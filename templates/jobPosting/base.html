@@ -8,7 +8,7 @@
         <title>Mines Crowdsourcing</title>
     </head>
     <body class="d-flex flex-column">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
         <a class="navbar-brand w-100" href="#">Mines Crowdsourcing</a>
         <div class="collapse navbar-collapse flex-grow-1 text-righ">
           <ul class="navbar-nav mr-auto">
@@ -21,15 +21,17 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Request</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Account</a>
+            </li>
           </ul>
         </div>
       </nav>
 
+
       {% block content %}{% endblock %}
 
-      <footer class="mt-3 py-4 text-center">
-          <div>© 2019 Mines Crowdsourcing Team</div>
-      </footer>
+      <div class="mt-3 py-4 text-center"> © 2019 Mines Crowdsourcing Team </div>
 
       {% block scripts %}{% endblock %}
     </body>
