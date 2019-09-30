@@ -2,6 +2,11 @@
 
 {% block content %}
 <div class="text-center">
-    <p>Welcome</p>
+    <p>Welcome
+      {% if user.is_authenticated %}
+        {{ user.username }}, let's help research at Mines!
+      { % else % }
+        on Mines Crowdsourcing.
+      {% endif %}</p>
 </div>
 {% endblock %}
