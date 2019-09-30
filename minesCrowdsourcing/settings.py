@@ -119,13 +119,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = '/'
+
 # Configure Django App for Heroku.
 try:
     import django_heroku
     django_heroku.settings(locals())
 except ImportError:
     pass
-    
+
 # Django configuration for local settings
 try:
     from local_settings import *
