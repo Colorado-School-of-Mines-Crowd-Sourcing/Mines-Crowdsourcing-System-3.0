@@ -19,7 +19,12 @@ class ParticipantCompletedTasks(models.Model):
     task_ID = models.IntegerField(blank=False)
 
 
-class ActiveTaskID(models.Model):
+class RequesterActiveTaskID(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    task_ID = models.IntegerField(blank=False)
+
+
+class RequesterPastTaskId(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     task_ID = models.IntegerField(blank=False)
 
@@ -36,6 +41,6 @@ class Task(models.Model):
     end_date = models.DateField(blank=False)
 
 
-class Tag(models.Model):
+class Tags(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     tag = models.CharField(max_length=20, blank=False)
