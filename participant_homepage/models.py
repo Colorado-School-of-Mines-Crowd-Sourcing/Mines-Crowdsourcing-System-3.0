@@ -33,7 +33,7 @@ class Task(models.Model):
     task_ID = models.AutoField(primary_key=True, blank=False)
     link_to = models.CharField(max_length=50, blank=False)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
-    min_participant_req = models.IntegerField
+    min_participant_req = models.IntegerField(default=0, blank=True)
     title = models.CharField(max_length=100, blank=False)
     payment_index = models.IntegerField(blank=False)
     description = models.CharField(max_length=1024, blank=False)
