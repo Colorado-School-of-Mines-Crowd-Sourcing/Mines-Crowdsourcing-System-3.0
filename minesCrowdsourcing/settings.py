@@ -79,14 +79,8 @@ WSGI_APPLICATION = 'minesCrowdsourcing.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd7lcgvg64efj7l',
-        'USER': 'gshqgehopcfsxx',
-        'PASSWORD': '336e8af4aacc7a31b63685dfd6559a576c46c289d9c0ce0ea7a4cc04555c5a69',
-        'HOST': 'ec2-174-129-27-158.compute-1.amazonaws.com',
-        'PORT': '5432',
-
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
