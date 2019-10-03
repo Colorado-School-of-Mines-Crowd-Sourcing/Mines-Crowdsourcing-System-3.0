@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <p>Welcome
+      {% if user.is_authenticated %}
+        {{ user.username }}, let's help research at Mines!
+      {% else %}
+        on Mines Crowdsourcing.
+      {% endif %}</p>
+</div>
+{% endblock %}
