@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #custom apps
-    'participant_homepage.apps.ParticipantConfig',
+    'participant.apps.ParticipantConfig',
+    'jobPosting.apps.JobpostingConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.hashers import make_password
 from django.db import models
 import uuid
 
@@ -12,6 +13,10 @@ class Users(AbstractBaseUser):
     CWID = models.IntegerField(unique=True, blank=False)
     authorized_requester = models.BooleanField(blank=False, default=False)
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def set_unusable_password(self):
+        # Set a value that will never be a valid hash
+        self.password = make_password(None)
 
 
 class ParticipantCompletedTasks(models.Model):
@@ -39,6 +44,7 @@ class Task(models.Model):
     description = models.CharField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
     end_date = models.DateField(blank=False)
+    requester = models.ForeignKey(Users, on_delete=models.CASCADE)
 
 
 class Tags(models.Model):
