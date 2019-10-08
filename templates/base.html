@@ -23,7 +23,7 @@
               <a class="nav-link" href="{% url 'participant_index' %}">Participate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Request</a>
+              <a class="nav-link" href="{% url 'requester_index' %}">Request</a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
