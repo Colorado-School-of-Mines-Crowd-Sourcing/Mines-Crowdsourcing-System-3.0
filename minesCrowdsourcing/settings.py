@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     #custom apps
     'participant.apps.ParticipantConfig',
-    'jobPosting.apps.JobpostingConfig',
+    'requester.apps.RequesterConfig',
 ]
 
 MIDDLEWARE = [
