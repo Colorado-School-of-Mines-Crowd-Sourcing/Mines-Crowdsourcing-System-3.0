@@ -19,4 +19,4 @@ def index(request):
     else:
         form = CreateJob()
 
-    return render(request, 'requester/index.html')
+    return render(request, 'requester/index.html', {'form': form})
