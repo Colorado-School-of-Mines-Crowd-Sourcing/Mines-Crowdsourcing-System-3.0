@@ -1,9 +1,24 @@
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.db import models
 import uuid
 
+
+#Define user manager
+class UserManager(BaseUserManager)
+    def create_user(self, multipass_username, name, CWID):
+        if not multipass_username:
+            raise ValueError("Enter your Mines username")
+
+
+
+    def create_superuser(self, multipass_username):
+        self.create_user(multipass_username, name, CWID)
+        user.is_staff()
+        user.is_superuser = True
+        user.save()
+        return user
 
 # Create your models here.
 class User(AbstractBaseUser):
@@ -16,6 +31,9 @@ class User(AbstractBaseUser):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     objects = UserManager()
+
+
+
 
     USERNAME_FIELD = 'multipass_username'
     def set_unusable_password(self):
