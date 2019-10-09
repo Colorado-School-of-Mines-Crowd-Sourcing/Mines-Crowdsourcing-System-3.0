@@ -10,10 +10,9 @@ def index(request):
         form = CreateJob(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            form.save()
+            new_job = form.save()
+            new_job.requester = request.user
+            new_job.save()
             messages.success(request, "Your task has been submitted for review.")
             return HttpResponseRedirect('/')
 

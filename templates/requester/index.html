@@ -4,8 +4,12 @@
 
 {% block content %}
 <form action="/requester/" method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
+  {% csrf_token %}
+  {% for field in form %}
+    {% if field.name != "requester" %}
+    <tr><td>{{ field | as_crispy_field }}</td></tr>
+    {% endif %}
+  {% endfor %}
+  <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
 </form>
 {% endblock %}
