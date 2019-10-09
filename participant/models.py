@@ -1,39 +1,46 @@
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.db import models
 import uuid
 
 
 #Define user manager
-class UserManager(BaseUserManager)
-    def create_user(self, multipass_username, name, CWID):
+class UserManager(BaseUserManager):
+    def create_user(self, multipass_username, name, email, CWID, authorized_requester=False, reward_balance=0, password=None):
         if not multipass_username:
             raise ValueError("Enter your Mines username")
+        user = self.model(
+            multipass_username = multipass_username,
+            name = name,
+            email = email,
+            CWID = CWID,
+            authorized_requester = authorized_requester,
+            reward_balance = reward_balance,
+        )
+        user.save()
+        return user
 
-
-
-    def create_superuser(self, multipass_username):
-        self.create_user(multipass_username, name, CWID)
-        user.is_staff()
+    def create_superuser(self, multipass_username, name, email, CWID, authorized_requester, reward_balance, password=None):
+        user = self.create_user(multipass_username, name, email, CWID, authorized_requester, reward_balance)
         user.is_superuser = True
         user.save()
         return user
 
 # Create your models here.
-class User(AbstractBaseUser):
-    user_ID = models.AutoField(primary_key=True, blank=False)
-    multipass_username = models.CharField(max_length=50, unique=True, blank=False)
-    name = models.CharField(max_length=100, blank=False)
-    email = models.CharField(max_length=50, blank=False)
-    CWID = models.IntegerField(unique=True, blank=False)
-    authorized_requester = models.BooleanField(blank=False, default=False)
-    reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+class User(AbstractBaseUser, PermissionsMixin):
+    user_ID = models.AutoField(primary_key=True,)
+    multipass_username = models.CharField(max_length=50, unique=True, )
+    name = models.CharField(max_length=100, )
+    email = models.CharField(max_length=50, )
+    CWID = models.IntegerField(unique=True, )
+    authorized_requester = models.BooleanField(default=False, )
+    reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
+    is_superuser = models.BooleanField(default=False, )
 
     objects = UserManager()
 
-
-
+    REQUIRED_FIELDS=['name', 'email', 'CWID', 'authorized_requester', 'reward_balance']
 
     USERNAME_FIELD = 'multipass_username'
     def set_unusable_password(self):
