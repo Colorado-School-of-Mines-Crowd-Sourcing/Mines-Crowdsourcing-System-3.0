@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     #custom apps
     'participant.apps.ParticipantConfig',
     'requester.apps.RequesterConfig',
+
+    #external APP_DIRS
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

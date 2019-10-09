@@ -13,6 +13,8 @@ def index(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
+            form.save()
+            messages.success(request, "Your task has been submitted for review.")
             return HttpResponseRedirect('/')
 
     # if a GET (or any other method) we'll create a blank form
