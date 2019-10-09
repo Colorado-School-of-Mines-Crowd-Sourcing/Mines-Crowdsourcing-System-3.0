@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import UserManager
 from django.contrib.auth.hashers import make_password
 from django.db import models
 import uuid
@@ -13,6 +14,8 @@ class User(AbstractBaseUser):
     CWID = models.IntegerField(unique=True, blank=False)
     authorized_requester = models.BooleanField(blank=False, default=False)
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'multipass_username'
     def set_unusable_password(self):
