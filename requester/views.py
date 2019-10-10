@@ -10,7 +10,7 @@ def index(request):
         form = CreateJob(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            new_job = form.save()
+            new_job = form.save(commit=False)
             new_job.requester = request.user
             new_job.save()
             messages.success(request, "Your task has been submitted for review.")
