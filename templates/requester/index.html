@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if user.authorized_requester %}
 <form action="/requester/" method="post">
   {% csrf_token %}
   {% for field in form %}
@@ -12,4 +13,7 @@
   {% endfor %}
   <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
 </form>
+{% else %}
+<p>You must be authorized to request a job in order to use this page</p> 
+{% endif %}
 {% endblock %}
