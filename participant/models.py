@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_ID = models.AutoField(primary_key=True,)
     multipass_username = models.CharField(max_length=50, unique=True, )
     name = models.CharField(max_length=100, )
-    email = models.CharField(max_length=50, )
+    email = models.EmailField()
     CWID = models.IntegerField(unique=True, )
     authorized_requester = models.BooleanField(default=False, )
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
