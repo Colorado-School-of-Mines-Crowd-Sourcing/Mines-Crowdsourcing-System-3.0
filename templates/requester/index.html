@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% comment %} {% if user.authorized_requester %} {% endcomment %}
+<form action="/requester/" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    {% if field.name != "requester" %}
+    <tr><td>{{ field | as_crispy_field }}</td></tr>
+    {% endif %}
+  {% endfor %}
+  <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
+</form>
+{% comment %}
+{% else %}
+<p>You must be authorized to request a job in order to use this page</p>
+{% endif %}
+{% endcomment %}
+{% endblock %}
