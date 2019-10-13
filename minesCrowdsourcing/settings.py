@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #custom apps
-    'participant.apps.ParticipantConfig',
-    'jobPosting.apps.JobpostingConfig',
+    'participant',
+    'requester',
+
+    #external APP_DIRS
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +59,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'minesCrowdsourcing.urls'
+
+AUTH_USER_MODEL = 'participant.User'
 
 TEMPLATES = [
     {

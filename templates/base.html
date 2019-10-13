@@ -10,7 +10,7 @@
     </head>
     <body class="d-flex flex-column vh-100">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-        <a class="navbar-brand w-100" href="#">Mines Crowdsourcing</a>
+        <a class="navbar-brand w-100" href="{% url 'index' %}">Mines Crowdsourcing</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedContent" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,7 +23,7 @@
               <a class="nav-link" href="{% url 'participant_index' %}">Participate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Request</a>
+              <a class="nav-link" href="{% url 'requester_index' %}">Request</a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
