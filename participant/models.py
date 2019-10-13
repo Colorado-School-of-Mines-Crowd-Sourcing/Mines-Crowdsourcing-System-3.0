@@ -71,7 +71,7 @@ class Task(models.Model):
     min_participant_req = models.IntegerField(default=0, blank=True)
     title = models.CharField(max_length=100, blank=False)
     payment_index = models.IntegerField(blank=False)
-    description = models.CharField(max_length=1024, blank=False)
+    description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
