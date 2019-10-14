@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center h-100">
+  <ul class="list-group list-group-flush">
+    {% for pending_task in pending %}
+      <li class="list-group-item"> {{ pending_task.task.title }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

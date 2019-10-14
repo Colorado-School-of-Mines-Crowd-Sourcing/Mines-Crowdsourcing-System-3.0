@@ -30,11 +30,10 @@ class UserManager(BaseUserManager):
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
-    user_ID = models.AutoField(primary_key=True,)
     multipass_username = models.CharField(max_length=50, unique=True, )
     name = models.CharField(max_length=100, )
     email = models.EmailField()
-    CWID = models.IntegerField(unique=True, )
+    CWID = models.IntegerField(primary_key=True,)
     authorized_requester = models.BooleanField(default=False, )
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
@@ -49,23 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.password = make_password(None)
 
 
-class ParticipantCompletedTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task_ID = models.IntegerField(blank=False)
-
-
-class RequesterActiveTaskID(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task_ID = models.IntegerField(blank=False)
-
-
-class RequesterPastTaskId(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task_ID = models.IntegerField(blank=False)
-
-
 class Task(models.Model):
-    task_ID = models.AutoField(primary_key=True, blank=False)
     link_to = models.URLField(max_length=50, blank=False)
     ideal_participant = models.CharField(max_length=100, blank=False)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
@@ -74,9 +57,32 @@ class Task(models.Model):
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
+    is_posted = models.BooleanField(default=False, )
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
 
+class ParticipantCompletedTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+
+class RequesterActiveTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, user, task):
+        activeTask = cls(user=user, task = task)
+        return activeTask
+
+class RequesterPastTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, user, task):
+        pastTask = cls(user=user, task = task)
+        return pastTask
 
 class Tag(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
