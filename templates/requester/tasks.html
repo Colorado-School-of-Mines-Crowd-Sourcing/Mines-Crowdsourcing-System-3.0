@@ -2,21 +2,53 @@
 
 {% block content %}
 <div class="container-fluid">
-  <div class="row justify-content-center align-items-center h-100">
-    <h3>Pending tasks</h3>
-    <ul class="list-group list-group-flush">
-      {% for pending_task in pending %}
-        <li class="list-group-item"> {{ pending_task.task.title }}</li>
-      {% endfor %}
-    </ul>
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+      <ul class="list-group list-group-flush">
+        <h3>Pending tasks</h3>
+        {% if pending %}
+          {% for pending_task in pending %}
+            <li class="list-group-item"> {{ pending_task.task.title }}</li>
+          {% endfor %}
+        {% else %}
+            <li class="list-group-item">You currently have no pending task!</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="col-sm-3"></div>
   </div>
-  <div class="row justify-content-center align-items-center h-100">
-    <h3>Active tasks</h3>
-    <ul class="list-group list-group-flush">
-      {% for pending_task in pending %}
-        <li class="list-group-item"> {{ pending_task.task.title }}</li>
-      {% endfor %}
-    </ul>
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+      <ul class="list-group list-group-flush">
+        <h3>Active tasks</h3>
+        {% if active %}
+          {% for active_task in active %}
+            <li class="list-group-item"> {{ pending_task.task.title }}</li>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">You currently have no active task!</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+      <ul class="list-group list-group-flush">
+        <h3>Completed tasks</h3>
+        {% if completed %}
+          {% for completed_task in completed %}
+            <li class="list-group-item"> {{ pending_task.task.title }}</li>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">You currently have no completed task!</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="col-sm-3"></div>
   </div>
 </div>
 
