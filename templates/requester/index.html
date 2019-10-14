@@ -5,8 +5,11 @@
 {% block content %}
 {% comment %} {% if user.authorized_requester %} {% endcomment %}
 <div>
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+  {% endfor %}
   <div class="row justify-content-center align-items-center h-100">
-      <p class='text-center'><b>Disclaimer:</b> You must have a valid payment index and the required funds in your account in
+    <p class='text-center'><b>Disclaimer:</b> You must have a valid payment index and the required funds in your account in
    order for your task to be published.</p>
    </div>
      <form action="/requester/" method="post">

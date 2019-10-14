@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.apps import apps
 
 from .forms import CreateJob
@@ -25,7 +25,8 @@ def index(request):
             new_job.requester = user
             new_job.save()
             logger.info(request, "Your task has been submitted for review.")
-            return HttpResponseRedirect('/')
+            messages.success(request, "Your task has been submitted for review.")
+            return redirect('requester_index')
 
     # if a GET (or any other method) we'll create a blank form
     else:
