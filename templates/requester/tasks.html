@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center h-100">
-  <ul class="list-group list-group-flush">
-    {% for pending_task in pending %}
-      <li class="list-group-item"> {{ pending_task.task.title }}</li>
-    {% endfor %}
-  </ul>
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center h-100">
+    <h3>Pending tasks</h3>
+    <ul class="list-group list-group-flush">
+      {% for pending_task in pending %}
+        <li class="list-group-item"> {{ pending_task.task.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="row justify-content-center align-items-center h-100">
+    <h3>Active tasks</h3>
+    <ul class="list-group list-group-flush">
+      {% for pending_task in pending %}
+        <li class="list-group-item"> {{ pending_task.task.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 
 {% endblock %}
