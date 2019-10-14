@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.db import models
+from django.core.validators import MinValueValidator
 import uuid
 
 
@@ -67,8 +68,8 @@ class Task(models.Model):
     task_ID = models.AutoField(primary_key=True, blank=False)
     link_to = models.URLField(max_length=50, blank=False)
     ideal_participant = models.CharField(max_length=100, blank=False)
-    reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00, min_value=0.0)
-    min_participant_req = models.IntegerField(default=0, blank=True, min_value=0)
+    reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
+    min_participant_req = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
     title = models.CharField(max_length=100, blank=False)
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
