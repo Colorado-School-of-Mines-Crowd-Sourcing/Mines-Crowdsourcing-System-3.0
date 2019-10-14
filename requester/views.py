@@ -26,7 +26,7 @@ def create(request):
             #new_job.requester = request.user
             new_job.requester = user
             new_job.save()
-            apps.get_model('participant', 'RequesterPastTask').create(user, new_job.task_ID).save()
+            apps.get_model('participant', 'RequesterPastTask').create(user, new_job).save()
             logger.info(request, "task submitted for review.")
             messages.success(request, "Your task has been submitted for review.")
             return redirect('requester_create')
@@ -57,4 +57,8 @@ def see_tasks(request):
         user = user
     )
 
-    return render(request, 'requester/tasks.html', {'pending': pending}, {'active': active}, {'completed': completed})
+    return render(request, 'requester/tasks.html', {
+        'pending': pending,
+        'active': active,
+        'completed': completed,
+    })
