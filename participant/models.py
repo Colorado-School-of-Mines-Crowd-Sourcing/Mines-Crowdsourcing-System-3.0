@@ -22,8 +22,8 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, multipass_username, name, email, CWID, authorized_requester, reward_balance, password=None):
-        user = self.create_user(multipass_username, name, email, CWID, authorized_requester, reward_balance)
+    def create_superuser(self, multipass_username, name, email, CWID, reward_balance, password=None):
+        user = self.create_user(multipass_username, name, email, CWID, True, reward_balance)
         user.is_superuser = True
         user.save()
         return user
