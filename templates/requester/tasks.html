@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.authorized_requester %}
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-sm-3"></div>
@@ -60,5 +61,7 @@
     <div class="col-sm-3"></div>
   </div>
 </div>
-
+{% else %}
+<p>You must be authorized to request a job in order to use this page</p>
+{% endif %}
 {% endblock %}

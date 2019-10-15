@@ -4,7 +4,7 @@
 <div class="text-center">
     <p>Welcome
       {% if user.is_authenticated %}
-        {{ user.username }}, let's help research at Mines!
+        {{ user.multipass_username }}, let's help research at Mines!
       {% else %}
         on Mines Crowdsourcing.
       {% endif %}</p>

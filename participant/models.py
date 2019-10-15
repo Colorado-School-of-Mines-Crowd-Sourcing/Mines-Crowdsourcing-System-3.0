@@ -19,12 +19,15 @@ class UserManager(BaseUserManager):
             authorized_requester = authorized_requester,
             reward_balance = reward_balance,
         )
+        #To be removed
+        user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, multipass_username, name, email, CWID, reward_balance, password=None):
-        user = self.create_user(multipass_username, name, email, CWID, True, reward_balance)
+    def create_superuser(self, multipass_username, name, email, CWID, authorized_requester, reward_balance, password=None):
+        user = self.create_user(multipass_username, name, email, CWID, authorized_requester, reward_balance, password)
         user.is_superuser = True
+        user.is_staff = True
         user.save()
         return user
 
@@ -37,15 +40,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     authorized_requester = models.BooleanField(default=False, )
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
+    is_staff = models.BooleanField(default=False, )
+
 
     objects = UserManager()
 
     REQUIRED_FIELDS=['name', 'email', 'CWID', 'authorized_requester', 'reward_balance']
 
     USERNAME_FIELD = 'multipass_username'
-    def set_unusable_password(self):
+    #def set_unusable_password(self):
         # Set a value that will never be a valid hash
-        self.password = make_password(None)
+        #self.password = make_password(None)
 
 
 class Task(models.Model):
