@@ -22,7 +22,7 @@ def create(request):
             new_job = form.save(commit=False)
             new_job.requester = request.user
             new_job.save()
-            RequesterActiveTask.create(user, new_job).save()
+            RequesterActiveTask.create(new_job.requester, new_job).save()
             logger.info(request, "task submitted for review.")
             messages.success(request, "Your task has been submitted for review.")
             return redirect('requester_create')
