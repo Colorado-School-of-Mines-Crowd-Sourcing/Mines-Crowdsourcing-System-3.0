@@ -66,6 +66,9 @@ class Task(models.Model):
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 class ParticipantCompletedTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
