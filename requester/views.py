@@ -19,8 +19,8 @@ def create(request):
         form = CreateJob(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            new_job = form.save(commit=False)
             new_job.requester = request.user
-            new_job.requester = user
             new_job.save()
             RequesterActiveTask.create(user, new_job).save()
             logger.info(request, "task submitted for review.")
