@@ -19,11 +19,7 @@ def create(request):
         form = CreateJob(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # TODO: remove following lines when authentication works
-            new_job = form.save(commit=False)
-            random_username = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
-            user = User.objects.create_user(random_username, 'test', 'test@test.mines', random.randint(0, 2000), True)
-            #new_job.requester = request.user
+            new_job.requester = request.user
             new_job.requester = user
             new_job.save()
             RequesterActiveTask.create(user, new_job).save()
@@ -38,10 +34,7 @@ def create(request):
     return render(request, 'requester/create.html', {'form': form})
 
 def see_tasks(request):
-    # TODO: remove following lines when authentication works
-    users = User.objects.all().order_by('?')
-    user = users[0]
-    #user = request.user
+    user = request.user
 
     pending = RequesterActiveTask.objects.filter(
         user = user,
