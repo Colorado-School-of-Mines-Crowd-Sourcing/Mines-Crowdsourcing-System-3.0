@@ -19,11 +19,27 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'participant_index' %}">Participate</a>
+            <li class="dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                  Participate
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'participant_index' %}">Available Tasks</a>
+                  <a class="dropdown-item" href="{% url 'participant_index' %}">See my Completed Tasks</a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'requester_index' %}">Request</a>
+            <li class="dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                  Request
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'requester_create' %}">Create a Task</a>
+                  <a class="dropdown-item" href="{% url 'requester_tasks' %}">See my Tasks</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}

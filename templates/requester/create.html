@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user.authorized_requester %}
+<div>
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+  {% endfor %}
+  <div class="row justify-content-center align-items-center h-100">
+    <p class='text-center'><b>Disclaimer:</b> You must have a valid payment index and the required funds in your account in
+   order for your task to be published.</p>
+   </div>
+     <form action="/requester/" method="post">
+        {% csrf_token %}
+        <tr><td>{{ form.title | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.min_participant_req | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.ideal_participant | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.description | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.reward_amount | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.end_date | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.payment_index | as_crispy_field }}</td></tr>
+        <tr><td>{{ form.link_to | as_crispy_field }}</td></tr>
+        <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
+      </form>
+</div>
+{% else %}
+<p>You must be authorized to request a job in order to use this page</p>
+{% endif %}
+{% endblock %}
