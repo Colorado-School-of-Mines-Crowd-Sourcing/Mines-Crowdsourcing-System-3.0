@@ -35,23 +35,25 @@ def create(request):
 
 def see_tasks(request):
     user = request.user
+    if user.is_anonymous:
+        return render(request, 'requester/tasks.html')
+    else:
+        pending = RequesterActiveTask.objects.filter(
+            user = user,
+            task__is_posted = False
+        )
 
-    pending = RequesterActiveTask.objects.filter(
-        user = user,
-        task__is_posted = False
-    )
+        active = RequesterActiveTask.objects.filter(
+            user = user,
+            task__is_posted = True
+        )
 
-    active = RequesterActiveTask.objects.filter(
-        user = user,
-        task__is_posted = True
-    )
+        completed = RequesterPastTask.objects.filter(
+            user = user
+        )
 
-    completed = RequesterPastTask.objects.filter(
-        user = user
-    )
-
-    return render(request, 'requester/tasks.html', {
-        'pending': pending,
-        'active': active,
-        'completed': completed,
-    })
+        return render(request, 'requester/tasks.html', {
+            'pending': pending,
+            'active': active,
+            'completed': completed,
+        })
