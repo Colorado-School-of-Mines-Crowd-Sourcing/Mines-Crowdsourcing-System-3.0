@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-        <p>TThis shows all tasks on the participant page</p>
+        <div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+        <h3>All Tasks Available</h3>
+        {% if all_tasks %}
+          {% for task_element in all_tasks %}
+            <li class="list-group-item d-flex justify-content-between">
+              <p>{{ task_element.title }}</p>
+              <p>Ends {{ task_element.end_date }}</p>
+            </li>
+          {% endfor %}
+        {% else %}
+            <li class="list-group-item">There are no task available at this time!</li>
+        {% endif %}
+    </div>
+  </div>
+        </div>
 {% endblock %}
