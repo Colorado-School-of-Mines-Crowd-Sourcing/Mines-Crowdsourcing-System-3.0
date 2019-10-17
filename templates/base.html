@@ -10,7 +10,7 @@
     </head>
     <body class="d-flex flex-column vh-100">
       <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-        <a class="navbar-brand w-100" href="#">Mines Crowdsourcing</a>
+        <a class="navbar-brand w-100" href="{% url 'index' %}">Mines Crowdsourcing</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedContent" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,11 +19,27 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'participant_index' %}">Participate</a>
+            <li class="dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                  Participate
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'participant_index' %}">Available Tasks</a>
+                  <a class="dropdown-item" href="{% url 'participant_index' %}">See my Completed Tasks</a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Request</a>
+            <li class="dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                  Request
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'requester_create' %}">Create a Task</a>
+                  <a class="dropdown-item" href="{% url 'requester_tasks' %}">See my Tasks</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
