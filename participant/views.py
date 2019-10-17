@@ -17,8 +17,8 @@ def completed_tasks(request):
     if user.is_anonymous:
         return render(request, 'participant/completed_task.html')
     else:
-        all_tasks = ParticipantCompletedTask.objects.filter(
+        completed_tasks_participant = ParticipantCompletedTask.objects.filter(
             user=user
         )
         return render(request, 'participant/completed_task.html', {
-            'all_tasks': all_tasks})
+            'completed_tasks_participant': completed_tasks_participant})
