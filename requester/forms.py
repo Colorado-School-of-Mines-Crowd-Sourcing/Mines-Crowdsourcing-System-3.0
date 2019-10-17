@@ -16,6 +16,6 @@ class CreateJob(ModelForm):
 
         help_texts = {
             'min_participant_req': 'This is the minimum number.',
-            'ideal_participant': 'List the qualities you would your participants to possess. Ex: "Freshman, CS Major"',
+            'ideal_participant': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
             'end_date': 'MM/DD/YYYY',
         }
