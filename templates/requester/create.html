@@ -3,9 +3,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div><h3 class="jumbotron">Create a Task</h3>
-
 {% if user.authorized_requester %}
+<div><h3 class="jumbotron">Create a Task</h3>
 <div>
   {% for message in messages %}
     <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
