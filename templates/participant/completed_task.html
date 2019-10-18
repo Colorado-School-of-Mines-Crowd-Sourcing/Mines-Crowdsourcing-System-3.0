@@ -6,6 +6,7 @@
     <div class="row justify-content-center">
       <div class="col-sm-3"></div>
       <div class="col-sm">
+        <ul class="list-group list-group-flush">
           <h3>Completed Tasks</h3>
           {% if completed_tasks_participant %}
             {% for task_element in completed_tasks_participant %}
@@ -17,6 +18,7 @@
           {% else %}
               <li class="list-group-item">There are no task available at this time!</li>
           {% endif %}
+          </ul>
       </div>
       <div class="col-sm-3"></div>
     </div>
