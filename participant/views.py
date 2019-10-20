@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from participant.models import *
+from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.http import HttpResponse
 
@@ -27,9 +28,6 @@ def completed_tasks(request):
 
 def search_results(request):
     query = request.GET.get('q')
-    query_result_list = Task.objects.annotate(
-        search=SearchVector('title'),
-    ).filter(search=SearchQuery(query))
+    query_result_list = Task.objects.filter(Q(title__contains=query))
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result_list})
-
