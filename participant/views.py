@@ -28,6 +28,8 @@ def completed_tasks(request):
 
 def search_results(request):
     query = request.GET.get('q')
-    query_result_list = Task.objects.filter(Q(title__contains=query))
+    query_title = Task.objects.filter(Q(title__contains=query))
+    query_tag = Task.objects.filter(Q(tag__tag=query))
+    query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
-        'resulted_tasks': query_result_list})
+        'resulted_tasks': query_result})

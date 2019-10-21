@@ -83,8 +83,8 @@ class RequesterActiveTask(models.Model):
 
     @classmethod
     def create(cls, user, task):
-        activeTask = cls(user=user, task=task)
-        return activeTask
+        active_task = cls(user=user, task=task)
+        return active_task
 
 
 class RequesterPastTask(models.Model):
@@ -93,10 +93,15 @@ class RequesterPastTask(models.Model):
 
     @classmethod
     def create(cls, user, task):
-        pastTask = cls(user=user, task=task)
-        return pastTask
+        past_task = cls(user=user, task=task)
+        return past_task
 
 
 class Tag(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     tag = models.CharField(max_length=20, blank=False)
+
+    @classmethod
+    def create(cls, tag, task):
+        new_tag = cls(tag=tag, task=task)
+        return new_tag
