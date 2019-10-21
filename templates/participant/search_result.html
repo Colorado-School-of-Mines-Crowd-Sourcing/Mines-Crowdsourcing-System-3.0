@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+      <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+      </form>
+      <ul class="py-5 list-group list-group-flush">
+        <h3>Search Results</h3>
+        {% if resulted_tasks %}
+          {% for task_element in resulted_tasks %}
+            <li class="list-group-item d-flex justify-content-between">
+              <p>{{ task_element.title }}</p>
+              <p>Ends {{ task_element.end_date }}</p>
+            </li>
+          {% endfor %}
+        {% else %}
+            <li class="list-group-item">No match!</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+</div>
+{% endblock %}

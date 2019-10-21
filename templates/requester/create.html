@@ -4,32 +4,43 @@
 
 {% block content %}
 {% if user.authorized_requester %}
-<div><h3 class="jumbotron">Create a Task</h3>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-sm-3"></div>
+    <div class="col-sm">
+      <div>
+        <h3 class="jumbotron">Create a Task</h3>
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+        {% endfor %}
+        <div class="row justify-content-center align-items-center h-100">
+            <p class="text-center"><b>Disclaimer: </b>The publishing of your tasks is subject to the approval of the site administrators.</p>
+         </div>
+           <form action="/requester/" method="post">
+              {% csrf_token %}
+              <tr><td>{{ form.title | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.min_participant_req | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.ideal_participant | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.description | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.reward_amount | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.end_date | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.payment_index | as_crispy_field }}</td></tr>
+              <tr><td>{{ form.link_to | as_crispy_field }}</td></tr>
+              <p class="text-center">By pressing the submit button,
+                  I agree that I have the required funding available and an approval from the IRB.</p>
+              <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
+            </form>
+      </div>
+    </div>
+    <div class="col-sm-3"></div>
 <div>
-  {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
-  {% endfor %}
-  <div class="row justify-content-center align-items-center h-100">
-      <p class="text-center"><b>Disclaimer: </b>The publishing of your tasks is subject to the approval of the site administrators.</p>
-   </div>
-     <form action="/requester/" method="post">
-        {% csrf_token %}
-        <tr><td>{{ form.title | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.min_participant_req | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.ideal_participant | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.description | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.reward_amount | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.end_date | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.payment_index | as_crispy_field }}</td></tr>
-        <tr><td>{{ form.link_to | as_crispy_field }}</td></tr>
-        <p class="text-center">By pressing the submit button,
-            I agree that I have the required funding available and an approval from the IRB.</p>
-        <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
-      </form>
 
-</div>
 {% else %}
-<p>You must be authorized to request a job in order to use this page</p>
+<div class="container d-flex h-100">
+  <div class="row m-auto">
+    <p>You must be authorized to request a job in order to use this page</p>
+  </div>
+</div>
 {% endif %}
 </div>
 {% endblock %}

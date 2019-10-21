@@ -25,8 +25,8 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="{% url 'participant_index' %}">Available Tasks</a>
-                  <a class="dropdown-item" href="{% url 'participant_index' %}">See my Completed Tasks</a>
+                  <a class="dropdown-item" href="{% url 'participant_all_tasks' %}">Available Tasks</a>
+                  <a class="dropdown-item" href="{% url 'participant_completed_tasks' %}">See my Completed Tasks</a>
                 </li>
               </ul>
             </li>
@@ -57,9 +57,9 @@
       </nav>
 
 
-      <div class="d-flex flex-grow-1">
+      <div class="flex-grow-1">
 
-        <div class="d-flex flex-grow-1 justify-content-center align-items-center"> {% block content %}{% endblock %} </div>
+        {% block content %}{% endblock %}
 
       </div>
       <footer class="mt-3 py-4 bg-light text-center"> © 2019 Mines Crowdsourcing Team </footer>

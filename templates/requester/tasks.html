@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if user.authorized_requester %}
-<div class="container-fluid">
+<div class="container-fluid py-5">
   <div class="row justify-content-center">
     <div class="col-sm-3"></div>
     <div class="col-sm">
@@ -62,6 +62,10 @@
   </div>
 </div>
 {% else %}
-<p>You must be authorized to request a job in order to use this page</p>
+<div class="container d-flex h-100">
+  <div class="row m-auto">
+    <p>You must be authorized to request a job in order to use this page</p>
+  </div>
+</div>
 {% endif %}
 {% endblock %}
