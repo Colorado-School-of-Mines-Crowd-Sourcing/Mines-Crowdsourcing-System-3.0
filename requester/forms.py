@@ -4,6 +4,8 @@ from django.apps import apps
 
 
 class CreateTask(ModelForm):
+    tags = forms.CharField(label='Tags', max_length=20, help_text='Separate your tags with a space')
+
     class Meta:
         model = apps.get_model('participant', 'Task')
         exclude = ['requester']
@@ -20,6 +22,3 @@ class CreateTask(ModelForm):
             'ideal_participant': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
             'end_date': 'MM/DD/YYYY',
         }
-
-class CreateTags(Form):
-    tags = forms.CharField(label="Tags", max_length=50)

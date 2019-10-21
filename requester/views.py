@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.apps import apps
 
-from participant.models import User, Task, RequesterActiveTask, RequesterPastTask
-from .forms import CreateTask, CreateTags
+from participant.models import User, Task, RequesterActiveTask, RequesterPastTask, Tag
+from .forms import CreateTask
 
 # TODO: Remove random import when user authentication is done
 import random, string
@@ -17,13 +17,19 @@ def create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form_task = CreateTask(request.POST)
-        form_tags = CreateTask(request.POST)
         # check whether it's valid:
-        if form_task.is_valid() and form_tags.is_valid():
+        if form_task.is_valid() :
+            # Task creation
             new_job = form_task.save(commit=False)
             new_job.requester = request.user
             new_job.save()
             RequesterActiveTask.create(new_job.requester, new_job).save()
+
+            # Tag creation
+            for tag in request.tags.split():
+                new_tag = Tag.create(tag, request.user)
+                new_tag.save()
+
             logger.info(request, "task submitted for review.")
             messages.success(request, "Your task has been submitted for review.")
             return redirect('requester_create')
@@ -31,8 +37,7 @@ def create(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         form_task = CreateTask()
-        form_tags = CreateTags()
-        return render(request, 'requester/create.html', {'form_task': form_task, 'form_tags': form_tags})
+        return render(request, 'requester/create.html', {'form_task': form_task})
 
 def see_tasks(request):
     user = request.user
