@@ -105,3 +105,6 @@ class Tag(models.Model):
     def create(cls, tag, task):
         new_tag = cls(tag=tag, task=task)
         return new_tag
+
+    def __str__(self):
+        return self.tag
