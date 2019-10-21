@@ -5,6 +5,9 @@
   <div class="row justify-content-center">
     <div class="col-sm-3"></div>
     <div class="col-sm">
+      <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
+        <input name="q" type="text" placeholder="Search...">
+      </form>
       <ul class="py-5 list-group list-group-flush">
         <h3>Search Results</h3>
         {% if resulted_tasks %}
