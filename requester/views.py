@@ -32,8 +32,7 @@ def create(request):
     else:
         form_task = CreateTask()
         form_tags = CreateTags()
-
-    return render(request, 'requester/create.html', {'form_task': form_task, 'form_tags': form_tags})
+        return render(request, 'requester/create.html', {'form_task': form_task, 'form_tags': form_tags})
 
 def see_tasks(request):
     user = request.user
