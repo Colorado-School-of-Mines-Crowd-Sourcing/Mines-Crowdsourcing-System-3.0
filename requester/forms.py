@@ -22,4 +22,4 @@ class CreateTask(ModelForm):
         }
 
 class CreateTags(Form):
-    tags = forms.Charfield(label="Tags")
+    tags = forms.CharField(label="Tags", max_length=50)
