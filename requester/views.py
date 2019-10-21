@@ -18,16 +18,18 @@ def create(request):
         # create a form instance and populate it with data from the request:
         form_task = CreateTask(request.POST)
         # check whether it's valid:
+        print(request)
         if form_task.is_valid() :
             # Task creation
-            new_job = form_task.save(commit=False)
-            new_job.requester = request.user
-            new_job.save()
-            RequesterActiveTask.create(new_job.requester, new_job).save()
+            new_task = form_task.save(commit=False)
+            new_task.requester = request.user
+            new_task.save()
+            RequesterActiveTask.create(new_task.requester, new_task).save()
 
             # Tag creation
-            for tag in request.tags.split():
-                new_tag = Tag.create(tag, request.user)
+            for tag in request.POST.get('tags').split():
+                logger.info(request, "tag ", tag, " created")
+                new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
             logger.info(request, "task submitted for review.")
@@ -37,7 +39,7 @@ def create(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         form_task = CreateTask()
-        return render(request, 'requester/create.html', {'form_task': form_task})
+    return render(request, 'requester/create.html', {'form_task': form_task})
 
 def see_tasks(request):
     user = request.user
