@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.apps import apps
 
 from participant.models import User, Task, RequesterActiveTask, RequesterPastTask
-from .forms import CreateJob
+from .forms import CreateTask
 
 # TODO: Remove random import when user authentication is done
 import random, string
@@ -29,7 +29,8 @@ def create(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = CreateJob()
+        form_task = CreateTask()
+        form_tag = CreateTags()
 
     return render(request, 'requester/create.html', {'form': form})
 

@@ -1,8 +1,9 @@
-from django.forms import ModelForm
+from django import forms
+from django.forms import ModelForm, Form
 from django.apps import apps
 
 
-class CreateJob(ModelForm):
+class CreateTask(ModelForm):
     class Meta:
         model = apps.get_model('participant', 'Task')
         exclude = ['requester']
@@ -19,3 +20,6 @@ class CreateJob(ModelForm):
             'ideal_participant': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
             'end_date': 'MM/DD/YYYY',
         }
+
+class CreateTags(Form):
+    tags = forms.Charfield(label="Tags")
