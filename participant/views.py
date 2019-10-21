@@ -17,12 +17,12 @@ def all_available_tasks(request):
 def completed_tasks(request):
     user = request.user
     if user.is_anonymous:
-        return render(request, 'participant/completed_task.html')
+        return render(request, 'participant/completed_tasks.html')
     else:
         completed_tasks_participant = ParticipantCompletedTask.objects.filter(
             user=user
         )
-        return render(request, 'participant/completed_task.html', {
+        return render(request, 'participant/completed_tasks.html', {
             'completed_tasks_participant': completed_tasks_participant})
 
 
