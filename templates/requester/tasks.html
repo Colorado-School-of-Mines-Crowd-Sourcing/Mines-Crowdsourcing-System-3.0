@@ -12,6 +12,8 @@
           {% for pending_task in pending %}
             <li class="list-group-item d-flex justify-content-between">
               <p>{{ pending_task.task.title }}</p>
+              <p>{{ pending_task.task.description }}</p>
+              <p>$ {{ pending_task.task.reward_amount }}</p>
               <p>Ends {{ pending_task.task.end_date }}</p>
             </li>
           {% endfor %}
@@ -31,6 +33,8 @@
           {% for active_task in active %}
           <li class="list-group-item d-flex justify-content-between">
             <p>{{ active_task.task.title }}</p>
+            <p>{{ active_task.task.description }}</p>
+            <p>{{ active_task.task.reward_amount }}</p>
             <p>Ends {{ active_task.task.end_date }}</p>
           </li>
           {% endfor %}
@@ -50,6 +54,8 @@
           {% for completed_task in completed %}
           <li class="list-group-item d-flex justify-content-between">
             <p>{{ completed_task.task.title }}</p>
+            <p>{{ completed_task.task.description }}</p>
+            <p>{{ completed_task.task.reward_amount }}</p>
             <p>Ended {{ completed_task.task.end_date }}</p>
           </li>
           {% endfor %}
