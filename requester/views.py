@@ -27,7 +27,7 @@ def create(request):
             RequesterActiveTask.create(new_task.requester, new_task).save()
 
             # Tag creation
-            for tag in request.POST.get('tags').split():
+            for tag in request.POST.get('tags').split(','):
                 logger.info(request, "tag ", tag, " created")
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
