@@ -76,6 +76,9 @@ class ParticipantCompletedTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = 'Completed task'
+        verbose_name_plural = 'Completed tasks'
 
 class RequesterActiveTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
