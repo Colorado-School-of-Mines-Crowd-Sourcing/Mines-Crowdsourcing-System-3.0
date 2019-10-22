@@ -10,11 +10,11 @@
           <h3>Completed Tasks</h3>
           {% if completed_tasks %}
             {% for task in completed_tasks %}
-              <li class="list-group-item d-flex justify-content-between">
-                <p>{{ task.title }}</p>
-                <p>{{ task.description }}</p>
-                <p>$ {{ task.reward_amount }}</p>
-                <p>Ends {{ task.end_date }}</p>
+              <li class="list-group-item d-flex justify-content-between px-0">
+                <p class="w-25 mx-1">{{ task.title }}</p>
+                <p class="w-25 mx-1">{{ task.description }}</p>
+                <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
+                <p class="w-25 mx-1">Ends {{ task.end_date }}</p>
               </li>
             {% endfor %}
           {% else %}
@@ -28,7 +28,7 @@
 {% else %}
 <div class="container d-flex h-100">
   <div class="row m-auto">
-    <p>You must login to view your completed tasks</p>
+    <p class="w-25 mx-1">You must login to view your completed tasks</p>
   </div>
 </div>
 {% endif %}

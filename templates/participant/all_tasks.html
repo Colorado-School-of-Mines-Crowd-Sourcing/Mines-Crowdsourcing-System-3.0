@@ -9,15 +9,15 @@
       <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
       </form>
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush ">
         <h3>All Tasks Available</h3>
         {% if all_tasks %}
           {% for task_element in all_tasks %}
-            <li class="list-group-item d-flex justify-content-between">
-              <p>{{ task_element.title }}</p>
-              <p>{{ task_element.description }}</p>
-              <p>$ {{ task_element.reward_amount }}</p>
-              <p>Ends {{ task_element.end_date }}</p>
+            <li class="list-group-item d-flex justify-content-between px-0">
+              <p class="w-25 mx-1">{{ task_element.title }}</p>
+              <p class="w-25 mx-1">{{ task_element.ideal_participant }}</p>
+              <p class="w-25 mx-1">${{ task_element.reward_amount }}</p>
+              <p class="w-25 mx-1">Ends {{ task_element.end_date }}</p>
             </li>
           {% endfor %}
         {% else %}

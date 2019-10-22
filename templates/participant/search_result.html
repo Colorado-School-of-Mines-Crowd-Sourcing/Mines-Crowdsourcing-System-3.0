@@ -12,11 +12,11 @@
         <h3>Search Results</h3>
         {% if resulted_tasks %}
           {% for task_element in resulted_tasks %}
-            <li class="list-group-item d-flex justify-content-between">
-              <p>{{ task_element.title }}</p>
-              <p>{{ task_element.task.description }}</p>
-              <p>$  {{ task_element.task.reward_amount }}</p>
-              <p>Ends {{ task_element.end_date }}</p>
+            <li class="list-group-item d-flex justify-content-between px-0">
+              <p class="w-25 mx-1">{{ task_element.title }}</p>
+              <p class="w-25 mx-1">{{ task_element.description }}</p>
+              <p class="w-25 mx-1">${{ task_element.reward_amount }}</p>
+              <p class="w-25 mx-1">Ends {{ task_element.end_date }}</p>
             </li>
           {% endfor %}
         {% else %}

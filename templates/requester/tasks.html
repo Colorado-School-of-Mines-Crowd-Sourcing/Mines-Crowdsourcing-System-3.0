@@ -10,11 +10,11 @@
         <h3>Pending tasks</h3>
         {% if pending %}
           {% for task in pending %}
-            <li class="list-group-item d-flex justify-content-between">
-              <p>{{ task.title }}</p>
-              <p>{{ task.description }}</p>
-              <p>$ {{ task.reward_amount }}</p>
-              <p>Ends {{ task.end_date }}</p>
+            <li class="list-group-item d-flex justify-content-between px-0">
+              <p class="w-25 mx-1">{{ task.title }}</p>
+              <p class="w-25 mx-1">{{ task.description }}</p>
+              <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
+              <p class="w-25 mx-1">Ends {{ task.end_date }}</p>
             </li>
           {% endfor %}
         {% else %}
@@ -32,10 +32,10 @@
         {% if active %}
           {% for task in active %}
           <li class="list-group-item d-flex justify-content-between">
-            <p>{{ task.title }}</p>
-            <p>{{ task.description }}</p>
-            <p>$ {{ task.reward_amount }}</p>
-            <p>Ends {{ task.end_date }}</p>
+            <p class="w-25 mx-1">{{ task.title }}</p>
+            <p class="w-25 mx-1">{{ task.description }}</p>
+            <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
+            <p class="w-25 mx-1">Ends {{ task.end_date }}</p>
           </li>
           {% endfor %}
         {% else %}
@@ -53,10 +53,10 @@
         {% if completed %}
           {% for task in completed %}
           <li class="list-group-item d-flex justify-content-between">
-            <p>{{ task.title }}</p>
-            <p>{{ task.description }}</p>
-            <p>$ {{ task.reward_amount }}</p>
-            <p>Ended {{ task.end_date }}</p>
+            <p class="w-25 mx-1">{{ task.title }}</p>
+            <p class="w-25 mx-1">{{ task.description }}</p>
+            <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
+            <p class="w-25 mx-1">Ended {{ task.end_date }}</p>
           </li>
           {% endfor %}
         {% else %}
@@ -70,7 +70,7 @@
 {% else %}
 <div class="container d-flex h-100">
   <div class="row m-auto">
-    <p>You must be authorized to request a job in order to use this page</p>
+    <p class="w-25 mx-1">You must be authorized to request a job in order to use this page</p>
   </div>
 </div>
 {% endif %}
