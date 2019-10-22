@@ -8,7 +8,7 @@
       <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
       </form>
-      <ul class="py-5 list-group list-group-flush">
+      <ul class="list-group list-group-flush">
         <h3>Search Results</h3>
         {% if resulted_tasks %}
           {% for task_element in resulted_tasks %}
