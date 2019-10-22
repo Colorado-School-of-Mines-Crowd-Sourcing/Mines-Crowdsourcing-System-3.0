@@ -46,18 +46,18 @@ def see_tasks(request):
     if user.is_anonymous:
         return render(request, 'requester/tasks.html')
     else:
-        pending = RequesterActiveTask.objects.filter(
-            user = user,
-            task__is_posted = False
+        pending = Task.objects.filter(
+            requester = user,
+            requesteractivetask__task__is_posted = False
         )
 
-        active = RequesterActiveTask.objects.filter(
-            user = user,
-            task__is_posted = True
+        active = Task.objects.filter(
+            requester = user,
+            requesteractivetask__task__is_posted = True
         )
 
-        completed = RequesterPastTask.objects.filter(
-            user = user
+        completed = Task.objects.filter(
+            requesterpasttask__user = user
         )
 
         return render(request, 'requester/tasks.html', {

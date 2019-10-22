@@ -4,17 +4,17 @@
 {% if user.authorized_requester %}
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
     <div class="col-sm">
       <ul class="list-group list-group-flush">
         <h3>Pending tasks</h3>
         {% if pending %}
-          {% for pending_task in pending %}
+          {% for task in pending %}
             <li class="list-group-item d-flex justify-content-between">
-              <p>{{ pending_task.task.title }}</p>
-              <p>{{ pending_task.task.description }}</p>
-              <p>$ {{ pending_task.task.reward_amount }}</p>
-              <p>Ends {{ pending_task.task.end_date }}</p>
+              <p>{{ task.title }}</p>
+              <p>{{ task.description }}</p>
+              <p>$ {{ task.reward_amount }}</p>
+              <p>Ends {{ task.end_date }}</p>
             </li>
           {% endfor %}
         {% else %}
@@ -22,20 +22,20 @@
         {% endif %}
       </ul>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
     <div class="col-sm">
       <ul class="list-group list-group-flush">
         <h3>Active tasks</h3>
         {% if active %}
-          {% for active_task in active %}
+          {% for task in active %}
           <li class="list-group-item d-flex justify-content-between">
-            <p>{{ active_task.task.title }}</p>
-            <p>{{ active_task.task.description }}</p>
-            <p>{{ active_task.task.reward_amount }}</p>
-            <p>Ends {{ active_task.task.end_date }}</p>
+            <p>{{ task.title }}</p>
+            <p>{{ task.description }}</p>
+            <p>$ {{ task.reward_amount }}</p>
+            <p>Ends {{ task.end_date }}</p>
           </li>
           {% endfor %}
         {% else %}
@@ -43,20 +43,20 @@
         {% endif %}
       </ul>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
     <div class="col-sm">
       <ul class="list-group list-group-flush">
         <h3>Completed tasks</h3>
         {% if completed %}
-          {% for completed_task in completed %}
+          {% for task in completed %}
           <li class="list-group-item d-flex justify-content-between">
-            <p>{{ completed_task.task.title }}</p>
-            <p>{{ completed_task.task.description }}</p>
-            <p>{{ completed_task.task.reward_amount }}</p>
-            <p>Ended {{ completed_task.task.end_date }}</p>
+            <p>{{ task.title }}</p>
+            <p>{{ task.description }}</p>
+            <p>$ {{ task.reward_amount }}</p>
+            <p>Ended {{ task.end_date }}</p>
           </li>
           {% endfor %}
         {% else %}
@@ -64,7 +64,7 @@
         {% endif %}
       </ul>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
   </div>
 </div>
 {% else %}
