@@ -27,13 +27,13 @@ def create(request):
             RequesterActiveTask.create(new_task.requester, new_task).save()
 
             # Tag creation
-            for tag in request.POST.get('tags').split():
-                logger.info(request, "tag ", tag, " created")
+            for tag in request.POST.get('tags').split(','):
+                logger.info(request, 'tag ', tag, ' created')
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
-            logger.info(request, "task submitted for review.")
-            messages.success(request, "Your task has been submitted for review.")
+            logger.info(request, 'task submitted for review.')
+            messages.success(request, 'Your task has been submitted for review.')
             return redirect('requester_create')
 
     # if a GET (or any other method) we'll create a blank form
