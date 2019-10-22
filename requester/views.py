@@ -17,8 +17,7 @@ def create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form_task = CreateTask(request.POST)
-        # check whether it's valid:
-        print(request)
+        # check whether it's valid
         if form_task.is_valid() :
             # Task creation
             new_task = form_task.save(commit=False)
