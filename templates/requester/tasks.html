@@ -33,7 +33,7 @@
           {% for task in active %}
           <li class="list-group-item d-flex justify-content-between">
             <p class="w-25 mx-1">{{ task.title }}</p>
-            <p class="w-25 mx-1">{{ task.description }}</p>
+            <p class="w-25 mx-1">{{ task.ideal_participant }}</p>
             <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
             <p class="w-25 mx-1">Ends {{ task.end_date }}</p>
           </li>
@@ -54,7 +54,7 @@
           {% for task in completed %}
           <li class="list-group-item d-flex justify-content-between">
             <p class="w-25 mx-1">{{ task.title }}</p>
-            <p class="w-25 mx-1">{{ task.description }}</p>
+            <p class="w-25 mx-1">{{ task.ideal_participant }}</p>
             <p class="w-25 mx-1">$ {{ task.reward_amount }}</p>
             <p class="w-25 mx-1">Ended {{ task.end_date }}</p>
           </li>
