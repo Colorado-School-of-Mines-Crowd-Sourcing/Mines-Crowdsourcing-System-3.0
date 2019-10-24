@@ -76,6 +76,9 @@ class ParticipantCompletedTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = 'Completed task'
+        verbose_name_plural = 'Completed tasks'
 
 class RequesterActiveTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -105,3 +108,6 @@ class Tag(models.Model):
     def create(cls, tag, task):
         new_tag = cls(tag=tag, task=task)
         return new_tag
+
+    def __str__(self):
+        return self.tag

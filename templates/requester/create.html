@@ -18,14 +18,15 @@
          </div>
            <form action="/requester/" method="post">
               {% csrf_token %}
-              <tr><td>{{ form.title | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.min_participant_req | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.ideal_participant | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.description | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.reward_amount | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.end_date | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.payment_index | as_crispy_field }}</td></tr>
-              <tr><td>{{ form.link_to | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.title | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.min_participant_req | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.ideal_participant | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.description | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.tags | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.reward_amount | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.end_date | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.payment_index | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.link_to | as_crispy_field }}</td></tr>
               <p class="text-center">By pressing the submit button,
                   I agree that I have the required funding available and an approval from the IRB.</p>
               <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
