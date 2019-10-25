@@ -18,7 +18,7 @@ class CreateTask(ModelForm):
         }
 
         help_texts = {
-            'min_participant_req': 'This is the minimum number.',
+            'max_participant': 'This is the maximum number.',
             'ideal_participant': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
             'end_date': 'MM/DD/YYYY',
         }

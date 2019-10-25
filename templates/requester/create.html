@@ -19,7 +19,7 @@
            <form action="/requester/" method="post">
               {% csrf_token %}
               <tr><td>{{ form_task.title | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.min_participant_req | as_crispy_field }}</td></tr>
+              <tr><td>{{ form_task.max_participant | as_crispy_field }}</td></tr>
               <tr><td>{{ form_task.ideal_participant | as_crispy_field }}</td></tr>
               <tr><td>{{ form_task.description | as_crispy_field }}</td></tr>
               <tr><td>{{ form_task.tags | as_crispy_field }}</td></tr>
