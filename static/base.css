@@ -1,0 +1,17 @@
+/*
+Add custom purple coloring to navbar and footer.
+ */
+
+.nav-custom{
+background-color: #5C246E;
+background: -webkit-linear-gradient(to right, #5C246E, #070000, #5C246E);
+background: linear-gradient(to right, #5C246E, #070000, #5C246E);
+}
+
+.dropdown-menu {
+    background: rgba(255,255,255,0.3);
+}
+
+.footer-text-custom {
+    color: #5C246E;
+}
