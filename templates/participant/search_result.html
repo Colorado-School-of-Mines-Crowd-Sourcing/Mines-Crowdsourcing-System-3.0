@@ -17,6 +17,7 @@
               <p class="w-25 mx-1">{{ task_element.ideal_participant }}</p>
               <p class="w-25 mx-1">${{ task_element.reward_amount }}</p>
               <p class="w-25 mx-1">Ends {{ task_element.end_date }}</p>
+              <p class="w-25 mx-1">Created by {{ task_element.requester.name }}</p>
             </li>
           {% endfor %}
         {% else %}
