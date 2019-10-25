@@ -11,7 +11,7 @@ class CreateTask(ModelForm):
         exclude = ['requester']
 
         labels = {
-            'min_participant_req': 'Number of participants',
+            'max_participant': 'Number of participants',
             'ideal_participant': 'Participant profile',
             'reward_amount': 'Reward',
             'link_to': 'Link to Google Form',
