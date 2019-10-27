@@ -2,14 +2,26 @@
 
 {% block content %}
 <div class="container d-flex h-100">
-  <div class="row m-auto">
-    <p >Welcome
-      {% if user.is_authenticated %}
-        {{ user.name }}, let's help research at Mines!
-      {% else %}
-        on Mines Crowdsourcing.
-      {% endif %}
-    </p>
+  <div class="row m-auto bg-light text-center">
+  {% if user.is_authenticated %}
+      <h1 class="mx-auto">Welcome {{ user.name }}, let's help research at Mines! </h1>
+        <p>
+          If you want to earn some money, click on the "Participants" tab to choose a task.
+          If you want to propose a research project, click on the "Request" tab.
+        <br> <br> <br>
+            If you have any questions, please contact the website administrator or Dr. Chuan Yue.
+        </p>
+  {% else %}
+      <h1 class="mx-auto"> Welcome to the Mines Crowdsourcing System 1.0! </h1>
+        <p>
+        The Colorado School of Mines is happy to present their own crowdsourcing system.
+        Here, researchers can utilize the power of crowdsourcing to study behaviors, verify data, support machine learning efforts, survey public opinions, respond to crises such as natural disasters and so on.
+        Participants can complete these tasks in return for compensation.
+        Together, we can move Mines’ research efforts forward to provide meaningful solutions to important problems.
+        <br> <br>
+        Log in to get started.
+  </p>
+  {% endif %}
   </div>
 </div>
 {% endblock %}

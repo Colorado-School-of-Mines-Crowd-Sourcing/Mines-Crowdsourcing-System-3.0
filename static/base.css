@@ -9,7 +9,7 @@ background: linear-gradient(to right, #5C246E, #070000, #5C246E);
 }
 
 .dropdown-menu {
-    background: rgba(255,255,255,0.3);
+    background: #eceded;
 }
 
 .footer-text-custom {

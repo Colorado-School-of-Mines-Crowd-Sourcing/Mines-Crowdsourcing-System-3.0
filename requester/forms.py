@@ -11,14 +11,14 @@ class CreateTask(ModelForm):
         exclude = ['requester']
 
         labels = {
-            'min_participant_req': 'Number of participants',
-            'ideal_participant': 'Participant profile',
-            'reward_amount': 'Reward',
+            'max_num_participants': 'Maximum Number of Participants',
+            'participant_qualifications': 'Participant Qualifications',
+            'reward_amount': 'Reward ',
             'link_to': 'Link to Google Form',
         }
 
         help_texts = {
-            'min_participant_req': 'This is the minimum number.',
-            'ideal_participant': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
+            'participant_qualifications': 'List the qualities you want your participants to possess. Ex: "Freshman, CS Major"',
+            'reward_amount': 'Amount of compensation (in $) per task per participant',
             'end_date': 'MM/DD/YYYY',
         }
