@@ -17,8 +17,7 @@ def create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form_task = CreateTask(request.POST)
-        # check whether it's valid:
-        print(request)
+        # check whether it's valid
         if form_task.is_valid() :
             # Task creation
             new_task = form_task.save(commit=False)
@@ -28,12 +27,12 @@ def create(request):
 
             # Tag creation
             for tag in request.POST.get('tags').split(','):
-                logger.info(request, "tag ", tag, " created")
+                logger.info(request, 'tag ', tag, ' created')
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
-            logger.info(request, "task submitted for review.")
-            messages.success(request, "Your task has been submitted for review.")
+            logger.info(request, 'task submitted for review.')
+            messages.success(request, 'Your task has been submitted for review.')
             return redirect('requester_create')
 
     # if a GET (or any other method) we'll create a blank form
