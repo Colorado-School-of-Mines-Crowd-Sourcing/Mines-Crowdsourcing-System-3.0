@@ -80,6 +80,9 @@ class ParticipantCompletedTask(models.Model):
         verbose_name = 'Completed task'
         verbose_name_plural = 'Completed tasks'
 
+    def __str__(self):
+        return self.task.title
+
 class RequesterActiveTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -89,6 +92,8 @@ class RequesterActiveTask(models.Model):
         active_task = cls(user=user, task=task)
         return active_task
 
+    def __str__(self):
+        return self.task.title
 
 class RequesterPastTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -98,6 +103,9 @@ class RequesterPastTask(models.Model):
     def create(cls, user, task):
         past_task = cls(user=user, task=task)
         return past_task
+
+    def __str__(self):
+        return self.task.title
 
 
 class Tag(models.Model):
