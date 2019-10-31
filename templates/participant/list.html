@@ -1,0 +1,9 @@
+{% for task in tasks %}
+  <li class="list-group-item d-flex justify-content-between px-0">
+    <p class="w-20 mx-1">{{ task.title }}</p>
+    <p class="w-20 mx-1">{{ task.ideal_participant }}</p>
+    <p class="w-20 mx-1">${{ task.reward_amount }}</p>
+    <p class="w-20 mx-1">Ends {{ task.end_date }}</p>
+    <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
+  </li>
+{% endfor %}

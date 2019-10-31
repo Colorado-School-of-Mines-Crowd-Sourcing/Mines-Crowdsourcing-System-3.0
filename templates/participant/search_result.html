@@ -11,15 +11,7 @@
       <ul class="list-group list-group-flush">
         <h3>Search Results</h3>
         {% if resulted_tasks %}
-          {% for task_element in resulted_tasks %}
-            <li class="list-group-item d-flex justify-content-between px-0">
-              <p class="w-20 mx-1">{{ task_element.title }}</p>
-              <p class="w-20 mx-1">{{ task_element.ideal_participant }}</p>
-              <p class="w-20 mx-1">${{ task_element.reward_amount }}</p>
-              <p class="w-20 mx-1">Ends {{ task_element.end_date }}</p>
-              <p class="w-20 mx-1">Created by {{ task_element.requester.name }}</p>
-            </li>
-          {% endfor %}
+          {% include "./list.html" with tasks=resulted_tasks %}
         {% else %}
             <li class="list-group-item">No match!</li>
         {% endif %}
