@@ -3,7 +3,6 @@ Add custom coloring to navbar and footer.
  */
 
 .nav-custom{
-background-color: #5C246E;
 background: -webkit-linear-gradient(to right, #7a9c97, #070000, #7a9c97);
 background: linear-gradient(to right, #7a9c97, #070000, #7a9c97);
 }
