@@ -59,7 +59,7 @@ class Task(models.Model):
     link_to = models.URLField(max_length=50, blank=False)
     ideal_participant = models.CharField(max_length=100, blank=True)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
-    min_participant_req = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
+    max_participant = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
     title = models.CharField(max_length=100, blank=False)
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
@@ -80,6 +80,9 @@ class ParticipantCompletedTask(models.Model):
         verbose_name = 'Completed task'
         verbose_name_plural = 'Completed tasks'
 
+    def __str__(self):
+        return self.task.title
+
 class RequesterActiveTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -89,6 +92,8 @@ class RequesterActiveTask(models.Model):
         active_task = cls(user=user, task=task)
         return active_task
 
+    def __str__(self):
+        return self.task.title
 
 class RequesterPastTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -98,6 +103,9 @@ class RequesterPastTask(models.Model):
     def create(cls, user, task):
         past_task = cls(user=user, task=task)
         return past_task
+
+    def __str__(self):
+        return self.task.title
 
 
 class Tag(models.Model):
