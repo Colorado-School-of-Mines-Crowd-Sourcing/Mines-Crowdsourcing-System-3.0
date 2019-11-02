@@ -16,7 +16,7 @@
         <div class="row justify-content-center align-items-center h-100">
             <p class="text-center"><b>Disclaimer: </b>The publishing of your task is subject to the approval of the site administrators.</p>
          </div>
-           <form action="/requester/" method="post">
+           <form action="/requester/create" method="post">
               {% csrf_token %}
               <tr><td>{{ form_task.title | as_crispy_field }}</td></tr>
               <tr><td>{{ form_task.description | as_crispy_field }}</td></tr>
