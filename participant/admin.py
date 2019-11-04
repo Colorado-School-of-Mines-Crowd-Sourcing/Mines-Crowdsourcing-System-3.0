@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import User, Task, Tag, ParticipantCompletedTask
+from .models import User, Task, Tag, ParticipantCompletedTask, Transaction
 
 admin.site.unregister(Group)
 
@@ -25,6 +25,7 @@ class TagsAdmin(admin.ModelAdmin):
 @admin.register(ParticipantCompletedTask)
 class ParticipantCompletedTaskAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
