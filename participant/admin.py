@@ -25,3 +25,7 @@ class TagsAdmin(admin.ModelAdmin):
 @admin.register(ParticipantCompletedTask)
 class ParticipantCompletedTaskAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+    pass
