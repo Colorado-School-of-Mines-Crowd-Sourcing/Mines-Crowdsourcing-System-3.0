@@ -130,3 +130,6 @@ class Transaction(models.Model):
     def create(cls, recipient, amount):
         transaction = cls(recipient = recipient, amount = amount, processed = False)
         return transaction
+
+    def __str__(self):
+        return str(self.amount) + " to " + self.recipient.name
