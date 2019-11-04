@@ -43,4 +43,4 @@ def redeem(request):
         transaction.save()
 
         messages.success(request, 'Your balance has been redeemed.')
-    return render('participant/redeem.html', {'user':user})
+    return render(request, 'participant/redeem.html', {'user':user})
