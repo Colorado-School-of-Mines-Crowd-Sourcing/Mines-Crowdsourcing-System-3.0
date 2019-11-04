@@ -4,7 +4,6 @@ from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.http import HttpResponse
 
-
 def index(request):
     return render(request, 'participant/index.html')
 
@@ -36,11 +35,20 @@ def search_results(request):
 
 
 def redeem(request):
+    # Minimum balance to redeem
+    MIN_REWARD = 5
+
     user = request.user
+
     if request.method == 'POST':
         amount = user.reward_balance
-        transaction = Transaction.create(user, amount)
-        transaction.save()
+        if amount > MIN_REWARD:
+            transaction = Transaction.create(user, amount)
+            transaction.save()
+            user.reward_balance = 0
+            user.save()
+            messages.success(request, 'Your balance has been redeemed.')
+        else:
+            message.error(request, f'Your need {MIN_REWARD} in order to redeem')
 
-        messages.success(request, 'Your balance has been redeemed.')
     return render(request, 'participant/redeem.html', {'user':user})

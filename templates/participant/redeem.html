@@ -3,8 +3,11 @@
 {% block content %}
 <div class="container d-flex h-100">
   <div class="row m-auto">
-    <p>You currently have {{ user.reward_balance }}, click here to redeem <br>
-    <button type="button" name="redeem">Redeem</button></p>
+    <p class="text-center">You currently have {{ user.reward_balance }}, click here to redeem <br>
+      <form class="" action={% url 'redeem' %} method="post">
+        <button type="button" name="redeem">Redeem</button>
+      </form>
+    </p>
   </div>
 </div>
 {% endblock %}
