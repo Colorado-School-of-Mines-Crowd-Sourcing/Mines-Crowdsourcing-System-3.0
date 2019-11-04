@@ -2,9 +2,21 @@
 
 {% block content %}
 <div class="container d-flex h-100">
+<<<<<<< HEAD
   <div class="row m-auto">
     <p>You currently have {{ user.reward_balance }}, click here to redeem <br>
     <button type="button" name="redeem">Redeem</button></p>
+=======
+  <div class="row">
+    <div class="col">
+      <p>You currently have {{ user.reward_balance }}, click here to redeem <br></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" name="redeem">Redeem</button>
+    </div>
+>>>>>>> b87d411ae98d55dfaa140e912a8bd008a0df1926
   </div>
 </div>
 {% endblock %}
