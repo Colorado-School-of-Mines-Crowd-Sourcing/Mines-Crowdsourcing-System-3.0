@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <h1> %task.title</h1>
+        {% if task %}
+              {% for t in task %}
+                <p>{{ t.title }}</p>
+                  {# Need to populate this page #}
+          {% endfor %}
+    {% else %}
+        <h2>Shouldn't be here. Error!</h2>
+    {% endif %}
 {% endblock %}

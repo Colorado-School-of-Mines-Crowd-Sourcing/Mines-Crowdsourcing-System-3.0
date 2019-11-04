@@ -35,6 +35,5 @@ def search_results(request):
         'resulted_tasks': query_result})
 
 
-def task_details(request, task):
-    print(task)
-    return render(request, 'participant/task_details.html', {'task': task})
+def task_details(request, task_id):
+    return render(request, 'participant/task_details.html', {'task': Task.objects.filter(is_posted=True, pk=task_id)})
