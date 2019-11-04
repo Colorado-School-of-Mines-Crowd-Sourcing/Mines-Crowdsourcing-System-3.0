@@ -35,5 +35,6 @@ def search_results(request):
         'resulted_tasks': query_result})
 
 
-def task_details(request, getting_task):
-    return render(request, 'participant/task_details.html', {'task': getting_task})
+def task_details(request, task):
+    print(task)
+    return render(request, 'participant/task_details.html', {'task': task})

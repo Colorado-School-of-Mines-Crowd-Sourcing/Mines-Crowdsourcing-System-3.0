@@ -7,7 +7,7 @@
 
 {% for task in tasks %}
     <button type="button" >
-    <a href="{% url 'task_details_page' %}" style="color: inherit" >
+    <a href="{% url 'task_details_page' task.title %}" style="color: inherit" >
   <li id = "task" class="list-group-item  d-flex justify-content-between px-0">
     <p class="w-20 mx-1">{{ task.title }}</p>
     <p class="w-20 mx-1">{{ task.ideal_participant }}</p>
