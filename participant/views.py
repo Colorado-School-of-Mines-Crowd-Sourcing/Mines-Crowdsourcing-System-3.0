@@ -3,6 +3,7 @@ from participant.models import *
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.http import HttpResponse
+from django.contrib import messages
 
 def index(request):
     return render(request, 'participant/index.html')
@@ -49,6 +50,6 @@ def redeem(request):
             user.save()
             messages.success(request, 'Your balance has been redeemed.')
         else:
-            message.error(request, f'Your need {MIN_REWARD} in order to redeem')
+            messages.error(request, f'Your need {MIN_REWARD} in order to redeem')
 
     return render(request, 'participant/redeem.html', {'user':user})
