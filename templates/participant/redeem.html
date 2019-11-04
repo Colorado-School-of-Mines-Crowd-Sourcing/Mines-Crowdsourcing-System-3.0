@@ -3,7 +3,8 @@
 {% block content %}
 <div class="container d-flex h-100">
   <div class="row m-auto">
-    <button type="button" name="redeem"></button>
+    <p>You currently have {{ user.reward_balance }}, click here to redeem</p>
+    <button type="button" name="redeem">Redeem</button>
   </div>
 </div>
 {% endblock %}
