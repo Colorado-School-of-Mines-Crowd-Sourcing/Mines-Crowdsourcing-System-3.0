@@ -33,3 +33,7 @@ def search_results(request):
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
+
+
+def task_details(request, getting_task):
+    return render(request, 'participant/task_details.html', {'task': getting_task})
