@@ -129,4 +129,4 @@ class Transaction(models.Model):
     @classmethod
     def create(cls, recipient, amount):
         transaction = cls(recipient = recipient, amount = amount, processed = False)
-        return Transaction
+        return transaction
