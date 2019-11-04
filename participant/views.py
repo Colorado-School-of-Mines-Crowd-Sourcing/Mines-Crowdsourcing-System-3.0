@@ -33,3 +33,14 @@ def search_results(request):
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
+
+
+def redeem(request):
+    user = request.user
+    if request.method == 'POST':
+        amount = user.reward_balance
+        transaction = Transaction.create(user, amount)
+        transaction.save()
+
+        messages.success(request, 'Your balance has been redeemed.')
+    return render('participant/redeem.html', {'user':user})
