@@ -5,7 +5,7 @@
   <div class="row m-auto">
     <p class="text-center">You currently have {{ user.reward_balance }}, click here to redeem</p>
     <form class="" action={% url 'redeem' %} method="post">
-      <button type="button" name="redeem">Redeem</button>
+      <input type="input" name="redeem">Redeem</input>
     </form>
   </div>
 </div>
