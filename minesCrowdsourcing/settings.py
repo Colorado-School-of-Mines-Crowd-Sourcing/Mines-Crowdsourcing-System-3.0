@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     #custom apps
     'participant',
     'requester',
-
+    'registration',
+    
     #external APP_DIRS
     'crispy_forms',
 ]
