@@ -9,7 +9,7 @@
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
         <div class="py-5 row justify-content-center align-items-center h-100">
-          <p class="text-center">You currently have {{ user.reward_balance }}, click here to redeem</p>
+          <p class="text-center">You currently have ${{ user.reward_balance }}, click here to redeem</p>
         </div>
         <form class="" action={% url 'redeem' %} method="post">
           {% csrf_token %}

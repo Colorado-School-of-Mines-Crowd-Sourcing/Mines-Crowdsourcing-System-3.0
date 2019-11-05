@@ -50,6 +50,6 @@ def redeem(request):
             user.save()
             messages.success(request, 'Your balance has been redeemed.')
         else:
-            messages.error(request, f'Your need {MIN_REWARD} in order to redeem')
+            messages.error(request, f'Your need ${MIN_REWARD} in order to redeem')
 
     return render(request, 'participant/redeem.html', {'user':user})
