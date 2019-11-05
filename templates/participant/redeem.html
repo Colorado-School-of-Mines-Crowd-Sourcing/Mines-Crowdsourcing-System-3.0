@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-sm-2"></div>
-      <div class="col-sm">
-        <div>
-          {% for message in messages %}
-            <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
-          {% endfor %}
-          <div class="py-5 row justify-content-center align-items-center h-100">
-            <p class="text-center">You currently have {{ user.reward_balance }}, click here to redeem</p>
-          </div>
-          <form class="" action={% url 'redeem' %} method="post">
-            {% csrf_token %}
-            <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="redeem" value="Redeem"></input>
-          </form>
+<div class="container d-flex h-100">
+  <div class="row m-auto">
+    <div class="col-sm">
+      <div>
+        {% for message in messages %}
+          <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
+        {% endfor %}
+        <div class="py-5 row justify-content-center align-items-center h-100">
+          <p class="text-center">You currently have {{ user.reward_balance }}, click here to redeem</p>
         </div>
+        <form class="" action={% url 'redeem' %} method="post">
+          {% csrf_token %}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="redeem" value="Redeem"></input>
+        </form>
       </div>
-    <div class="col-sm-2"></div>
+    </div>
   </div>
 </div>
 {% endblock %}
