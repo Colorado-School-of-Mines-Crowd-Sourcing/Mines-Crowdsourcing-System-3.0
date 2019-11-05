@@ -27,7 +27,13 @@ class ParticipantCompletedTaskAdmin(admin.ModelAdmin):
     pass
 
 
+# Transactions processing action 
+def make_processed(modeladmin, request, queryset):
+    queryset.update(processed=True)
+make_processed.short_description = "Mark selected transactions as processed"
+
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'processed']
     list_filter = ['processed']
+    actions = [make_processed]
