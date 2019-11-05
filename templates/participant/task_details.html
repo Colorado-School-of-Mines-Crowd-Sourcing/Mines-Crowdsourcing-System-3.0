@@ -1,12 +1,27 @@
+<style>
+h3,h2,p,div {
+    text-align: center;
+}
+</style>
 {% extends 'base.html' %}
-
 {% block content %}
         {% if task %}
               {% for t in task %}
-                <p>{{ t.title }}</p>
-                  {# Need to populate this page #}
+                <h2 class="display-4">{{ t.title }}</h2>
+                <h3 >Description</h3>
+                <p > {{ t.description }}</p>
+                <h3>Ideal participant:</h3>
+                <p class="w-20 mx-1">{{ t.ideal_participant }}</p>
+                <h3>Reward amount:</h3>
+                <p class="w-20 mx-1">${{ t.reward_amount }}</p>
+                <h3>Ending at:</h3>
+                <p class="w-20 mx-1">Ends {{ t.end_date }}</p>
+                <h3>Created by:</h3>
+                <p class="w-20 mx-1">Created by {{ t.requester.name }}</p>
+                  <a class="w-20 mx-1" href={{ t.link_to }} target="_blank"><button type="button" class="btn btn-primary">Complete Task</button></a><br>
+        {# Need to populate this page #}
           {% endfor %}
-    {% else %}
+        {% else %}
         <h2>Shouldn't be here. Error!</h2>
     {% endif %}
 {% endblock %}
