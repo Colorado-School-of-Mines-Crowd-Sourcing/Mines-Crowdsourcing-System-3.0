@@ -29,4 +29,5 @@ class ParticipantCompletedTaskAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['__str__', 'processed']
+    list_filter = ['processed']
