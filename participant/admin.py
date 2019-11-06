@@ -7,6 +7,12 @@ admin.site.unregister(Group)
 
 
 # Register your models here.
+
+# User actions
+def make_requester(modeladmin, request, queryset):
+    queryset.update(authorized_requester=True)
+make_requester.short_description = "Mark selected users as authorized requester"
+
 @admin.register(User)
 class TaskAdmin(admin.ModelAdmin):
     list_filter=['authorized_requester']
