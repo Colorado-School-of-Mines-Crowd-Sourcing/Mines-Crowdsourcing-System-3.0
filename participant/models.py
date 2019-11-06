@@ -57,9 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Task(models.Model):
     link_to = models.URLField(max_length=50, blank=False)
-    ideal_participant = models.CharField(max_length=100, blank=True)
+    participant_qualifications = models.CharField(max_length=100, blank=True)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
-    max_participant = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
+    max_num_participants = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
     title = models.CharField(max_length=100, blank=False)
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
