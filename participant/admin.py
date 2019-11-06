@@ -15,8 +15,8 @@ make_requester.short_description = "Mark selected users as authorized requester"
 
 @admin.register(User)
 class TaskAdmin(admin.ModelAdmin):
-    list_filter=['authorized_requester']
-
+    list_filter = ['authorized_requester']
+    actions = [make_requester]
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
