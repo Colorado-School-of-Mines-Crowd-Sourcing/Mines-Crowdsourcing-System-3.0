@@ -9,7 +9,7 @@ admin.site.unregister(Group)
 # Register your models here.
 @admin.register(User)
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    list_filter=['authorized_requester']
 
 
 @admin.register(Task)
