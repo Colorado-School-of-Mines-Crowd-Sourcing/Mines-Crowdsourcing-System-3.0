@@ -7,21 +7,20 @@ h3,h2,p,div {
 {% block content %}
      {% if user.authorized_requester %}
         {% if task %}
-              {% for field in task %}
-                <h2 class="display-4">{{ field.title }}</h2>
+                <h2 class="display-4">{{ task.title }}</h2>
                 <h3 >Description</h3>
-                <p > {{ field.description }}</p>
+                <p > {{ task.description }}</p>
                 <h3>Ideal participant:</h3>
-                <p class="w-20 mx-1">{{ field.ideal_participant }}</p>
+                <p class="w-20 mx-1">{{ task.ideal_participant }}</p>
                 <h3>Reward amount:</h3>
-                <p class="w-20 mx-1">${{ field.reward_amount }}</p>
+                <p class="w-20 mx-1">${{ task.reward_amount }}</p>
                 <h3>Ending at:</h3>
-                <p class="w-20 mx-1">Ends {{ field.end_date }}</p>
+                <p class="w-20 mx-1">Ends {{ task.end_date }}</p>
                 <h3>Created by:</h3>
-                <p class="w-20 mx-1">Created by {{ field.requester.name }}</p>
-                <a class="w-20 mx-1" href={{ field.link_to }} target="_blank"><button type="button" class="btn btn-primary">Complete Task</button></a><br>
-                {# Need to populate this page #}
-              {% endfor %}
+                <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
+                {%  if not already_completed %}
+                        <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-primary">Complete Task</button></a><br>
+                {% endif %}
         {% else %}
         <h2>Shouldn't be here. Error!</h2>
         {% endif %}
