@@ -42,10 +42,8 @@ def task_details(request, task_id):
         try:
             ParticipantCompletedTask.objects.get(task=current_task)
             already_completed = True
-        except:
-            already_completed = False
+        pass
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
-
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
