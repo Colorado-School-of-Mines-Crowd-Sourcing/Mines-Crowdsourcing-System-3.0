@@ -39,8 +39,11 @@ def task_details(request, task_id):
     try:
         current_task = Task.objects.get(is_posted=True, pk=task_id)
         already_completed = False
-        if ParticipantCompletedTask.objects.get(task=current_task).exists():
+        try:
+            ParticipantCompletedTask.objects.get(task=current_task)
             already_completed = True
+        except:
+            already_completed = False
     except Task.DoesNotExit:
         raise Http404('Task does not exist')
 
