@@ -2,7 +2,7 @@ from django.shortcuts import render
 from participant.models import *
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
-from django.http import HttpResponse,
+from django.http import HttpResponse
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 
@@ -42,9 +42,9 @@ def redeem(request):
 
     user = request.user
 
-    if !user.is_authenticated:
+    if not user.is_authenticated:
         raise PermissionDenied()
-        
+
     if request.method == 'POST':
         amount = user.reward_balance
         if amount >= MIN_REWARD:
