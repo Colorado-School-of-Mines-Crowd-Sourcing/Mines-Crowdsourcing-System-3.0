@@ -2,7 +2,7 @@ from django.shortcuts import render
 from participant.models import *
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 
 def index(request):
