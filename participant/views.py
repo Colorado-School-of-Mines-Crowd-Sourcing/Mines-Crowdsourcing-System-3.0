@@ -36,9 +36,13 @@ def search_results(request):
 
 
 def task_details(request, task_id):
-    current_task = Task.objects.get(is_posted=True, pk=task_id)
-    already_completed = False
-    if ParticipantCompletedTask.objects.filter(task=current_task).exists():
-        already_completed = True
+    try:
+        current_task = Task.objects.get(is_posted=True, pk=task_id)
+        already_completed = False
+        if ParticipantCompletedTask.objects.get(task=current_task).exists():
+            already_completed = True
+    except Task.DoesNotExit:
+        raise Http404('Task does not exist')
+
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
