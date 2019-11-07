@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.authorized_requester %}
+{% if user.is_authenticated %}
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-sm-2"></div>
