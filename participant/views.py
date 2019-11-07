@@ -52,4 +52,4 @@ def redeem(request):
         else:
             messages.error(request, f'Your need ${MIN_REWARD} in order to redeem')
 
-    return render(request, 'participant/redeem.html', {'user':user})
+    return render(request, 'participant/redeem.html', {'user':user, 'min_reward':MIN_REWARD })
