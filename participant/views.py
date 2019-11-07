@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.http import HttpResponse
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 
 def index(request):
@@ -41,6 +42,9 @@ def redeem(request):
     MIN_REWARD = 5
 
     user = request.user
+
+    if not user.is_authenticated:
+        raise PermissionDenied()
 
     if request.method == 'POST':
         # Redeem all of the available balance
