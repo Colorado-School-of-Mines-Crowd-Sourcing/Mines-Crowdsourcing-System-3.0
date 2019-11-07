@@ -83,6 +83,11 @@ class ParticipantCompletedTask(models.Model):
     def __str__(self):
         return self.task.title
 
+    @classmethod
+    def create(cls, user, task):
+        completed_task = cls(user=user, task=task)
+        return completed_task
+
 
 class RequesterActiveTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

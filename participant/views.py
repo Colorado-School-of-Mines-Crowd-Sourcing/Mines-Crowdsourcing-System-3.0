@@ -1,8 +1,9 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from participant.models import *
 from django.db.models import Q
-from django.contrib.postgres.search import SearchQuery, SearchVector
-from django.http import HttpResponse, Http404
+from django.http import Http404
+from django.contrib import messages
 
 
 def index(request):
@@ -19,11 +20,11 @@ def completed_tasks(request):
     if user.is_anonymous:
         return render(request, 'participant/completed_tasks.html')
     else:
-        completed_tasks = Task.objects.filter(
+        all_completed_tasks = Task.objects.filter(
             participantcompletedtask__user=user
         )
         return render(request, 'participant/completed_tasks.html', {
-            'completed_tasks': completed_tasks})
+            'completed_tasks': all_completed_tasks})
 
 
 def search_results(request):
@@ -39,10 +40,14 @@ def task_details(request, task_id):
     try:
         current_task = Task.objects.get(is_posted=True, pk=task_id)
         already_completed = False
+        if request.method == 'POST':
+            ParticipantCompletedTask.create(request.user, current_task).save()
+            messages.success(request, 'Payment od this task is subject to requester approval')
         try:
             ParticipantCompletedTask.objects.get(task=current_task)
             already_completed = True
-        pass
+        except ObjectDoesNotExist:
+            pass
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,

@@ -19,7 +19,12 @@ h3,h2,p,div {
         <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
         {% if not already_completed %}
                 <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-dark">Complete Task</button></a><br>
+                <form action="/participant/task_details" method="post">
+                    <input type="mark_completed_task" class="d-block mx-auto my-3 btn btn-dark" value="Mark Task Completed">
+                </form>
         {% endif %}
+
+
     {% else %}
         <h2>You must be logged in to view the details of this job.</h2>
     {% endif %}
