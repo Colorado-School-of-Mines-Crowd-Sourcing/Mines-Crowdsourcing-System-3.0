@@ -43,7 +43,7 @@ def redeem(request):
 
     if request.method == 'POST':
         amount = user.reward_balance
-        if amount > MIN_REWARD:
+        if amount >= MIN_REWARD:
             transaction = Transaction.create(user, amount)
             transaction.save()
             user.reward_balance = 0
