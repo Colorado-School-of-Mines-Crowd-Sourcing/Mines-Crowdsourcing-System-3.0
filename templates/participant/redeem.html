@@ -9,8 +9,21 @@
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
         <div class="py-5 row justify-content-center align-items-center h-100">
-          <p class="text-center">You currently have ${{ user.reward_balance }}, click here to redeem</p>
+            <h2 class="text-center">You currently have ${{ user.reward_balance }}</h2>
         </div>
+            <h4>How to Redeem</h4>
+            <ul>
+            <li>You must have a minimum balance of $5. </li>
+            <li>You must have a direct deposit form on file with CSM. If you do not, fill out
+                <a href="https://inside.mines.edu/UserFiles/File/finance/controller/CSM_Docs/Direct%20Deposit%20Enrollment%20Form.doc" >this form</a>. </li>
+            <li>You must have a W-9 on file with the school. If you do not, fill out the form found at this
+                <a href="https://www.irs.gov/pub/irs-pdf/fw9.pdf" >link</a> on the IRS website and return it to the Payroll
+                department on campus. </li>
+            <li>It may take up to 3 weeks to process your compensations successfully.</li>
+            <li>Click the "redeem" button!</li>
+            </ul>
+
+
         <form class="" action={% url 'redeem' %} method="post">
           {% csrf_token %}
           <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="redeem" value="Redeem"></input>
