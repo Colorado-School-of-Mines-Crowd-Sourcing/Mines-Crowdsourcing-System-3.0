@@ -20,7 +20,6 @@ h3,h2,p,div {
         {% if not already_completed %}
                 <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-primary">Complete Task</button></a><br>
         {% endif %}
-    {% endif %}
     {% else %}
         <h2>You must be logged in to view the details of this job.</h2>
     {% endif %}
