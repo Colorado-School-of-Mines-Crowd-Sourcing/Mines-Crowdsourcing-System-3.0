@@ -44,7 +44,7 @@ def task_details(request, task_id):
             already_completed = True
         except:
             already_completed = False
-    except Task.DoesNotExit:
+    except Task.DoesNotExist:
         raise Http404('Task does not exist')
 
     return render(request, 'participant/task_details.html', {'task': current_task,
