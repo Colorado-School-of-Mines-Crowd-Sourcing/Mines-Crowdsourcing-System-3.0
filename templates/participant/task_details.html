@@ -1,31 +1,31 @@
-<style>
-h3,h2,p,div {
-    text-align: center;
-}
-</style>
 {% extends 'base.html' %}
 {% block content %}
-     {% if user.is_authenticated %}
-        <h2 class="display-4">{{ task.title }}</h2>
-        <h3 >Description</h3>
-        <p > {{ task.description }}</p>
-        <h3>Participant qualifications:</h3>
-        <p class="w-20 mx-1">{{ task.participant_qualifications }}</p>
-        <h3>Reward amount:</h3>
-        <p class="w-20 mx-1">${{ task.reward_amount }}</p>
-        <h3>Ending at:</h3>
-        <p class="w-20 mx-1">Ends {{ task.end_date }}</p>
-        <h3>Created by:</h3>
-        <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
-        {% if not already_completed %}
-                <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-dark">Complete Task</button></a><br>
-                <form action="/participant/task_details" method="post">
-                    <input type="mark_completed_task" class="d-block mx-auto my-3 btn btn-dark" value="Mark Task Completed">
-                </form>
-        {% endif %}
-
-
-    {% else %}
-        <h2>You must be logged in to view the details of this job.</h2>
-    {% endif %}
+  {% if user.is_authenticated %}
+    <div class="text-center mx-5">
+      <h2 class="py-5">{{ task.title }}</h2>
+      <h3>Description</h3>
+      <p > {{ task.description }}</p>
+      <h3>Participant qualifications:</h3>
+      <p class="w-20 mx-1">{{ task.participant_qualifications }}</p>
+      <h3>Reward amount:</h3>
+      <p class="w-20 mx-1">${{ task.reward_amount }}</p>
+      <h3>Ending at:</h3>
+      <p class="w-20 mx-1">Ends {{ task.end_date }}</p>
+      <h3>Created by:</h3>
+      <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
+      <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-dark">Complete Task</button></a><br>
+      {% if not already_completed %}
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Mark Task Completed">
+        </form>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="container d-flex h-100">
+      <div class="row m-auto bg-light text-center">
+        <h2 class="text-center">You must be logged in to view the details of this job.</h2>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
