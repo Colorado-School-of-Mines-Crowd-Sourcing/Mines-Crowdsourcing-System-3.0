@@ -1,17 +1,18 @@
 <style>
-#task:hover {
-  background-color: black;
-    color: white;
-}
-    #task{
-        border-radius: 15px 15px 15px 15px;
+    #task:hover {
+        background-color: #7a9c97;
+        color: white;
     }
+    #task:link {
+      text-decoration: none;
+    }
+
 </style>
 
 {% for task in tasks %}
-  <button type="button" >
-    <a href="{% url 'task_details_page' task.pk %}" style="color: inherit" >
-      <li id = "task" class="list-group-item  d-flex justify-content-between px-0">
+  <button type="button" class="p-0 m-0">
+    <a id="task" href="{% url 'task_details_page' task.pk %}" style="color: inherit" >
+      <li id="task" class="list-group-item  d-flex justify-content-between px-0">
         <p class="w-20 mx-1">{{ task.title }}</p>
         <p class="w-20 mx-1">{{ task.participant_qualifications}}</p>
         <p class="w-20 mx-1">${{ task.reward_amount }}</p>

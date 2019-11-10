@@ -81,7 +81,7 @@ class ParticipantCompletedTask(models.Model):
         verbose_name_plural = 'Completed tasks'
 
     def __str__(self):
-        return self.task.title
+        return self.user.name + ' completed ' + self.task.title
 
     @classmethod
     def create(cls, user, task):
