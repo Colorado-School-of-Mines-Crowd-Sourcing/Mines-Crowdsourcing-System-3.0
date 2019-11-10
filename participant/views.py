@@ -24,7 +24,7 @@ def completed_tasks(request):
             participantcompletedtask__user=user
         )
         return render(request, 'participant/completed_tasks.html', {
-            'completed_tasks': all_completed_tasks})
+            'all_completed_tasks': all_completed_tasks})
 
 
 def search_results(request):

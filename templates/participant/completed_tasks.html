@@ -8,8 +8,8 @@
       <div class="col-sm">
         <ul class="py-5 list-group list-group-flush">
           <h3>Completed Tasks</h3>
-          {% if completed_tasks %}
-            {% include "./list.html" with tasks=completed_tasks %}
+          {% if all_completed_tasks %}
+            {% include "./list.html" with tasks=all_completed_tasks %}
           {% else %}
               <li class="list-group-item">You have not completed any tasks yet!</li>
           {% endif %}
