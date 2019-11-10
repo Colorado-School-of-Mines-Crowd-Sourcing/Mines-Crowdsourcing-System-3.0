@@ -16,6 +16,10 @@
       <p class="w-20 mx-1">Ends {{ task.end_date }}</p>
       <h3>Created by:</h3>
       <p class="w-20 mx-1">Created by {{ task.requester.name }}</p>
+      <p><small>
+        Disclaimer: Compensation for the completion of this task is subject to the requester's approval. <br>
+        Please consult the "Redeem" page for further information regarding payments.
+      </small></p>
       <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-dark">Complete Task</button></a><br>
       {% if not already_completed %}
         <form action="" method="post">
