@@ -2,11 +2,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  <div class="container-fluid">
+  <div class="container-fluid py-5">
     <div class="row justify-content-center">
       <div class="col-sm-2"></div>
       <div class="col-sm">
-        <ul class="py-5 list-group list-group-flush">
+        <ul class="list-group list-group-flush">
           <h3>Completed Tasks</h3>
           {% if all_completed_tasks %}
             {% include "./list.html" with tasks=all_completed_tasks %}
