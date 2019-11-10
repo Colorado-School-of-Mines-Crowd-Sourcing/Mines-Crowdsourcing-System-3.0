@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from participant.models import *
 from django.db.models import Q
 from django.http import Http404
@@ -42,7 +42,9 @@ def task_details(request, task_id):
         already_completed = False
         if request.method == 'POST':
             ParticipantCompletedTask.create(request.user, current_task).save()
-            return render(request, 'participant/mark_completed.html', {'task': current_task})
+            messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
+                                      'waiting for the approval of the requester.')
+            return redirect('task_details_page', task_id)
         try:
             ParticipantCompletedTask.objects.get(task=current_task)
             already_completed = True
