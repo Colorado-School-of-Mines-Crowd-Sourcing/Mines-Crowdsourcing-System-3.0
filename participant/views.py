@@ -42,7 +42,7 @@ def task_details(request, task_id):
         already_completed = False
         if request.method == 'POST':
             ParticipantCompletedTask.create(request.user, current_task).save()
-            messages.success(request, 'Payment od this task is subject to requester approval')
+            return render(request, 'participant/mark_completed.html', {'task': current_task})
         try:
             ParticipantCompletedTask.objects.get(task=current_task)
             already_completed = True
