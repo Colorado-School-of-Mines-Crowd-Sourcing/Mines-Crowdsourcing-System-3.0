@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render , redirect
 from participant.models import *
 from django.db.models import Q
-from django.contrib.postgres.search import SearchQuery, SearchVector
-from django.http import HttpResponse
+from django.contrib import messages
+from django.http import HttpResponse, Http404
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 
@@ -21,11 +22,11 @@ def completed_tasks(request):
     if user.is_anonymous:
         return render(request, 'participant/completed_tasks.html')
     else:
-        completed_tasks = Task.objects.filter(
+        all_completed_tasks = Task.objects.filter(
             participantcompletedtask__user=user
         )
         return render(request, 'participant/completed_tasks.html', {
-            'completed_tasks': completed_tasks})
+            'all_completed_tasks': all_completed_tasks})
 
 
 def search_results(request):
@@ -36,7 +37,25 @@ def search_results(request):
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
 
-
+def task_details(request, task_id):
+    try:
+        current_task = Task.objects.get(is_posted=True, pk=task_id)
+        already_completed = False
+        if request.method == 'POST':
+            ParticipantCompletedTask.create(request.user, current_task).save()
+            messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
+                                      'waiting for the approval of the requester.')
+            return redirect('task_details_page', task_id)
+        try:
+            ParticipantCompletedTask.objects.get(task=current_task)
+            already_completed = True
+        except ObjectDoesNotExist:
+            pass
+    except Task.DoesNotExist:
+        raise Http404('Task does not exist')
+    return render(request, 'participant/task_details.html', {'task': current_task,
+                                                             'already_completed': already_completed})
+  
 def redeem(request):
     # Minimum balance to redeem
     MIN_REWARD = 5

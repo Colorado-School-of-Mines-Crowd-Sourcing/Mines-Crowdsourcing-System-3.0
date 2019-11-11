@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.authorized_requester %}
-  <div class="container-fluid">
+{% if user.is_authenticated %}
+  <div class="container-fluid py-5">
     <div class="row justify-content-center">
       <div class="col-sm-2"></div>
       <div class="col-sm">
-        <ul class="py-5 list-group list-group-flush">
+        <ul class="list-group list-group-flush">
           <h3>Completed Tasks</h3>
-          {% if completed_tasks %}
-            {% include "./list.html" with tasks=completed_tasks %}
+          {% if all_completed_tasks %}
+            {% include "./list.html" with tasks=all_completed_tasks %}
           {% else %}
               <li class="list-group-item">You have not completed any tasks yet!</li>
           {% endif %}
@@ -21,7 +21,7 @@
 {% else %}
 <div class="container d-flex h-100">
   <div class="row m-auto">
-    <p>You must login to view your completed tasks</p>
+    <h2>You must login to view your completed tasks</h2>
   </div>
 </div>
 {% endif %}
