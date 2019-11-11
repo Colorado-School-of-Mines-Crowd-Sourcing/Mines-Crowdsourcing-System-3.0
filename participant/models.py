@@ -126,3 +126,17 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tag
+
+
+class Transaction(models.Model):
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, )
+    amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00, )
+    processed = models.BooleanField(default=False, )
+
+    @classmethod
+    def create(cls, recipient, amount):
+        transaction = cls(recipient = recipient, amount = amount, processed = False)
+        return transaction
+
+    def __str__(self):
+        return str(self.amount) + " to " + self.recipient.name

@@ -10,14 +10,14 @@
         <title>Mines Crowdsourcing</title>
     </head>
     <body class="d-flex flex-column vh-100">
-      <nav class="navbar navbar-expand-lg sticky-top navbar-dark nav-custom">
+      <nav class="navbar navbar-expand-lg sticky-top navbar-dark nav-custom justify-content-end">
         <a class="navbar-brand w-100" href="{% url 'index' %}">
             <img class="image-fluid w-50" src="{% static "logo.png" %}" alt="Mines Crowd-Sourcing System">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedContent" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse flex-grow-1" id="collapsedContent">
+        <div class="collapse navbar-collapse flex-grow-0 ml-auto" id="collapsedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link text-light" href="{% url 'index' %}">Home</a>
@@ -46,7 +46,7 @@
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
-              <a class="nav-link text-light" href="#">Account</a>
+              <a class="nav-link text-light" href="{% url 'redeem' %}">Redeem</a>
             </li>
             <li class="nav-item">
               <a class="nav-link red text-light" href="{% url 'logout' %}">Logout</a>
