@@ -3,6 +3,8 @@ from participant.models import *
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.http import HttpResponse
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 
 def index(request):
@@ -33,3 +35,27 @@ def search_results(request):
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
+
+
+def redeem(request):
+    # Minimum balance to redeem
+    MIN_REWARD = 5
+
+    user = request.user
+
+    if not user.is_authenticated:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        # Redeem all of the available balance
+        amount = user.reward_balance
+        if amount >= MIN_REWARD:
+            transaction = Transaction.create(user, amount)
+            transaction.save()
+            user.reward_balance = 0  # Reset balance to 0 since all was redeemed
+            user.save()
+            messages.success(request, 'Your balance has been redeemed.')
+        else:
+            messages.error(request, f'You need at least ${MIN_REWARD} in order to redeem')
+
+    return render(request, 'participant/redeem.html', {'user': user, 'min_reward': MIN_REWARD})
