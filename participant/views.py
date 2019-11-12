@@ -23,7 +23,7 @@ def completed_tasks(request):
         return render(request, 'participant/completed_tasks.html')
     else:
         all_completed_tasks = Task.objects.filter(
-            participant__contains=user
+            participants=user
         )
         return render(request, 'participant/completed_tasks.html', {
             'all_completed_tasks': all_completed_tasks})
@@ -40,17 +40,12 @@ def search_results(request):
 def task_details(request, task_id):
     try:
         current_task = Task.objects.get(is_posted=True, pk=task_id)
-        already_completed = False
+        already_completed = request.user in current_task.participants
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
             current_task.participant.add(request.user)
             return redirect('task_details_page', task_id)
-        try:
-            ParticipantCompletedTask.objects.get(task=current_task)
-            already_completed = True
-        except ObjectDoesNotExist:
-            pass
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,

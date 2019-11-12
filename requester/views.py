@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.apps import apps
 
-from participant.models import User, Task, RequesterActiveTask, RequesterPastTask, Tag
+from participant.models import User, Task, Tag
 from .forms import CreateTask
 
 # TODO: Remove random import when user authentication is done
@@ -23,7 +23,6 @@ def create(request):
             new_task = form_task.save(commit=False)
             new_task.requester = request.user
             new_task.save()
-            RequesterActiveTask.create(new_task.requester, new_task).save()
 
             # Tag creation
             for tag in request.POST.get('tags').split(','):
@@ -47,16 +46,19 @@ def see_tasks(request):
     else:
         pending = Task.objects.filter(
             requester = user,
-            requesteractivetask__task__is_posted = False
+            is_posted = False,
+            is_completed = False,
         )
 
         active = Task.objects.filter(
             requester = user,
-            requesteractivetask__task__is_posted = True
+            is_posted = True,
+            is_completed = False,
         )
 
         completed = Task.objects.filter(
-            requesterpasttask__user = user
+            requester = user,
+            is_completed = True,
         )
 
         return render(request, 'requester/tasks.html', {

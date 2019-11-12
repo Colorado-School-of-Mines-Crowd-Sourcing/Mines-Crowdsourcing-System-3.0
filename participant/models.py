@@ -66,10 +66,10 @@ class Task(models.Model):
     description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
     is_posted = models.BooleanField(default=False, )
-    is_completed = model.BooleanField(default=False, )
+    is_completed = models.BooleanField(default=False, )
     end_date = models.DateField(blank=False)
-    requester = models.ForeignKey(User, on_delete=models.CASCADE)
-    participants = models.ManyToManyField(User)
+    requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req')
+    participants = models.ManyToManyField(User, related_name='part')
 
     def __str__(self):
         return self.title
