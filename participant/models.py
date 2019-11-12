@@ -44,6 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
+    # completed_tasks = ManyToMany(Task) maybe?
 
     objects = UserManager()
 
@@ -65,54 +66,13 @@ class Task(models.Model):
     description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
     is_posted = models.BooleanField(default=False, )
+    is_completed = model.BooleanField(default=False, )
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
+    participants = models.ManyToManyField(User)
 
     def __str__(self):
         return self.title
-
-
-class ParticipantCompletedTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Completed task'
-        verbose_name_plural = 'Completed tasks'
-
-    def __str__(self):
-        return self.user.name + ' completed ' + self.task.title
-
-    @classmethod
-    def create(cls, user, task):
-        completed_task = cls(user=user, task=task)
-        return completed_task
-
-
-class RequesterActiveTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    @classmethod
-    def create(cls, user, task):
-        active_task = cls(user=user, task=task)
-        return active_task
-
-    def __str__(self):
-        return self.task.title
-
-
-class RequesterPastTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    @classmethod
-    def create(cls, user, task):
-        past_task = cls(user=user, task=task)
-        return past_task
-
-    def __str__(self):
-        return self.task.title
 
 
 class Tag(models.Model):

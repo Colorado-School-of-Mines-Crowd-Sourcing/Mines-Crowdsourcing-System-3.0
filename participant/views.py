@@ -23,7 +23,7 @@ def completed_tasks(request):
         return render(request, 'participant/completed_tasks.html')
     else:
         all_completed_tasks = Task.objects.filter(
-            participantcompletedtask__user=user
+            participant__contains=user
         )
         return render(request, 'participant/completed_tasks.html', {
             'all_completed_tasks': all_completed_tasks})
@@ -42,9 +42,9 @@ def task_details(request, task_id):
         current_task = Task.objects.get(is_posted=True, pk=task_id)
         already_completed = False
         if request.method == 'POST':
-            ParticipantCompletedTask.create(request.user, current_task).save()
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
+            current_task.participant.add(request.user)
             return redirect('task_details_page', task_id)
         try:
             ParticipantCompletedTask.objects.get(task=current_task)
@@ -55,7 +55,7 @@ def task_details(request, task_id):
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
-  
+
 def redeem(request):
     # Minimum balance to redeem
     MIN_REWARD = 5
