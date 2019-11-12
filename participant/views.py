@@ -40,11 +40,11 @@ def search_results(request):
 def task_details(request, task_id):
     try:
         current_task = Task.objects.get(is_posted=True, pk=task_id)
-        already_completed = request.user in current_task.participants
+        already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
-            current_task.participant.add(request.user)
+            current_task.participants.add(request.user)
             return redirect('task_details_page', task_id)
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
