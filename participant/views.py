@@ -39,7 +39,14 @@ def search_results(request):
 
 def task_details(request, task_id):
     try:
-        current_task = Task.objects.get(status__in=[Task.ACTIVE, Task.COMPLETED], pk=task_id)
+        current_task = Task.objects.get(pk=task_id)
+        
+        # If the task has not been posted or is closed and the user
+        # has not completed, we still want to display a 404
+        if (current_task.status == Task.PENDING or
+            (current_task.status == Task.COMPLETED
+                and request.user not in current_task.participants.all())):
+                raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
