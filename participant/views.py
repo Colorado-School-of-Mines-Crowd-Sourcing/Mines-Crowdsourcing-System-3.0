@@ -14,7 +14,7 @@ def index(request):
 
 def all_available_tasks(request):
     return render(request, 'participant/all_tasks.html', {
-        'all_tasks': Task.objects.filter(is_posted=True)})
+        'all_tasks': Task.objects.filter(status=Task.ACTIVE)})
 
 
 def completed_tasks(request):
@@ -23,7 +23,7 @@ def completed_tasks(request):
         return render(request, 'participant/completed_tasks.html')
     else:
         all_completed_tasks = Task.objects.filter(
-            participants=user
+            participants=user,
         )
         return render(request, 'participant/completed_tasks.html', {
             'all_completed_tasks': all_completed_tasks})
@@ -31,15 +31,15 @@ def completed_tasks(request):
 
 def search_results(request):
     query = request.GET.get('q')
-    query_title = Task.objects.filter(Q(title__contains=query), is_posted=True)
-    query_tag = Task.objects.filter(Q(tag__tag__contains=query), is_posted=True)
+    query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
+    query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
 
 def task_details(request, task_id):
     try:
-        current_task = Task.objects.get(is_posted=True, pk=task_id)
+        current_task = Task.objects.get(status__in=[Task.ACTIVE, Task.COMPLETED], pk=task_id)
         already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '

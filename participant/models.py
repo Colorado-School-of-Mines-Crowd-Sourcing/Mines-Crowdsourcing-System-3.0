@@ -57,6 +57,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Task(models.Model):
+    PENDING = 'PE'
+    ACTIVE = 'AC'
+    COMPLETED = 'CO'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (ACTIVE, 'Active'),
+        (COMPLETED, 'Completed'),
+    ]
+
     link_to = models.URLField(max_length=50, blank=False)
     participant_qualifications = models.CharField(max_length=100, blank=True)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
@@ -65,11 +74,10 @@ class Task(models.Model):
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
-    is_posted = models.BooleanField(default=False, )
-    is_completed = models.BooleanField(default=False, )
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req')
-    participants = models.ManyToManyField(User, related_name='part')
+    participants = models.ManyToManyField(User, blank=True, related_name='part')
 
     def __str__(self):
         return self.title

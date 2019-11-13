@@ -9,7 +9,7 @@ class CreateTask(ModelForm):
 
     class Meta:
         model = apps.get_model('participant', 'Task')
-        exclude = ['requester', 'participants']
+        exclude = ['requester', 'participants', 'status']
 
         labels = {
             'max_num_participants': 'Maximum Number of Participants',

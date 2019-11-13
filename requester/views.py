@@ -46,19 +46,17 @@ def see_tasks(request):
     else:
         pending = Task.objects.filter(
             requester = user,
-            is_posted = False,
-            is_completed = False,
+            status = Task.PENDING,
         )
 
         active = Task.objects.filter(
             requester = user,
-            is_posted = True,
-            is_completed = False,
+            status = Task.ACTIVE,
         )
 
         completed = Task.objects.filter(
             requester = user,
-            is_completed = True,
+            status = Task.COMPLETED,
         )
 
         return render(request, 'requester/tasks.html', {
