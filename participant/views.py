@@ -45,6 +45,9 @@ def task_details(request, task_id):
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
             current_task.participants.add(request.user)
+            if current_task.participants = current_task.max_num_participants:
+                current_task.status = Task.COMPLETED
+            current_task.save()
             return redirect('task_details_page', task_id)
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
