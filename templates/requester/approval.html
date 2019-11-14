@@ -12,12 +12,12 @@
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
 
-        <h2> {{ task.title }} <h2>
+        <h2 class="text-center"> {{ task.title }} <h2>
 
         <form type="submit" action="" method="post">
           {% csrf_token %}
           {% for choice in form_approval.participants.field.queryset %}
-            <p>Test</p>
+            {{ choice }}
           {% endfor %}
           <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
         </form>
