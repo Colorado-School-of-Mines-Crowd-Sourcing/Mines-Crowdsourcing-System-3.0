@@ -12,9 +12,13 @@
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
 
-        <form class="" action= method="post">
+        <h2> {{ task.title }} <h2>
+
+        <form type="submit" action="" method="post">
           {% csrf_token %}
-          {{ form_approval.participants|crispy }}
+          {% for choice in form_approval.participants.field.queryset %}
+            <p>Test</p>
+          {% endfor %}
           <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
         </form>
       </div>

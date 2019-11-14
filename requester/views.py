@@ -4,7 +4,7 @@ from django.apps import apps
 from django.http import Http404
 
 from participant.models import User, Task, Tag
-from .forms import CreateTask
+from .forms import CreateTask, CreateApproval
 
 # TODO: Remove random import when user authentication is done
 import random, string
@@ -82,9 +82,12 @@ def approve_contributors(request, task_id):
                         task.approved_contributors.add(user)
                 task.save()
                 messages.success(request, 'Your task has been submitted for review.')
-                return redirect('contributor_approval')
+                return redirect('contributor_approval', task_id)
         else:
             form_approval = CreateTask(task.participants)
-            return render(request, 'requester/approval.html', {'form_task': form_approval})
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
+        
+    return render(request, 'requester/approval.html',
+                {'form_approval': form_approval,
+                'task': task})
