@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #custom apps
-    'participant',
+    'participant.apps.ParticipantConfig',
     'requester',
 
     #external APP_DIRS
