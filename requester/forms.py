@@ -30,7 +30,7 @@ class CreateApproval(ModelForm):
         model = apps.get_model('participant', 'Task')
         fields = ['participants']
 
-    def __init__(self, *args,**kwargs):
+    def __init__(self, participants_set=None, *args,**kwargs):
         participants_set = kwargs.pop('participants_set', None)
         super(CreateApproval,self).__init__(*args,**kwargs)
         self.fields['participants'] = forms.ModelMultipleChoiceField(

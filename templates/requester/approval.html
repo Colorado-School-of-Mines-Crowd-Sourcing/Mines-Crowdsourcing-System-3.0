@@ -14,11 +14,9 @@
 
         <h2 class="text-center"> {{ task.title }} <h2>
 
-        <form type="submit" action="" method="post">
+        <form action="" method="post">
           {% csrf_token %}
-          {% for choice in form_approval.participants.field.queryset %}
-            {{ choice }}
-          {% endfor %}
+          {{ form_approval|crispy }}
           <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
         </form>
       </div>
