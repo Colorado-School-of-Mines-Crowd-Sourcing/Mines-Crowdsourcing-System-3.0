@@ -23,3 +23,11 @@ class CreateTask(ModelForm):
             'reward_amount': 'Amount of compensation (in $) per task per participant',
             'end_date': 'MM/DD/YYYY',
         }
+
+
+class CreateApproval(ModelForm):
+    class Meta:
+        model = apps.get_model('participant', 'Task')
+        fields = ['participants']
+
+    participants = form.ModelMultipleChoiceField(queryset = )

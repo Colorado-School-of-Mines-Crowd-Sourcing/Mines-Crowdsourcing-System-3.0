@@ -3,7 +3,7 @@ from django.shortcuts import render , redirect
 from participant.models import *
 from django.db.models import Q
 from django.contrib import messages
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 

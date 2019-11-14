@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container d-flex h-100">
+  <div class="row m-auto">
+    <div class="col-sm">
+      <div>
+        {% for message in messages %}
+          <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
+        {% endfor %}
+
+        <form class="" action= method="post">
+          {% csrf_token %}
+          {{ form_approval.participants|crispy }}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

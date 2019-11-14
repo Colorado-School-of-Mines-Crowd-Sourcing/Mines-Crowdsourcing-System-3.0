@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.apps import apps
+from django.http import Http404
 
 from participant.models import User, Task, Tag
 from .forms import CreateTask
@@ -30,7 +31,6 @@ def create(request):
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
-            logger.info(request, 'task submitted for review.')
             messages.success(request, 'Your task has been submitted for review.')
             return redirect('requester_create')
 
@@ -64,3 +64,27 @@ def see_tasks(request):
             'active': active,
             'completed': completed,
         })
+
+
+def approve_contributors(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+        if task.requester != request.user:
+            raise Task.DoesNotExist
+
+        if request.method == 'POST':
+            form_approval = CreateApproval(request.POST, )
+            if form_approval.is_valid() :
+                users = form_approval.participants
+                for user in users:
+                    if user not in task.approved_contributors:
+                        user.reward_balance += task.reward_amount
+                        task.approved_contributors.add(user)
+                task.save()
+                messages.success(request, 'Your task has been submitted for review.')
+                return redirect('contributor_approval')
+        else:
+            form_approval = CreateTask()
+            return render(request, 'requester/approval.html', {'form_task': form_approval})
+    except Task.DoesNotExist:
+        raise Http404('Task does not exist')
