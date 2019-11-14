@@ -14,7 +14,7 @@ def index(request):
 
 def all_available_tasks(request):
     return render(request, 'participant/all_tasks.html', {
-        'all_tasks': Task.objects.filter(is_posted=True)})
+        'all_tasks': Task.objects.filter(status=Task.ACTIVE)})
 
 
 def completed_tasks(request):
@@ -23,7 +23,7 @@ def completed_tasks(request):
         return render(request, 'participant/completed_tasks.html')
     else:
         all_completed_tasks = Task.objects.filter(
-            participantcompletedtask__user=user
+            participants=user,
         )
         return render(request, 'participant/completed_tasks.html', {
             'all_completed_tasks': all_completed_tasks})
@@ -31,31 +31,36 @@ def completed_tasks(request):
 
 def search_results(request):
     query = request.GET.get('q')
-    query_title = Task.objects.filter(Q(title__contains=query), is_posted=True)
-    query_tag = Task.objects.filter(Q(tag__tag__contains=query), is_posted=True)
+    query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
+    query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result})
 
 def task_details(request, task_id):
     try:
-        current_task = Task.objects.get(is_posted=True, pk=task_id)
-        already_completed = False
+        current_task = Task.objects.get(pk=task_id)
+
+        # If the task has not been posted or is closed and the user
+        # has not completed, we still want to display a 404
+        if (current_task.status == Task.PENDING or
+            (current_task.status == Task.COMPLETED
+                and request.user not in current_task.participants.all())):
+                raise Task.DoesNotExist
+        already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
-            ParticipantCompletedTask.create(request.user, current_task).save()
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
+            current_task.participants.add(request.user)
+            if current_task.participants.count() >= current_task.max_num_participants:
+                current_task.status = Task.COMPLETED
+            current_task.save()
             return redirect('task_details_page', task_id)
-        try:
-            ParticipantCompletedTask.objects.get(task=current_task)
-            already_completed = True
-        except ObjectDoesNotExist:
-            pass
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
-  
+
 def redeem(request):
     # Minimum balance to redeem
     MIN_REWARD = 5

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import User, Task, Tag, ParticipantCompletedTask, Transaction
+from .models import User, Task, Tag, Transaction
 
 admin.site.unregister(Group)
 
@@ -20,12 +20,6 @@ class TaskAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagsAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(ParticipantCompletedTask)
-class ParticipantCompletedTaskAdmin(admin.ModelAdmin):
-    pass
-
 
 # Transactions processing actions
 def make_processed(modeladmin, request, queryset):

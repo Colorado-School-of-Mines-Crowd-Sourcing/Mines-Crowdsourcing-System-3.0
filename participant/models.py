@@ -44,6 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
+    # completed_tasks = ManyToMany(Task) maybe?
 
     objects = UserManager()
 
@@ -56,6 +57,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Task(models.Model):
+    PENDING = 'PE'
+    ACTIVE = 'AC'
+    COMPLETED = 'CO'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (ACTIVE, 'Active'),
+        (COMPLETED, 'Completed'),
+    ]
+
     link_to = models.URLField(max_length=50, blank=False)
     participant_qualifications = models.CharField(max_length=100, blank=True)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
@@ -64,55 +74,13 @@ class Task(models.Model):
     payment_index = models.IntegerField(blank=False)
     description = models.TextField(max_length=1024, blank=False)
     posted_date = models.DateField(auto_now_add=True, blank=False)
-    is_posted = models.BooleanField(default=False, )
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING)
     end_date = models.DateField(blank=False)
-    requester = models.ForeignKey(User, on_delete=models.CASCADE)
+    requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req')
+    participants = models.ManyToManyField(User, blank=True, related_name='part')
 
     def __str__(self):
         return self.title
-
-
-class ParticipantCompletedTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Completed task'
-        verbose_name_plural = 'Completed tasks'
-
-    def __str__(self):
-        return self.user.name + ' completed ' + self.task.title
-
-    @classmethod
-    def create(cls, user, task):
-        completed_task = cls(user=user, task=task)
-        return completed_task
-
-
-class RequesterActiveTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    @classmethod
-    def create(cls, user, task):
-        active_task = cls(user=user, task=task)
-        return active_task
-
-    def __str__(self):
-        return self.task.title
-
-
-class RequesterPastTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-    @classmethod
-    def create(cls, user, task):
-        past_task = cls(user=user, task=task)
-        return past_task
-
-    def __str__(self):
-        return self.task.title
 
 
 class Tag(models.Model):

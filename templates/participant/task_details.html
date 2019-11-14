@@ -4,7 +4,7 @@
     <div class="text-center mx-5">
       <h2 class="py-5">{{ task.title }}</h2>
       {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+        <div class="alert {{ message.tags }} text-center">{{ message }}</div>
       {% endfor %}
       <h3>Description</h3>
       <p > {{ task.description }}</p>
