@@ -84,10 +84,11 @@ def approve_contributors(request, task_id):
                 messages.success(request, 'Your task has been submitted for review.')
                 return redirect('contributor_approval', task_id)
         else:
-            form_approval = CreateApproval(participants_set=task.participants.all())
+            participants_set=task.participants.all()
+            form_approval = CreateApproval(participants_set=participants_set)
+            test = form_approval.fields['participants'].queryset
+            return render(request, 'requester/approval.html',
+                        {'form_approval': form_approval,
+                        'task': task})
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
-
-    return render(request, 'requester/approval.html',
-                {'form_approval': form_approval,
-                'task': task})
