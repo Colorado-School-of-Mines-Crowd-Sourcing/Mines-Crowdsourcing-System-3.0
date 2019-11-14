@@ -73,7 +73,7 @@ def approve_contributors(request, task_id):
             raise Task.DoesNotExist
 
         if request.method == 'POST':
-            form_approval = CreateApproval(request.POST, )
+            form_approval = CreateApproval(request.POST, task.participants)
             if form_approval.is_valid() :
                 users = form_approval.participants
                 for user in users:
@@ -84,7 +84,7 @@ def approve_contributors(request, task_id):
                 messages.success(request, 'Your task has been submitted for review.')
                 return redirect('contributor_approval')
         else:
-            form_approval = CreateTask()
+            form_approval = CreateTask(task.participants)
             return render(request, 'requester/approval.html', {'form_task': form_approval})
     except Task.DoesNotExist:
         raise Http404('Task does not exist')

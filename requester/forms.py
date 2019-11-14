@@ -30,4 +30,8 @@ class CreateApproval(ModelForm):
         model = apps.get_model('participant', 'Task')
         fields = ['participants']
 
-    participants = form.ModelMultipleChoiceField(queryset = )
+    def __init__(self, participants_set, *args,**kwargs):
+        super(CreateApproval,self).__init__(*args,**kwargs)
+        self.fields['participants'] = forms.MdodelChoiceFields(
+                                        choices=participants_set,
+                                        to_field_name='name',)
