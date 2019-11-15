@@ -81,6 +81,7 @@ def approve_contributors(request, task_id):
                     if user not in task.approved_participants.all():
                         user.reward_balance += task.reward_amount
                         task.approved_participants.add(user)
+                        user.save()
                 task.save()
                 messages.success(request, 'The participants you selected are now approved!')
                 return redirect('contributor_approval', task_id)
