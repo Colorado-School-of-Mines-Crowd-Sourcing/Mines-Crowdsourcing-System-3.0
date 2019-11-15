@@ -9,6 +9,7 @@ def signup(request):
             user = form.save()
             user.email = user.multipass_username+"@mines.edu"
             raw_password = form.cleaned_data.get('password1')
+            user.save()
             login(request, user)
             return redirect('index')
     else:
