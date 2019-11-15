@@ -7,17 +7,21 @@
 <div class="container d-flex h-100">
   <div class="row m-auto">
     <div class="col-sm">
-      {% for message in messages %}
-        <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
-      {% endfor %}
+      {% if approval_left %}
+        {% for message in messages %}
+          <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
+        {% endfor %}
 
-      <h2 class="text-center"> {{ task.title }} <h2>
+        <h2 class="text-center"> {{ task.title }} <h2>
 
-      <form action="" method="post">
-        {% csrf_token %}
-        {{ form_approval|crispy }}
-        <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
-      </form>
+        <form action="" method="post">
+          {% csrf_token %}
+          {{ form_approval|crispy }}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Approve selected users"></input>
+        </form>
+      {% else %}
+        <h2>You have no one left to approve on this task!</h2>
+      {% endif %}
     </div>
   </div>
 </div>

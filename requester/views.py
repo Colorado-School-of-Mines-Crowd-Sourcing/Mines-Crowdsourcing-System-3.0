@@ -87,8 +87,12 @@ def approve_contributors(request, task_id):
         else:
             participants_set=task.participants.all().difference(task.approved_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)
+            approval_left = True
+            if participants_set.count() == 0:
+                approval_left = False
             return render(request, 'requester/approval.html',
                         {'form_approval': form_approval,
-                        'task': task})
+                        'task': task,
+                        'approval_left': approval_left,})
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
