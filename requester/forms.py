@@ -33,6 +33,7 @@ class CreateApproval(ModelForm):
     def __init__(self, *args,**kwargs):
         participants_set = kwargs.pop('participants_set', None)
         super(CreateApproval,self).__init__(*args,**kwargs)
-        self.fields['participants'] = forms.ModelMultipleChoiceField(
+        if participants_set:
+            self.fields['participants'] = forms.ModelMultipleChoiceField(
                                         queryset=participants_set,
                                         widget=forms.CheckboxSelectMultiple,)
