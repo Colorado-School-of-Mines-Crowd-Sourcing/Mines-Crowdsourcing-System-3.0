@@ -55,6 +55,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Set a value that will never be a valid hash
     # self.password = make_password(None)
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     PENDING = 'PE'

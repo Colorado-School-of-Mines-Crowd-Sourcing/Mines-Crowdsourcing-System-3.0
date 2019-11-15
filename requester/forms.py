@@ -35,5 +35,4 @@ class CreateApproval(ModelForm):
         super(CreateApproval,self).__init__(*args,**kwargs)
         self.fields['participants'] = forms.ModelMultipleChoiceField(
                                         queryset=participants_set,
-                                        widget=forms.CheckboxSelectMultiple,
-                                        to_field_name='name',)
+                                        widget=forms.CheckboxSelectMultiple,)

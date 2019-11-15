@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.apps import apps
-from django.http import Http404
+from django.http import Http404, QueryDict
 
 from participant.models import User, Task, Tag
 from .forms import CreateTask, CreateApproval
@@ -73,20 +73,17 @@ def approve_contributors(request, task_id):
             raise Task.DoesNotExist
 
         if request.method == 'POST':
-            form_approval = CreateApproval(request.POST)
-            if form_approval.is_valid() :
-                users = form_approval.participants.all()
-                for user in users:
-                    if user not in task.approved_contributors:
-                        user.reward_balance += task.reward_amount
-                        task.approved_contributors.add(user)
-                task.save()
-                messages.success(request, 'Your task has been submitted for review.')
-                return redirect('contributor_approval', task_id)
+            users = request.POST.getlist('participants')
+            for user in users:
+                if user not in task.approved_participants.all():
+                    user.reward_balance += task.reward_amount
+                    task.approved_contributors.add(user)
+            task.save()
+            messages.success(request, 'The participants you selected are now approved!')
+            return redirect('contributor_approval', task_id)
         else:
             participants_set=task.participants.all()
             form_approval = CreateApproval(participants_set=participants_set)
-            test = form_approval.fields['participants'].queryset
             return render(request, 'requester/approval.html',
                         {'form_approval': form_approval,
                         'task': task})
