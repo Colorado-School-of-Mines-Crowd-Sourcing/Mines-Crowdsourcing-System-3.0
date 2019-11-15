@@ -45,7 +45,8 @@ def task_details(request, task_id):
         # has not completed, we still want to display a 404
         if (current_task.status == Task.PENDING or
             (current_task.status == Task.COMPLETED
-                and request.user not in current_task.participants.all())):
+            and request.user not in current_task.participants.all()
+            and request.user not in current_task.approved_participants)):
                 raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
