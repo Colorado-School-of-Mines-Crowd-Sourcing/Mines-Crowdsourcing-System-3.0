@@ -9,7 +9,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), "default")
 
 
-@register_job(scheduler, "cron", hour=0)
+@register_job(scheduler, "interval", seconds=30, replace_existing=True)
 def daily_expired_task_cleaner():
     date_of_today = datetime.date(datetime.now(pytz.timezone('America/Denver')))
     all_active_tasks = Task.objects.filter(status=Task.ACTIVE)
