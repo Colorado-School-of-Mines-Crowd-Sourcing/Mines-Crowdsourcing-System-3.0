@@ -1,5 +1,5 @@
 pytz
-apscheduler
+django-apscheduler
 Django
 gunicorn
 django_heroku
