@@ -9,7 +9,7 @@
     <div class="col-sm">
     <h3 class="jumbotron text-center">Contributor Payment Approval</h3>
     <p>Here you can see who has contributed to your task request.
-        Select the contributor you would like to approve for payment.</p>
+        Select the ones you would like to approve for payment according to the orginal posted amount.</p>
       {% if user.authorized_requester%}
         {% for message in messages %}
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
@@ -26,7 +26,7 @@
             <div>{{ form_approval|crispy }}</div>
             <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="approve" value="Confirm"></input>
           </form>
-          <p class="text-center">*Please keep in mind that the confirmation of payment for selected participants is final.</p>
+          <p class="text-center">*Please keep in mind that the payment for selected contributors is final once confirmed.</p>
         {% else %}
           <h2 class="text-center" >You have no one left to approve on this task!</h2>
         {% endif %}
