@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #custom apps
-    'participant.apps.ParticipantConfig',
+    'participant',
     'requester',
+    'django_apscheduler',
 
     #external APP_DIRS
     'crispy_forms',
