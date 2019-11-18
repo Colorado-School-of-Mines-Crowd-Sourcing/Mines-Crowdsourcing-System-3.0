@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     #external APP_DIRS
     'crispy_forms',
+    'django_apscheduler',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
