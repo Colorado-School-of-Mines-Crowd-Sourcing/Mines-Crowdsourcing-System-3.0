@@ -55,6 +55,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Set a value that will never be a valid hash
     # self.password = make_password(None)
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     PENDING = 'PE'
@@ -78,6 +81,7 @@ class Task(models.Model):
     end_date = models.DateField(blank=False)
     requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req')
     participants = models.ManyToManyField(User, blank=True, related_name='part')
+    approved_participants = models.ManyToManyField(User, blank=True, related_name='aproved')
 
     def __str__(self):
         return self.title

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.apps import apps
+from django.http import Http404, QueryDict
 
 from participant.models import User, Task, Tag
-from .forms import CreateTask
+from .forms import CreateTask, CreateApproval
 
 # TODO: Remove random import when user authentication is done
 import random, string
@@ -30,7 +31,6 @@ def create(request):
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
-            logger.info(request, 'task submitted for review.')
             messages.success(request, 'Your task has been submitted for review.')
             return redirect('requester_create')
 
@@ -64,3 +64,36 @@ def see_tasks(request):
             'active': active,
             'completed': completed,
         })
+
+
+def approve_contributors(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+        if task.requester != request.user:
+            raise Task.DoesNotExist
+
+        if request.method == 'POST':
+
+            form_approval = CreateApproval(request.POST)
+            if form_approval.is_valid():
+                users = form_approval.cleaned_data['participants']
+                for user in users:
+                    if user not in task.approved_participants.all():
+                        user.reward_balance += task.reward_amount
+                        task.approved_participants.add(user)
+                        user.save()
+                task.save()
+                messages.success(request, 'The participants you selected are now approved!')
+                return redirect('contributor_approval', task_id)
+        else:
+            participants_set=task.participants.all().difference(task.approved_participants.all())
+            form_approval = CreateApproval(participants_set=participants_set)
+            approval_left = True
+            if participants_set.count() == 0:
+                approval_left = False
+            return render(request, 'requester/approval.html',
+                        {'form_approval': form_approval,
+                        'task': task,
+                        'approval_left': approval_left,})
+    except Task.DoesNotExist:
+        raise Http404('Task does not exist')
