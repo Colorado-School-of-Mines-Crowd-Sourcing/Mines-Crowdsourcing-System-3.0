@@ -5,9 +5,8 @@
 {% block content %}
 {% if user.authorized_requester %}
 <div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-sm-2"></div>
-    <div class="col-sm">
+  <div class="row m-auto justify-content-center">
+    <div class="col-sm-10">
       <div>
         <h3 class="jumbotron text-center">Create a Task</h3>
         {% for message in messages %}
@@ -16,25 +15,25 @@
         <div class="row justify-content-center align-items-center h-100">
             <p class="text-center"><b>Disclaimer: </b>The publishing of your task is subject to the approval of the site administrators.</p>
          </div>
-           <form action="/requester/create" method="post">
-              {% csrf_token %}
-              <tr><td>{{ form_task.title | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.description | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.max_num_participants | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.participant_qualifications | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.tags | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.reward_amount | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.end_date | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.payment_index | as_crispy_field }}</td></tr>
-              <tr><td>{{ form_task.link_to | as_crispy_field }}</td></tr>
-              <p class="text-center">By pressing the submit button,
-                  I agree that I have the required funding available and an approval from the CSM Human Subjects Team.</p>
-              <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
-            </form>
-      </div>
+         <form action="/requester/create" method="post">
+            {% csrf_token %}
+            <tr><td>{{ form_task.title | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.description | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.max_num_participants | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.participant_qualifications | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.tags | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.reward_amount | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.end_date | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.payment_index | as_crispy_field }}</td></tr>
+            <tr><td>{{ form_task.link_to | as_crispy_field }}</td></tr>
+            <p class="text-center">By pressing the submit button,
+                I agree that I have the required funding available and an approval from the CSM Human Subjects Team.</p>
+            <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
+          </form>
+        </div>
     </div>
-    <div class="col-sm-2"></div>
   </div>
+</div>
 
 {% else %}
 <div class="container d-flex h-100">
@@ -43,5 +42,4 @@
   </div>
 </div>
 {% endif %}
-</div>
 {% endblock %}

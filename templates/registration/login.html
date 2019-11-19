@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="text-center">
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
+<div class="container h-100 align-self-center">
+  <div class="row py-5">
+    <h2 class="m-auto">Login</h2>
+  </div>
+  <div class="row py-5">
+    <div class="col">
+      <form class="text-center" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group">
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

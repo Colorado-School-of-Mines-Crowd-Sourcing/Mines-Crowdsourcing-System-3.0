@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container h-100 align-self-center">
+  <div class="row py-5 justify-content-center">
+    <h2 class="m-auto">Sign up</h2>
+  </div>
+  <div class="row py-5">
+    <div class="col-sm-8 mx-auto">
+      <form class="text-center" method="post">
+         {% csrf_token %}
+         {% for field in form %}
+           <div class="form-group">
+             {{ field|as_crispy_field }}
+             {% for error in field.errors %}
+               <p style="color: red">{{ error }}</p>
+             {% endfor %}
+           </div>
+         {% endfor %}
+         <button type="submit">Sign up</button>
+       </form>
+    </div>
+   </div>
+ </div>
+{% endblock %}
