@@ -69,7 +69,7 @@ class Task(models.Model):
         (COMPLETED, 'Completed'),
     ]
 
-    link_to = models.URLField(max_length=50, blank=False)
+    link_to = models.URLField(max_length=200, blank=False)
     participant_qualifications = models.CharField(max_length=100, blank=True)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2, blank=False, default=0.00)
     max_num_participants = models.PositiveIntegerField(default=0, blank=True, validators=[MinValueValidator(1)])
