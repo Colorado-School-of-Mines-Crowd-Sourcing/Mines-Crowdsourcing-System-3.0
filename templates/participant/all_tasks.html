@@ -8,11 +8,12 @@
     <div class="col-sm">
       <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
+        <br><small class="text-muted">Search on title and tags</small><br>
       </form>
       <ul class="list-group list-group-flush ">
         <h3>All Tasks Available</h3>
         {% if all_tasks %}
-          {% include "./list.html" with tasks=all_tasks %}
+          {% include "./list.html" with tasks=all_tasks all_tags=all_tags_mapped %}
         {% else %}
             <li class="list-group-item">There are no tasks available at this time!</li>
         {% endif %}

@@ -7,11 +7,12 @@
     <div class="col-sm">
       <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
+        <br><small class="text-muted">Search on title and tags</small><br>
       </form>
       <ul class="list-group list-group-flush">
         <h3>Search Results</h3>
         {% if resulted_tasks %}
-          {% include "./list.html" with tasks=resulted_tasks %}
+          {% include "./list.html" with tasks=resulted_tasks all_tags=all_tags_mapped %}
         {% else %}
             <li class="list-group-item">No matches!</li>
         {% endif %}
