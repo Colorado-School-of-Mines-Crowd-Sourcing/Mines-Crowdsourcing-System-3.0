@@ -7,13 +7,16 @@ from django.http import Http404
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 
-all_tags_objects = Tag.objects.filter(task__status=Task.ACTIVE)
-all_tags_mapped = {}
-for tag_objects in all_tags_objects:
-    try:
-        all_tags_mapped[tag_objects.task] = all_tags_mapped[tag_objects.task] + "," + tag_objects.tag
-    except KeyError:
-        all_tags_mapped[tag_objects.task] = tag_objects.tag
+
+def all_active_tasks_tags():
+    all_tags_objects = Tag.objects.filter(task__status=Task.ACTIVE)
+    all_tags_mapped = {}
+    for tag_objects in all_tags_objects:
+        try:
+            all_tags_mapped[tag_objects.task] = all_tags_mapped[tag_objects.task] + "," + tag_objects.tag
+        except KeyError:
+            all_tags_mapped[tag_objects.task] = tag_objects.tag
+    return all_tags_mapped
 
 
 def index(request):
@@ -21,6 +24,7 @@ def index(request):
 
 
 def all_available_tasks(request):
+    all_tags_mapped = all_active_tasks_tags()
     return render(request, 'participant/all_tasks.html', {
         'all_tasks': Task.objects.filter(status=Task.ACTIVE), 'all_tags_mapped': all_tags_mapped})
 
@@ -38,6 +42,7 @@ def completed_tasks(request):
 
 
 def search_results(request):
+    all_tags_mapped = all_active_tasks_tags()
     query = request.GET.get('q')
     query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
     query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
