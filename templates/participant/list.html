@@ -14,6 +14,11 @@
     <a id="task" href="{% url 'task_details_page' task.pk %}" style="color: inherit" >
       <li id="task" class="list-group-item  d-flex justify-content-between px-0">
         <p class="w-25 mx-1">{{ task.title }}</p>
+         {% for key, value in all_tags.items %}
+            {% if key == task%}
+                <p class="w-25 mx-1">Tags: {{value}}</p>
+            {% endif %}
+         {% endfor %}
         <p class="w-25 mx-1">{{ task.participant_qualifications}}</p>
         <p class="w-25 mx-1">${{ task.reward_amount }}</p>
         <p class="w-25 mx-1">Ends {{ task.end_date }}</p>

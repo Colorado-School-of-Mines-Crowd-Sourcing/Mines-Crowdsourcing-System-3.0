@@ -11,7 +11,7 @@
       <ul class="list-group list-group-flush">
         <h3>Search Results</h3>
         {% if resulted_tasks %}
-          {% include "./list.html" with tasks=resulted_tasks %}
+          {% include "./list.html" with tasks=resulted_tasks all_tags=all_tags_mapped %}
         {% else %}
             <li class="list-group-item">No matches!</li>
         {% endif %}

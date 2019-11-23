@@ -12,7 +12,7 @@
       <ul class="list-group list-group-flush ">
         <h3>All Tasks Available</h3>
         {% if all_tasks %}
-          {% include "./list.html" with tasks=all_tasks %}
+          {% include "./list.html" with tasks=all_tasks all_tags=all_tags_mapped %}
         {% else %}
             <li class="list-group-item">There are no tasks available at this time!</li>
         {% endif %}

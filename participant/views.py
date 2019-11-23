@@ -1,11 +1,19 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render , redirect
+from django.shortcuts import render, redirect
 from participant.models import *
 from django.db.models import Q
 from django.contrib import messages
 from django.http import Http404
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+
+all_tags_objects = Tag.objects.filter(task__status=Task.ACTIVE)
+all_tags_mapped = {}
+for tag_objects in all_tags_objects:
+    try:
+        all_tags_mapped[tag_objects.task] = all_tags_mapped[tag_objects.task] + "," + tag_objects.tag
+    except KeyError:
+        all_tags_mapped[tag_objects.task] = tag_objects.tag
 
 
 def index(request):
@@ -14,7 +22,7 @@ def index(request):
 
 def all_available_tasks(request):
     return render(request, 'participant/all_tasks.html', {
-        'all_tasks': Task.objects.filter(status=Task.ACTIVE)})
+        'all_tasks': Task.objects.filter(status=Task.ACTIVE), 'all_tags_mapped': all_tags_mapped})
 
 
 def completed_tasks(request):
@@ -35,7 +43,8 @@ def search_results(request):
     query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
-        'resulted_tasks': query_result})
+        'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
+
 
 def task_details(request, task_id):
     try:
@@ -44,10 +53,10 @@ def task_details(request, task_id):
         # If the task has not been posted or is closed and the user
         # has not completed, we still want to display a 404
         if (current_task.status == Task.PENDING or
-            (current_task.status == Task.COMPLETED
-            and request.user not in current_task.participants.all()
-            and request.user not in current_task.approved_participants)):
-                raise Task.DoesNotExist
+                (current_task.status == Task.COMPLETED
+                 and request.user not in current_task.participants.all()
+                 and request.user not in current_task.approved_participants)):
+            raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
@@ -61,6 +70,7 @@ def task_details(request, task_id):
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
+
 
 def redeem(request):
     # Minimum balance to redeem
