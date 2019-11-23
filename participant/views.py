@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
+from django.shortcuts import render , redirect
 from participant.models import *
 from django.db.models import Q
 from django.contrib import messages
@@ -53,10 +53,10 @@ def task_details(request, task_id):
         # If the task has not been posted or is closed and the user
         # has not completed, we still want to display a 404
         if (current_task.status == Task.PENDING or
-                (current_task.status == Task.COMPLETED
-                 and request.user not in current_task.participants.all()
-                 and request.user not in current_task.approved_participants)):
-            raise Task.DoesNotExist
+            (current_task.status == Task.COMPLETED
+            and request.user not in current_task.participants.all()
+            and request.user not in current_task.approved_participants)):
+                raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
@@ -70,7 +70,6 @@ def task_details(request, task_id):
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,
                                                              'already_completed': already_completed})
-
 
 def redeem(request):
     # Minimum balance to redeem
