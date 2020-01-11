@@ -13,4 +13,4 @@ install:
 
 # run test scripts
 script:
-- python src/manage.py test
+- python3 manage.py test
