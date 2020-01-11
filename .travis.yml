@@ -10,7 +10,11 @@ env:
 # install dependencies
 install:
 - pip install -r requirements.txt
+- pip install codecov
 
 # run test scripts
 script:
-- python3 manage.py test
+- coverage run manage.py test
+
+after_success:
+- codecov
