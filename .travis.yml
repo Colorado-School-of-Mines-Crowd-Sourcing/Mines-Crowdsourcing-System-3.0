@@ -12,9 +12,12 @@ install:
   - pip install -r requirements.txt
   - pip install codecov
 
+# sets up database
+before_script:
+  - python3 manage.py migrate
+
 # run test scripts
 script:
-  - python3 manage.py migrate
   - coverage run manage.py test
 
 after_success:
