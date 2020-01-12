@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'participant',
     'requester',
     'registration',
-    
+
     #external APP_DIRS
     'crispy_forms',
     'django_apscheduler',
@@ -150,7 +150,7 @@ LOGOUT_REDIRECT_URL = 'index'
 # Configure Django App for Heroku.
 try:
     import django_heroku
-    django_heroku.settings(locals())
+    django_heroku.settings(locals(), test_runner=False)
 except ImportError:
     pass
 
