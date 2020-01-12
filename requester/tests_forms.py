@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.apps import apps
 import datetime
 
-from .forms import *
+from requester.forms import *
 
 # Create your tests here.
 class CreateTaskTest(TestCase):
