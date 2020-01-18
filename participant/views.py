@@ -4,6 +4,7 @@ from participant.models import *
 from django.db.models import Q
 from django.contrib import messages
 from django.http import Http404
+from django.views.generic.detail import SingleObjectMixin
 
 from wkhtmltopdf.views import PDFTemplateView
 
@@ -103,7 +104,7 @@ def redeem(request):
 class formPDF(SingleObjectMixin, PDFTemplateView):
 
     model = Transaction
-    template_name = 'admin/participant/transaction_form.html'
+    template_name = 'admin/participant/transaction/transaction_form.html'
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
