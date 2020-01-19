@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.urls import path, reverse
+from django.utils.html import format_html
 
 from zipfile import ZipFile
 
@@ -32,6 +33,7 @@ class TagsAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
+
     def get_urls(self):
         return [
             path(
@@ -55,8 +57,8 @@ class TransactionAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">PDF</a>',
             reverse('admin:form_payment_pdf', args=[obj.pk]),
         )
+    download_form_action.short_description = 'Download as PDF'
 
-
-    list_display = ['__str__', 'processed']
+    list_display = ['__str__', 'processed', 'download_form_action']
     list_filter = ['processed']
     actions = [make_processed, make_not_processed]

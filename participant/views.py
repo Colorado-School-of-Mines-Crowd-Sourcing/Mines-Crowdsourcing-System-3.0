@@ -108,5 +108,5 @@ class formPDF(SingleObjectMixin, PDFTemplateView):
 
     def get(self, *args, **kwargs):
         self.object = self.get_object()
-        self.filename = '%s_%s.pdf' % (self.object.first_name, self.object.last_name)
+        self.filename = '%s.pdf' % (self.object.recipient)
         return super().get(*args, **kwargs)
