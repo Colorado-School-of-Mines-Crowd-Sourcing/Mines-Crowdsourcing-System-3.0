@@ -1,12 +1,12 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.shortcuts import render , redirect
 from participant.models import *
 from django.db.models import Q
 from django.contrib import messages
 from django.http import Http404
-from django.contrib import messages
-from django.core.exceptions import PermissionDenied
+from django.views.generic.detail import SingleObjectMixin
 
+from wkhtmltopdf.views import PDFTemplateView
 
 def all_active_tasks_tags():
     all_tags_objects = Tag.objects.filter(task__status=Task.ACTIVE)
@@ -98,3 +98,15 @@ def redeem(request):
             messages.error(request, f'You need at least ${MIN_REWARD} in order to redeem')
 
     return render(request, 'participant/redeem.html', {'user': user, 'min_reward': MIN_REWARD})
+
+
+# Admin Views
+class formPDF(SingleObjectMixin, PDFTemplateView):
+
+    model = Transaction
+    template_name = 'admin/participant/transaction/transaction_form.html'
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        self.filename = '%s.pdf' % (self.object.recipient)
+        return super().get(*args, **kwargs)
