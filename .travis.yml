@@ -15,6 +15,7 @@ install:
 # sets up database
 before_script:
   - python3 manage.py migrate
+  - python3 manage.py collectstatic
 
 # run test scripts
 script:
