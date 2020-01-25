@@ -16,3 +16,17 @@ class Create(TestCase):
         print('Response status code : ' + str(response.status_code))
 
         self.assertEquals(response.status_code, 200)
+
+
+class SeeTasks(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.create_url = reverse('requester_tasks')
+
+    def test_see_GET(self):
+        print('**************test_see_GET()******************')
+
+        response = self.client.get(self.create_url)
+        print('Response status code : ' + str(response.status_code))
+
+        self.assertEquals(response.status_code, 200)
