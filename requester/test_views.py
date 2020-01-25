@@ -51,7 +51,7 @@ class ApproveContributors(TestCase):
                         payment_index=1234,
                         description='a task description',
                         end_date=datetime.date(2020, 10, 30),
-                        requester=User.objects.get(CWID=1234),
+                        requester=User.objects.get(CWID=1111),
                         )
         test_task.save()
 
