@@ -58,6 +58,24 @@ def see_tasks(request):
             'completed': completed,
         })
 
+def approve(task_id, request):
+    form_approval = CreateApproval(request.POST)
+    if form_approval.is_valid():
+        users = form_approval.cleaned_data['participants']
+        for user in users:
+            if user not in task.approved_participants.all():
+                user.reward_balance += task.reward_amount
+                task.approved_participants.add(user)
+                user.save()
+        task.save()
+        messages.success(request, 'The participants you selected are now approved!')
+        return redirect('contributor_approval', task_id)
+
+def close(task_id):
+    task.status = Task.COMPLETED
+    task.save()
+    messages.success(request, 'The task has been closed!')
+    return redirect('contributor_approval', task_id)
 
 def approve_contributors(request, task_id):
     try:
@@ -67,22 +85,9 @@ def approve_contributors(request, task_id):
 
         if request.method == 'POST':
             if 'approve' in request.POST:
-                form_approval = CreateApproval(request.POST)
-                if form_approval.is_valid():
-                    users = form_approval.cleaned_data['participants']
-                    for user in users:
-                        if user not in task.approved_participants.all():
-                            user.reward_balance += task.reward_amount
-                            task.approved_participants.add(user)
-                            user.save()
-                    task.save()
-                    messages.success(request, 'The participants you selected are now approved!')
-                    return redirect('contributor_approval', task_id)
+                return approve(task_id, request)
             elif 'close' in request.POST:
-                task.status = Task.COMPLETED
-                task.save()
-                messages.success(request, 'The task has been closed!')
-                return redirect('contributor_approval', task_id)
+                return close(task_id)
         else:
             participants_set=task.participants.all().difference(task.approved_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)
