@@ -37,12 +37,16 @@ class SeeTasks(TestCase):
 class ApproveContributors(TestCase):
     def setUp(self):
         self.client = Client()
+        self.requester = User.objects.create_user('test',
+                                        'requester',
+                                        'requester@test.com',
+                                        1111,
+                                        False)
         self.participant = User.objects.create_user('foo',
                                         'bar',
                                         'myemail@test.com',
                                         1234,
                                         False)
-        self.client.login(username='foo', password='test')
         test_task = Task(link_to='IamAnInvalidLink',
                         participant_qualifications= 'some qualifications',
                         reward_amount=12.34,
@@ -58,6 +62,7 @@ class ApproveContributors(TestCase):
     def test_see_GET_404(self):
         print('**************test_see_GET_404_no task()******************')
 
+        self.client.login(username='foo', password='test')
         self.approve_url = reverse_lazy('contributor_approval', args=[1000])
         response = self.client.get(self.approve_url)
         print('Response status code : ' + str(response.status_code))
@@ -67,6 +72,7 @@ class ApproveContributors(TestCase):
     def test_see_GET_200(self):
         print('**************test_see_GET_404_invalid_user()******************')
 
+        self.client.login(username='foo', password='test')
         self.approve_url = reverse_lazy('contributor_approval', args=[1])
         response = self.client.get(self.approve_url)
         print('Response status code : ' + str(response.status_code))
