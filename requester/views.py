@@ -20,7 +20,6 @@ def create(request):
 
             # Tag creation
             for tag in request.POST.get('tags').split(','):
-                logger.info(request, 'tag ', tag, ' created')
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
@@ -58,7 +57,7 @@ def see_tasks(request):
             'completed': completed,
         })
 
-def approve(task_id, request):
+def approve(task, task_id, request):
     form_approval = CreateApproval(request.POST)
     if form_approval.is_valid():
         users = form_approval.cleaned_data['participants']
@@ -71,7 +70,7 @@ def approve(task_id, request):
         messages.success(request, 'The participants you selected are now approved!')
         return redirect('contributor_approval', task_id)
 
-def close(task_id):
+def close(task, task_id, request):
     task.status = Task.COMPLETED
     task.save()
     messages.success(request, 'The task has been closed!')
@@ -85,9 +84,9 @@ def approve_contributors(request, task_id):
 
         if request.method == 'POST':
             if 'approve' in request.POST:
-                return approve(task_id, request)
+                return approve(task, task_id, request)
             elif 'close' in request.POST:
-                return close(task_id)
+                return close(task, task_id, request)
         else:
             participants_set=task.participants.all().difference(task.approved_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)

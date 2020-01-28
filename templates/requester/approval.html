@@ -17,13 +17,14 @@
         {% endfor %}
         {% if task.get_status_display == 'Pending' %}
           <h2 class="text-center">Contributor List Unavailable - This task is still pending!</h2>
+        {% elif task.get_status_display == 'Pending' or task.get_status_display == 'Active'%}
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="close" value="Close task"></input>
+        </form>
         {% elif approval_left %}
           {% if task.get_status_display == 'Active' %}
-            <p>Note: This task is still active. Don't forget to check back later for other contributors.</p>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="close" value="Close task"></input>
-            </form>
+            <p>Note: This task is still active. Don't forget to check back later for other contributors.</p>  
           {% endif %}
           <form action="" method="post">
             {% csrf_token %}
