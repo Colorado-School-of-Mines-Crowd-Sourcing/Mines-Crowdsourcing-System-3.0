@@ -8,7 +8,14 @@
     <div class="col-sm">
       <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
         <input name="q" type="text" placeholder="Search...">
-        <br><small class="text-muted">Search on title and tags</small><br>
+		<select name="cars">
+			<option value="volvo">Volvo</option>
+			<option value="saab">Saab</option>
+			<option value="fiat">Fiat</option>
+			<option value="audi">Audi</option>
+		</select>
+		<br><br>
+		<input type="submit">
       </form>
       <ul class="list-group list-group-flush ">
         <h3>All Tasks Available</h3>

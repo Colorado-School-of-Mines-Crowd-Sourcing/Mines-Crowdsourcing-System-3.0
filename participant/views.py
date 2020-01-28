@@ -44,6 +44,8 @@ def completed_tasks(request):
 def search_results(request):
     all_tags_mapped = all_active_tasks_tags()
     query = request.GET.get('q')
+    category = request.GET.get('category')
+    print(category)
     query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
     query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
     query_result = query_tag.union(query_title)
