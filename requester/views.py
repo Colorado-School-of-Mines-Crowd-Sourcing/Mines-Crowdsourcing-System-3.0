@@ -6,13 +6,6 @@ from django.http import Http404, QueryDict
 from participant.models import User, Task, Tag
 from .forms import CreateTask, CreateApproval
 
-# TODO: Remove random import when user authentication is done
-import random, string
-
-# Logger
-import logging
-
-logger = logging.getLogger(__name__)
 def create(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -27,7 +20,6 @@ def create(request):
 
             # Tag creation
             for tag in request.POST.get('tags').split(','):
-                logger.info(request, 'tag ', tag, ' created')
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
@@ -65,6 +57,24 @@ def see_tasks(request):
             'completed': completed,
         })
 
+def approve(task, task_id, request):
+    form_approval = CreateApproval(request.POST)
+    if form_approval.is_valid():
+        users = form_approval.cleaned_data['participants']
+        for user in users:
+            if user not in task.approved_participants.all():
+                user.reward_balance += task.reward_amount
+                task.approved_participants.add(user)
+                user.save()
+        task.save()
+        messages.success(request, 'The participants you selected are now approved!')
+        return redirect('contributor_approval', task_id)
+
+def close(task, task_id, request):
+    task.status = Task.COMPLETED
+    task.save()
+    messages.success(request, 'The task has been closed!')
+    return redirect('contributor_approval', task_id)
 
 def approve_contributors(request, task_id):
     try:
@@ -73,18 +83,10 @@ def approve_contributors(request, task_id):
             raise Task.DoesNotExist
 
         if request.method == 'POST':
-
-            form_approval = CreateApproval(request.POST)
-            if form_approval.is_valid():
-                users = form_approval.cleaned_data['participants']
-                for user in users:
-                    if user not in task.approved_participants.all():
-                        user.reward_balance += task.reward_amount
-                        task.approved_participants.add(user)
-                        user.save()
-                task.save()
-                messages.success(request, 'The participants you selected are now approved!')
-                return redirect('contributor_approval', task_id)
+            if 'approve' in request.POST:
+                return approve(task, task_id, request)
+            elif 'close' in request.POST:
+                return close(task, task_id, request)
         else:
             participants_set=task.participants.all().difference(task.approved_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)
