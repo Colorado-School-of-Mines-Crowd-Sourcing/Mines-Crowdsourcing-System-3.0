@@ -46,9 +46,8 @@ def search_results(request):
     query = request.GET.get('q')
     category = request.GET.get('category')
     print(category)
-    query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
-    query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
-    query_result = query_tag.union(query_title)
+	if category == "requester":
+	    query_result = Task.objects.filter(requester__contains=query), status=Task.ACTIVE)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
 

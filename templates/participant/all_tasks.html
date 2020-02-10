@@ -6,17 +6,7 @@
   <div class="row justify-content-center">
     <div class="col-sm-2"></div>
     <div class="col-sm">
-      <form class="py-5" action="{% url 'search_on_all_tasks' %}" method="get">
-        <input name="q" type="text" placeholder="Search...">
-		<select name="cars">
-			<option value="volvo">Volvo</option>
-			<option value="saab">Saab</option>
-			<option value="fiat">Fiat</option>
-			<option value="audi">Audi</option>
-		</select>
-		<br><br>
-		<input type="submit">
-      </form>
+      {% include "./search_bar.html" %}
       <ul class="list-group list-group-flush ">
         <h3>All Tasks Available</h3>
         {% if all_tasks %}
