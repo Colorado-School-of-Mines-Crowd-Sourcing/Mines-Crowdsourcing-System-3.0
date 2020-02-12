@@ -45,12 +45,12 @@ def search_results(request):
     all_tags_mapped = all_active_tasks_tags()
     query = request.GET.get('q')
     category = request.GET.get('category')
-	query_result = Task.objects.none()
+    query_result = Task.objects.none()
     if category == 'requester':
         query_result = Task.objects.filter(Q(requester__name__contains=query), status=Task.ACTIVE)
-	if category == 'qualification':
+    if category == 'qualification':
         query_result = Task.objects.filter(Q(participant_qualifications__contains=query), status=Task.ACTIVE)
-	if category == 'title':
+    if category == 'title':
         query_result = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
