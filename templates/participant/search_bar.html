@@ -2,11 +2,16 @@
         <input name="q" type="text" placeholder="Search...">
 		<select name="category">
 			<option value="requester">Requester</option>
-			<option value="end_date">End Date</option>
+			<option value="end_date">Ending before (mm/dd/yyyy)</option>
 			<option value="qualification">Qualification</option>
 			<option value="reward">Reward</option>
 			<option value="title">Title</option>
 		</select>
+
+    {% for message in messages %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+
 		<br><br>
 		<input type="submit">
       </form>

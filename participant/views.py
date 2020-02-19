@@ -7,6 +7,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from participant.models import *
 from wkhtmltopdf.views import PDFTemplateView
+from datetime import datetime
 
 
 def all_active_tasks_tags():
@@ -57,6 +58,20 @@ def search_results(request):
     if category == 'title':
         query_result = Task.objects.filter(
             Q(title__contains=query), status=Task.ACTIVE)
+    if category == 'reward':
+        try:
+            query_result = Task.objects.filter(
+                Q(reward_amount__gte=float(query)))
+        except ValueError:
+            messages.error(request, 'Please enter number value')
+
+    if category == 'end_date':
+        try:
+            query_result = Task.objects.filter(
+                Q(end_date__lte=datetime.strptime(query, '%m/%d/%Y')))
+        except ValueError:
+            messages.error(request, 'Please enter the date in the correct format')
+
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
 
