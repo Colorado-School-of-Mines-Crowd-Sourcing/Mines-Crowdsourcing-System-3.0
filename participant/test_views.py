@@ -33,8 +33,9 @@ class Search(TestCase):
     def test_search_title(self):
         print('**************test_search_title()**************')
 
-        response = self.client.get(self.search_url)
-        url = self.search_url + 'q=Test&category=title'
+        url = self.search_url + "?q=Test&category=title"
+        response = self.client.get(url)
         print(response.context['resulted_tasks'])
+        print(Task.objects.all())
 
-        #self.assertEquals(self.test_task, task)
+        # self.assertEquals(self.test_task, task)
