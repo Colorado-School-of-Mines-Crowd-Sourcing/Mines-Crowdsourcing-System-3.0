@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.db.models import Q
@@ -7,7 +9,6 @@ from django.views.generic.detail import SingleObjectMixin
 
 from participant.models import *
 from wkhtmltopdf.views import PDFTemplateView
-from datetime import datetime
 
 
 def all_active_tasks_tags():
@@ -52,7 +53,7 @@ def search_results(request):
     if category == 'requester':
         query_result = Task.objects.filter(
             Q(requester__name__contains=query), status=Task.ACTIVE)
-    if category == 'qualification':
+    if category == 'qualifications':
         query_result = Task.objects.filter(
             Q(participant_qualifications__contains=query), status=Task.ACTIVE)
     if category == 'title':
@@ -70,7 +71,8 @@ def search_results(request):
             query_result = Task.objects.filter(
                 Q(end_date__lte=datetime.strptime(query, '%m/%d/%Y')))
         except ValueError:
-            messages.error(request, 'Please enter the date in the correct format')
+            messages.error(
+                request, 'Please enter the date in the correct format')
 
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
