@@ -19,7 +19,7 @@ before_script:
 
 # run test scripts
 script:
-  - coverage run manage.py test requester
+  - coverage run manage.py test
 
 after_success:
   - codecov
