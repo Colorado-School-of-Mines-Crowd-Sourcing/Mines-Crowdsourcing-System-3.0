@@ -6,6 +6,7 @@ import datetime
 from requester.views import *
 from participant.models import Task, User
 
+
 class Create(TestCase):
     def setUp(self):
         self.client = Client()
@@ -38,25 +39,25 @@ class ApproveContributors(TestCase):
     def setUp(self):
         self.client = Client()
         self.requester = User.objects.create_user('test',
-                                        'requester',
-                                        'requester@test.com',
-                                        1111,
-                                        False)
+                                                  'requester',
+                                                  'requester@test.com',
+                                                  1111,
+                                                  False)
         self.participant = User.objects.create_user('foo',
-                                        'bar',
-                                        'myemail@test.com',
-                                        1234,
-                                        False)
+                                                    'bar',
+                                                    'myemail@test.com',
+                                                    1234,
+                                                    False)
         test_task = Task(link_to='IamAnInvalidLink',
-                        participant_qualifications= 'some qualifications',
-                        reward_amount=12.34,
-                        max_num_participants=69,
-                        title='some task title',
-                        payment_index=1234,
-                        description='a task description',
-                        end_date=datetime.date(2020, 10, 30),
-                        requester=User.objects.get(CWID=1111),
-                        )
+                         participant_qualifications='some qualifications',
+                         reward_amount=12.34,
+                         max_num_participants=69,
+                         title='some task title',
+                         payment_index=1234,
+                         description='a task description',
+                         end_date=datetime.date(2020, 10, 30),
+                         requester=User.objects.get(CWID=1111),
+                         )
         test_task.save()
 
     def test_see_GET_404(self):
