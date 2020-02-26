@@ -15,10 +15,11 @@ install:
 # sets up database
 before_script:
   - python3 manage.py migrate
+  - python3 manage.py collectstatic
 
 # run test scripts
 script:
-  - coverage run manage.py test requester
+  - coverage run manage.py test
 
 after_success:
   - codecov

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #external APP_DIRS
     'crispy_forms',
     'django_apscheduler',
+    'wkhtmltopdf',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

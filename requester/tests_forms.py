@@ -4,7 +4,6 @@ import datetime
 
 from requester.forms import *
 
-# Create your tests here.
 class CreateTaskTest(TestCase):
 
     def test_valid_entry(self):

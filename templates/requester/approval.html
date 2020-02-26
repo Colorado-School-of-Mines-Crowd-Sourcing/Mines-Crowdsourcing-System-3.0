@@ -7,20 +7,25 @@
 <div class="container d-flex h-100">
   <div class="row m-auto">
     <div class="col-sm">
-    <h3 class="jumbotron text-center">Contributor Payment Approval</h3>
-    <p>Here you can see who has contributed to your task request.
-        Select the ones you would like to approve for payment according to the orginal posted amount.</p>
+      <h3 class="jumbotron text-center">Contributor Payment Approval</h3>
       {% if user.authorized_requester%}
+        <h2 class="text-center py-3"> {{ task.title }} </h2>
+        <p>Here you can see who has contributed to your task request.
+        Select the ones you would like to approve for payment according to the orginal posted amount.</p>
         {% for message in messages %}
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
         {% if task.get_status_display == 'Pending' %}
           <h2 class="text-center">Contributor List Unavailable - This task is still pending!</h2>
+        {% elif task.get_status_display == 'Pending' or task.get_status_display == 'Active'%}
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="close" value="Close task"></input>
+        </form>
         {% elif approval_left %}
-            {% if task.get_status_display == 'Active' %}
-              <p>Note: This task is still active. Don't forget to check back later for other contributors.</p>
-            {% endif %}
-          <h2 class="text-center"> {{ task.title }} </h2>
+          {% if task.get_status_display == 'Active' %}
+            <p>Note: This task is still active. Don't forget to check back later for other contributors.</p>  
+          {% endif %}
           <form action="" method="post">
             {% csrf_token %}
             <div>{{ form_approval|crispy }}</div>
