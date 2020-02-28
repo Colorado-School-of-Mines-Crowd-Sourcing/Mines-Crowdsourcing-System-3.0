@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.apps import apps
+from django.contrib import messages
 from django.http import Http404, QueryDict
+from django.shortcuts import redirect, render
 
-from participant.models import User, Task, Tag
-from .forms import CreateTask, CreateApproval
+from participant.models import Tag, Task, User
+
+from .forms import CreateApproval, CreateTask
+
 
 def create(request):
     # if this is a POST request we need to process the form data
@@ -12,7 +14,7 @@ def create(request):
         # create a form instance and populate it with data from the request:
         form_task = CreateTask(request.POST)
         # check whether it's valid
-        if form_task.is_valid() :
+        if form_task.is_valid():
             # Task creation
             new_task = form_task.save(commit=False)
             new_task.requester = request.user
@@ -23,7 +25,8 @@ def create(request):
                 new_tag = Tag.create(tag, new_task)
                 new_tag.save()
 
-            messages.success(request, 'Your task has been submitted for review.')
+            messages.success(
+                request, 'Your task has been submitted for review.')
             return redirect('requester_create')
 
     # if a GET (or any other method) we'll create a blank form
@@ -31,24 +34,25 @@ def create(request):
         form_task = CreateTask()
     return render(request, 'requester/create.html', {'form_task': form_task})
 
+
 def see_tasks(request):
     user = request.user
     if user.is_anonymous:
         return render(request, 'requester/tasks.html')
     else:
         pending = Task.objects.filter(
-            requester = user,
-            status = Task.PENDING,
+            requester=user,
+            status=Task.PENDING,
         )
 
         active = Task.objects.filter(
-            requester = user,
-            status = Task.ACTIVE,
+            requester=user,
+            status=Task.ACTIVE,
         )
 
         completed = Task.objects.filter(
-            requester = user,
-            status = Task.COMPLETED,
+            requester=user,
+            status=Task.COMPLETED,
         )
 
         return render(request, 'requester/tasks.html', {
@@ -56,6 +60,7 @@ def see_tasks(request):
             'active': active,
             'completed': completed,
         })
+
 
 def approve(task, task_id, request):
     form_approval = CreateApproval(request.POST)
@@ -67,14 +72,17 @@ def approve(task, task_id, request):
                 task.approved_participants.add(user)
                 user.save()
         task.save()
-        messages.success(request, 'The participants you selected are now approved!')
+        messages.success(
+            request, 'The participants you selected are now approved!')
         return redirect('contributor_approval', task_id)
+
 
 def close(task, task_id, request):
     task.status = Task.COMPLETED
     task.save()
     messages.success(request, 'The task has been closed!')
     return redirect('contributor_approval', task_id)
+
 
 def approve_contributors(request, task_id):
     try:
@@ -88,14 +96,15 @@ def approve_contributors(request, task_id):
             elif 'close' in request.POST:
                 return close(task, task_id, request)
         else:
-            participants_set=task.participants.all().difference(task.approved_participants.all())
+            participants_set = task.participants.all().difference(
+                task.approved_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)
             approval_left = True
             if participants_set.count() == 0:
                 approval_left = False
             return render(request, 'requester/approval.html',
-                        {'form_approval': form_approval,
-                        'task': task,
-                        'approval_left': approval_left,})
+                          {'form_approval': form_approval,
+                           'task': task,
+                           'approval_left': approval_left, })
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
