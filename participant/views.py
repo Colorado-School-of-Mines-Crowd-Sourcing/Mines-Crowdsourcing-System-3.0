@@ -1,19 +1,23 @@
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from django.shortcuts import render , redirect
-from participant.models import *
-from django.db.models import Q
+import re
+
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.db.models import Q
 from django.http import Http404
+from django.shortcuts import redirect, render
 from django.views.generic.detail import SingleObjectMixin
 
+from participant.models import *
 from wkhtmltopdf.views import PDFTemplateView
+
 
 def all_active_tasks_tags():
     all_tags_objects = Tag.objects.filter(task__status=Task.ACTIVE)
     all_tags_mapped = {}
     for tag_objects in all_tags_objects:
         try:
-            all_tags_mapped[tag_objects.task] = all_tags_mapped[tag_objects.task] + "," + tag_objects.tag
+            all_tags_mapped[tag_objects.task] = all_tags_mapped[tag_objects.task] + \
+                "," + tag_objects.tag
         except KeyError:
             all_tags_mapped[tag_objects.task] = tag_objects.tag
     return all_tags_mapped
@@ -44,8 +48,10 @@ def completed_tasks(request):
 def search_results(request):
     all_tags_mapped = all_active_tasks_tags()
     query = request.GET.get('q')
-    query_title = Task.objects.filter(Q(title__contains=query), status=Task.ACTIVE)
-    query_tag = Task.objects.filter(Q(tag__tag__contains=query), status=Task.ACTIVE)
+    query_title = Task.objects.filter(
+        Q(title__contains=query), status=Task.ACTIVE)
+    query_tag = Task.objects.filter(
+        Q(tag__tag__contains=query), status=Task.ACTIVE)
     query_result = query_tag.union(query_title)
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
@@ -59,10 +65,13 @@ def task_details(request, task_id):
         # has not completed, we still want to display a 404
         if (current_task.status == Task.PENDING or
             (current_task.status == Task.COMPLETED
-            and request.user not in current_task.participants.all()
-            and request.user not in current_task.approved_participants)):
-                raise Task.DoesNotExist
+             and request.user not in current_task.participants.all()
+             and request.user not in current_task.approved_participants)):
+            raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
+        google_form = re.search(
+            "^https:\/\/docs.google.com\/forms\/.*$",
+            current_task.link_to)
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
@@ -73,8 +82,12 @@ def task_details(request, task_id):
             return redirect('task_details_page', task_id)
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
-    return render(request, 'participant/task_details.html', {'task': current_task,
-                                                             'already_completed': already_completed})
+    return render(request,
+                  'participant/task_details.html',
+                  {'task': current_task,
+                   'already_completed': already_completed,
+                   'google_form': google_form})
+
 
 def redeem(request):
     # Minimum balance to redeem
@@ -95,7 +108,8 @@ def redeem(request):
             user.save()
             messages.success(request, 'Your balance has been redeemed.')
         else:
-            messages.error(request, f'You need at least ${MIN_REWARD} in order to redeem')
+            messages.error(
+                request, f'You need at least ${MIN_REWARD} in order to redeem')
 
     return render(request, 'participant/redeem.html', {'user': user, 'min_reward': MIN_REWARD})
 
