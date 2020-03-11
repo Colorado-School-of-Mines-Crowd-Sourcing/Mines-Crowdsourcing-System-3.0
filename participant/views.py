@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
@@ -48,11 +49,32 @@ def completed_tasks(request):
 def search_results(request):
     all_tags_mapped = all_active_tasks_tags()
     query = request.GET.get('q')
-    query_title = Task.objects.filter(
-        Q(title__contains=query), status=Task.ACTIVE)
-    query_tag = Task.objects.filter(
-        Q(tag__tag__contains=query), status=Task.ACTIVE)
-    query_result = query_tag.union(query_title)
+    category = request.GET.get('category')
+    query_result = Task.objects.none()
+    if category == 'requester':
+        query_result = Task.objects.filter(
+            Q(requester__name__contains=query), status=Task.ACTIVE)
+    if category == 'qualifications':
+        query_result = Task.objects.filter(
+            Q(participant_qualifications__contains=query), status=Task.ACTIVE)
+    if category == 'title':
+        query_result = Task.objects.filter(
+            Q(title__contains=query), status=Task.ACTIVE)
+    if category == 'reward':
+        try:
+            query_result = Task.objects.filter(
+                Q(reward_amount__gte=float(query)))
+        except ValueError:
+            messages.error(request, 'Please enter number value')
+
+    if category == 'end_date':
+        try:
+            query_result = Task.objects.filter(
+                Q(end_date__lte=datetime.strptime(query, '%m/%d/%Y')))
+        except ValueError:
+            messages.error(
+                request, 'Please enter the date in the correct format')
+
     return render(request, 'participant/search_result.html', {
         'resulted_tasks': query_result, 'all_tags_mapped': all_tags_mapped})
 
