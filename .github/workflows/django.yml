@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Extract Branch Name
+      run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
@@ -25,14 +27,14 @@ jobs:
         python manage.py collectstatic
         coverage run manage.py test
     - name: Deploy prod
-      if: contains(github.ref, "master")
+      if: env.BRANCH == master
       uses: AkhileshNS/heroku-deploy@v2.0.2
       with:
           heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
           heroku_app_name: "mines-crowdsourcing"
           heroku_email: "leo.chely@live.fr"
     - name: Deploy dev
-      if: contains(github.ref, "dev")
+      if: env.BRANCH == dev
       uses: AkhileshNS/heroku-deploy@v2.0.2
       with:
           heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
