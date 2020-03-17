@@ -1,7 +1,6 @@
 name: Django CI
 
-on:
-  [push, pull_request]
+on: push
 
 jobs:
   build:
@@ -26,14 +25,14 @@ jobs:
         python manage.py collectstatic
         coverage run manage.py test
     - name: Deploy prod
-      if: $GITHUB_REF == */master
+      if: github.ref == */master
       uses: AkhileshNS/heroku-deploy@v2.0.2
       with:
           heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
           heroku_app_name: "mines-crowdsourcing"
           heroku_email: "leo.chely@live.fr"
     - name: Deploy dev
-      if: $GITHUB_REF == */dev
+      if: github.ref == */dev
       uses: AkhileshNS/heroku-deploy@v2.0.2
       with:
           heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
