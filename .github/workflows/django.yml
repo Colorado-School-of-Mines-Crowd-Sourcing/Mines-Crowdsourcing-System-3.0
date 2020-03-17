@@ -1,10 +1,7 @@
 name: Django CI
 
 on:
-  push:
-    branches: [ spike/* ]
-  pull_request:
-    branches: [ spike/* ]
+  [push, pull_request]
 
 jobs:
   build:
@@ -28,9 +25,17 @@ jobs:
         python manage.py migrate
         python manage.py collectstatic
         coverage run manage.py test
-    - name: Deploy to Heroku
+    - name: Deploy prod
+      if: $GITHUB_REF == */master
       uses: AkhileshNS/heroku-deploy@v2.0.2
       with:
           heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
-          heroku_app_name: "mines-crowdsourcing-dev-leo"
+          heroku_app_name: "mines-crowdsourcing"
+          heroku_email: "leo.chely@live.fr"
+    - name: Deploy dev
+      if: $GITHUB_REF == */dev
+      uses: AkhileshNS/heroku-deploy@v2.0.2
+      with:
+          heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
+          heroku_app_name: "mines-crowdsourcing-dev"
           heroku_email: "leo.chely@live.fr"
