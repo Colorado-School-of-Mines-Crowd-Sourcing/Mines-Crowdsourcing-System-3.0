@@ -8,14 +8,13 @@ from participant.models import Task, User
 from requester.views import *
 
 
-
 class Create(TestCase):
     def setUp(self):
         self.client = Client()
         self.create_url = reverse('requester_create')
 
     def test_create_GET_200(self):
-        print('**************test_create_GET_200()******************')
+        print('******************test_create_GET_200()**********************')
 
         response = self.client.get(self.create_url)
         print('Response status code : ' + str(response.status_code))
@@ -29,7 +28,7 @@ class SeeTasks(TestCase):
         self.see_task_url = reverse('requester_tasks')
 
     def test_see_GET_200(self):
-        print('**************test_see_GET_200()******************')
+        print('********************test_see_GET_200()************************')
 
         response = self.client.get(self.see_task_url)
         print('Response status code : ' + str(response.status_code))
@@ -63,6 +62,11 @@ class ApproveContributors(TestCase):
         test_task.save()
 
     def test_approve_GET_404_no_task(self):
+        """
+        GIVEN A requester tries to access a task
+        WHEN that task does not exist
+        THEN a 404 is returned
+        """
         print('**************test_approve_GET_404_no task()******************')
 
         response = self.client.force_login(self.requester)
@@ -73,7 +77,12 @@ class ApproveContributors(TestCase):
         self.assertEquals(response.status_code, 404)
 
     def test_approve_GET_404_invalid_user(self):
-        print('**************test_approve_GET_404_invalid_user()******************')
+        """
+        GIVEN A regular user tries to access a task
+        WHEN that user is not a requester
+        THEN a 404 is returned
+        """
+        print('************test_approve_GET_404_invalid_user()****************')
 
         response = self.client.force_login(self.participant)
         approve_url = reverse_lazy('contributor_approval', args=[1])
@@ -83,6 +92,11 @@ class ApproveContributors(TestCase):
         self.assertEquals(response.status_code, 404)
 
     def test_approve_GET_200(self):
+        """
+        GIVEN A requester tries to access a task
+        WHEN that requester created that task
+        THEN the task is displayed
+        """
         print('******************test_approve_GET_200()**********************')
 
         response = self.client.force_login(self.requester)
