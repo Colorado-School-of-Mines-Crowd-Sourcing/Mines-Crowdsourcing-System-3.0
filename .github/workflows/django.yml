@@ -4,7 +4,6 @@ on: push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,12 +21,14 @@ jobs:
       run: |
         python manage.py migrate
         python manage.py collectstatic
-        coverage run manage.py test
-  
+    - uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    steps:    
+    steps:
       - uses: actions/checkout@v2
       - name: Extract Branch Name
         run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
