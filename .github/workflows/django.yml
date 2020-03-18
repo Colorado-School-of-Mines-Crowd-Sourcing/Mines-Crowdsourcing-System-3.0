@@ -22,12 +22,12 @@ jobs:
         python manage.py migrate
         python manage.py collectstatic
         coverage run manage.py test
+        coverage xml
     - name: Code coverage
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./.coverage
-        flags: unittests
+        file: ./coverage.xml
         fail_ci_if_error: true
 
   deploy:
