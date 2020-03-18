@@ -21,6 +21,7 @@ jobs:
       run: |
         python manage.py migrate
         python manage.py collectstatic
+        coverage run manage.py test
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
