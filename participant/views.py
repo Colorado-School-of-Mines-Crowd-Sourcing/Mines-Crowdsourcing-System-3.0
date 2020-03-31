@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from django.contrib import messages
@@ -90,6 +91,9 @@ def task_details(request, task_id):
              and request.user not in current_task.approved_participants)):
             raise Task.DoesNotExist
         already_completed = request.user in current_task.participants.all()
+        google_form = re.search(
+            "^https:\/\/docs.google.com\/forms\/.*$",
+            current_task.link_to)
         if request.method == 'POST':
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
@@ -100,8 +104,11 @@ def task_details(request, task_id):
             return redirect('task_details_page', task_id)
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
-    return render(request, 'participant/task_details.html', {'task': current_task,
-                                                             'already_completed': already_completed})
+    return render(request,
+                  'participant/task_details.html',
+                  {'task': current_task,
+                   'already_completed': already_completed,
+                   'google_form': google_form})
 
 
 def redeem(request):

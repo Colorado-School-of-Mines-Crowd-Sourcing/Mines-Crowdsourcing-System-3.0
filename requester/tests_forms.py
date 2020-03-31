@@ -4,11 +4,12 @@ import datetime
 
 from requester.forms import *
 
+
 class CreateTaskTest(TestCase):
 
     def test_valid_entry(self):
         data = {
-            'link_to': 'https://leoiscool.com',
+            'link_to': 'https://docs.google.com/forms/test/form',
             'participant_qualifications': 'some qualifications',
             'reward_amount': 12.34,
             'max_num_participants': 69,

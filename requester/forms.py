@@ -1,11 +1,12 @@
 from django import forms
-from django.forms import ModelForm, Form
 from django.apps import apps
+from django.forms import Form, ModelForm
 
 
 class CreateTask(ModelForm):
 
-    tags = forms.CharField(label='Tags', max_length=40, help_text='Separate your tags with a comma')
+    tags = forms.CharField(label='Tags', max_length=40,
+                           help_text='Separate your tags with a comma')
 
     class Meta:
         model = apps.get_model('participant', 'Task')
@@ -15,7 +16,7 @@ class CreateTask(ModelForm):
             'max_num_participants': 'Maximum Number of Participants',
             'participant_qualifications': 'Participant Qualifications',
             'reward_amount': 'Reward ',
-            'link_to': 'Link to Google Form',
+            'link_to': 'Link to survey',
         }
 
         help_texts = {
@@ -30,10 +31,10 @@ class CreateApproval(ModelForm):
         model = apps.get_model('participant', 'Task')
         fields = ['participants']
 
-    def __init__(self, *args,**kwargs):
+    def __init__(self, *args, **kwargs):
         participants_set = kwargs.pop('participants_set', None)
-        super(CreateApproval,self).__init__(*args,**kwargs)
+        super(CreateApproval, self).__init__(*args, **kwargs)
         if participants_set:
             self.fields['participants'] = forms.ModelMultipleChoiceField(
-                                        queryset=participants_set,
-                                        widget=forms.CheckboxSelectMultiple,)
+                queryset=participants_set,
+                widget=forms.CheckboxSelectMultiple,)
