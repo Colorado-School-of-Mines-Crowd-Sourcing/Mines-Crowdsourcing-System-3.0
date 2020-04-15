@@ -1,13 +1,24 @@
 from django.apps import apps
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404, QueryDict
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render
-
 from participant.models import Tag, Task, User
 
 from .forms import CreateApproval, CreateTask
 
 
+def requester_check(user):
+    if user.is_anonymous:
+        return False
+    elif user.authorized_requester:
+        return True
+    else:
+        raise PermissionDenied
+
+
+@user_passes_test(requester_check)
 def create(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -35,6 +46,7 @@ def create(request):
     return render(request, 'requester/create.html', {'form_task': form_task})
 
 
+@user_passes_test(requester_check)
 def see_tasks(request):
     user = request.user
     if user.is_anonymous:
@@ -62,6 +74,7 @@ def see_tasks(request):
         })
 
 
+@user_passes_test(requester_check)
 def approve(task, task_id, request):
     form_approval = CreateApproval(request.POST)
     if form_approval.is_valid():
@@ -77,6 +90,7 @@ def approve(task, task_id, request):
         return redirect('contributor_approval', task_id)
 
 
+@user_passes_test(requester_check)
 def close(task, task_id, request):
     task.status = Task.COMPLETED
     task.save()
@@ -84,6 +98,7 @@ def close(task, task_id, request):
     return redirect('contributor_approval', task_id)
 
 
+@user_passes_test(requester_check)
 def approve_contributors(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)
