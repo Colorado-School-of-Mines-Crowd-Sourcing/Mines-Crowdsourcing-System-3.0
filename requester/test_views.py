@@ -11,11 +11,17 @@ from requester.views import *
 class Create(TestCase):
     def setUp(self):
         self.client = Client()
+        self.requester = User.objects.create_user('test',
+                                                  'requester',
+                                                  'requester@test.com',
+                                                  1111,
+                                                  True)
         self.create_url = reverse('requester_create')
 
     def test_create_GET_200(self):
         print('**************test_create_GET_200()******************')
 
+        response = self.client.force_login(self.requester)
         response = self.client.get(self.create_url)
         print('Response status code : ' + str(response.status_code))
 
@@ -25,11 +31,17 @@ class Create(TestCase):
 class SeeTasks(TestCase):
     def setUp(self):
         self.client = Client()
+        self.requester = User.objects.create_user('test',
+                                                  'requester',
+                                                  'requester@test.com',
+                                                  1111,
+                                                  True)
         self.see_task_url = reverse('requester_tasks')
 
     def test_see_GET_200(self):
         print('**************test_see_GET_200()******************')
 
+        response = self.client.force_login(self.requester)
         response = self.client.get(self.see_task_url)
         print('Response status code : ' + str(response.status_code))
 
@@ -71,15 +83,15 @@ class ApproveContributors(TestCase):
 
         self.assertEquals(response.status_code, 404)
 
-    def test_approve_GET_404_invalid_user(self):
-        print('**************test_approve_GET_404_invalid_user()******************')
+    def test_approve_GET_403_invalid_user(self):
+        print('**************test_approve_GET_403_invalid_user()******************')
 
         response = self.client.force_login(self.participant)
         approve_url = reverse_lazy('contributor_approval', args=[1])
         response = self.client.get(approve_url)
         print('Response status code : ' + str(response.status_code))
 
-        self.assertEquals(response.status_code, 404)
+        self.assertEquals(response.status_code, 403)
 
     def test_approve_GET_200(self):
         print('******************test_approve_GET_200()**********************')
