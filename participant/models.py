@@ -82,6 +82,7 @@ class Task(models.Model):
     requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req')
     participants = models.ManyToManyField(User, blank=True, related_name='part')
     approved_participants = models.ManyToManyField(User, blank=True, related_name='aproved')
+    paid_participants = models.ManyToManyField(User, blank=True, related_name='paid')
 
     def __str__(self):
         return self.title
