@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block content %}
 <div class="container h-100 align-self-center">
   <div class="row py-5 justify-content-center">
     <h2 class="m-auto">Sign up</h2>
   </div>
+  <p> Please complete the W-9 form in order to receive payments. Either of the listed items should satisfy: </p>
+  <ul>
+    <li> Deliver the W-9 form in person to Suite 224 in Guggenheim Hall </li>
+    <li> You can 'Request Service' and then 'Activate a Current Student or Employee as a Vendor' directly 
+    <a target="_blank" href="https://helpcenter.mines.edu/TDClient/2657/maps/Requests/ServiceDet?ID=45183"> here </a> (Mines Multipass Required)</li>
+    <li> Send the W-9 or W8-BEN to us by email, omitting the social security number or tax ID number portion from the form to <a href="mailto:jslander@mines.edu">jslander@mines.edu</a>.</li>    
+  </ul>
+  <p> Link to fillable <a target="_blank" href="{%static "W-9Fillable.pdf" %}"> W-9 form</a></p>
   <div class="row py-5">
     <div class="col-sm-8 mx-auto">
       <form class="text-center" method="post">
