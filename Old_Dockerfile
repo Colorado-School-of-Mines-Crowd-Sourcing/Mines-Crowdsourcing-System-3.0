@@ -1,0 +1,43 @@
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
+#ENV APACHE_LOG_DIR="/var/log/apache2"
+ENV APACHE_LOG_DIR="/var/www/html/minesCrowdsourcing/logs"
+#might help with showing error logs
+ENV PYTHONUNBUFFERED=1
+RUN apt-get update
+RUN apt-get install -y apt-utils vim curl apache2 apache2-utils 
+RUN apt-get install -y postgresql postgresql-contrib libpq-dev
+RUN apt-get -y install python3 libapache2-mod-wsgi-py3 
+RUN ln /usr/bin/python3 /usr/bin/python 
+RUN apt-get -y install python3-pip
+RUN ln /usr/bin/pip3 /usr/bin/pip 
+RUN pip install --upgrade pip 
+RUN pip install Django==3.0.4 ptvsd 
+
+
+
+ADD ./site-config.conf /etc/apache2/sites-available/000-default.conf 
+ADD ./requirements.txt /var/www/html 
+ADD ./www /var/www/html/minesCrowdsourcing
+RUN ls /var/www/html
+RUN ls /var/www/html/minesCrowdsourcing
+RUN ls /var/www/html/minesCrowdsourcing/logs
+
+
+RUN whoami
+WORKDIR /var/www/html 
+RUN pip install -r requirements.txt 
+RUN chmod -R 664 /var/www/html/minesCrowdsourcing/db.sqlite3 
+#RUN chmod 775 /var/www/html/minesCrowdsourcing/minesCrowdsourcing 
+RUN chmod -R 777 /var/www/html/minesCrowdsourcing/minesCrowdsourcing 
+RUN chmod -R 777 /var/www/html/minesCrowdsourcing/logs/
+#RUN chown -R :www-data /var/www/html/minesCrowdsourcing/db.sqlite3 
+#RUN chown -R :www-data /var/www/html/minesCrowdsourcing/minesCrowdsourcing 
+#RUN chown -R :www-data /var/www/html/minesCrowdsourcing/logs 
+RUN chown -R root /var/www/html/minesCrowdsourcing/db.sqlite3 
+RUN chown -R root /var/www/html/minesCrowdsourcing/minesCrowdsourcing 
+RUN chown -R root /var/www/html/minesCrowdsourcing/logs 
+RUN ls -la
+
+EXPOSE 80 3500 
+#CMD ["apache2ctl", "-D", "FOREGROUND"]
