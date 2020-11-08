@@ -1,8 +1,10 @@
 # nginx.default
 
 server {
-    listen 9601;
-    server_name example.org;
+    listen 443 ssl;
+    server_name my-site.com;
+    ssl_certificate /etc/nginx/my-site.com.crt;
+    ssl_certificate_key /etc/nginx/my-site.com.key;
 
     location / {
         proxy_pass http://127.0.0.1:9600;
