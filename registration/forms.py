@@ -4,7 +4,7 @@ from django.apps import apps
 class SignUpForm(UserCreationForm):
     class Meta:
         model = apps.get_model('participant', 'User')
-        fields = ['multipass_username', 'name', 'CWID']
+        fields = ['email', 'name', 'CWID']
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)

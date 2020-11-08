@@ -7,30 +7,46 @@
   <div class="row py-5 justify-content-center">
     <h2 class="m-auto">Sign up</h2>
   </div>
-  <p> Please complete the W-9 form in order to receive payments. This can be satisfied via any of the options listed below: </p>
-  <ul>
-    <li> Deliver the W-9 form in person to Suite 224 in Guggenheim Hall </li>
-    <li> You can 'Request Service' and then 'Activate a Current Student or Employee as a Vendor' directly
-    <a target="_blank" href="https://helpcenter.mines.edu/TDClient/2657/maps/Requests/ServiceDet?ID=45183"> through this link </a> (Mines Multipass Required)</li>
-    <li> Send the W-9 or W8-BEN to us by email, omitting the social security number or tax ID number portion from the form to <a href="mailto:jslander@mines.edu">jslander@mines.edu</a>.</li>
-  </ul>
-  <p> Link to fillable <a target="_blank" href="{%static "W-9Fillable.pdf" %}"> W-9 form</a></p>
-  <p> Note: If you are not already affiliated with Mines, once this process has been completed, you will recieve a Campus Wide ID (CWID) with which you can use to register to be a participant on the Mines Crowdsourcing System! </p>
+  <div>
+    <p>Before becoming a participant with the Mines Croudsourcing System, you must have a W-9
+      form filed with Colorado School of Mines (we want to make sure we can pay you!). If this has
+      already been done, you can fill out the following fields to register as a participant. Otherwise,
+      scroll to the bottom of this page for instructions on submitting a W-9 form.</p>
+  </div>
   <div class="row py-5">
     <div class="col-sm-8 mx-auto">
       <form class="text-center" method="post">
-         {% csrf_token %}
-         {% for field in form %}
-           <div class="form-group">
-             {{ field|as_crispy_field }}
-             {% for error in field.errors %}
-               <p style="color: red">{{ error }}</p>
-             {% endfor %}
-           </div>
-         {% endfor %}
-         <button type="submit">Sign up</button>
-       </form>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+          {{ field|as_crispy_field }}
+          {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <div>  <!-- style="text-align:left;"> --!>
+        <input type="checkbox" id="w9filled" name="w9filled" value="w9filled">
+        <label for="w9filled"> By checking this box, I am confirming that I have a W-9
+           form filed with the Colorado School of Mines</label><br>
+        </div>
+        <button type="submit">Sign up</button>
+      </form>
     </div>
-   </div>
- </div>
+  </div>
+  <p> Please complete and submit a <a target="_blank" href="{%static "W-9Fillable.pdf" %}"> W-9 form</a>
+    form in order to receive payments. This can be satisfied via any of the options listed below: </p>
+  <ul>
+    <li> Deliver the W-9 form in person to Suite 224 in Guggenheim Hall </li>
+    <li> If you have an existing Multipass login, 'Request Service' and then 'Activate a
+      Current Student or Employee as a Vendor' directly through
+      <a target="_blank" href="https://helpcenter.mines.edu/TDClient/2657/maps/Requests/ServiceDet?ID=45183"> this link </a>
+    </li>
+    <li> Submit the W-9 by email, omitting the social security number or tax ID number
+      portion from the form by sending it to <a href="mailto:jslander@mines.edu">jslander@mines.edu</a>.</li>
+  </ul>
+  <p> Note: If you are not already affiliated with Mines, once this process has been completed,
+     you will recieve a Campus Wide ID (CWID) with which you can use to register to be a participant
+     on the Mines Crowdsourcing System! </p>
+</div>
 {% endblock %}

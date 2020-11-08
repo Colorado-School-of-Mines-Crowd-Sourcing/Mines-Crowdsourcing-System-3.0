@@ -2,7 +2,6 @@ pytz
 django-apscheduler
 Django
 gunicorn
-django_heroku
-django-crispy-forms
+
 zipfile36
 django-wkhtmltopdf
