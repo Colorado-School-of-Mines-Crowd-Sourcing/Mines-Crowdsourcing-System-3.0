@@ -1,7 +1,7 @@
 # nginx.default
 
 server {
-    listen 443 ssl;
+    listen 9601 ssl;
     server_name my-site.com;
     ssl_certificate /etc/nginx/my-site.com.crt;
     ssl_certificate_key /etc/nginx/my-site.com.key;

@@ -21,7 +21,7 @@ RUN pip install -r requirements.txt
 RUN chmod 664 /opt/app/minesCrowdsourcing/db.sqlite3
 # --cache-dir /opt/app/pip_cache
 RUN chown -R www-data:www-data /opt/app
-EXPOSE 443
+EXPOSE 9601
 STOPSIGNAL SIGTERM
 CMD ["/opt/app/start-server.sh"]
 
