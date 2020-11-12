@@ -8,10 +8,10 @@ import uuid
 
 # Define user manager
 class UserManager(BaseUserManager):
-    def create_user(self, multipass_username, name, email, CWID, authorized_requester=False, reward_balance=0,
+    def create_user(self, name, email, CWID, authorized_requester=False, reward_balance=0,
                     password=None):
-        if not multipass_username:
-            raise ValueError("Enter your Mines username")
+        if not name:
+            raise ValueError("Enter your a username")
         user = self.model(
             name=name,
             email=email,
