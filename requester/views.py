@@ -2,6 +2,8 @@ from django.apps import apps
 from django.contrib import messages
 from django.http import Http404, QueryDict
 from django.shortcuts import redirect, render
+from django.core import mail
+from django.core.mail import EmailMessage
 
 from participant.models import Tag, Task, User
 
@@ -92,6 +94,9 @@ def approve(task, task_id, request):
             if user not in task.approved_participants.all():
                 user.reward_balance += task.reward_amount
                 task.approved_participants.add(user)
+                message = "Your submission for %s has been approved. $%s has been added to your account." % (task.title, "{0:.2f}".format(task.reward_amount))
+                body = "Mines Crowdsourcing System Task Approval - %s" % (task.title,)
+                email_user(request, message, body)
                 user.save()
         task.save()
         messages.success(
@@ -140,3 +145,12 @@ def approve_contributors(request, task_id):
                            'success_rate': success_rate, })
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
+
+def email_user(user_email, message, subject):
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email='minescrowdsourcing@gmail.com',
+        to=[user_email,],
+    )
+    email.send(False)

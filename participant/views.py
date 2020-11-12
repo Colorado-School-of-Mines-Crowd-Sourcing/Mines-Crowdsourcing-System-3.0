@@ -8,6 +8,8 @@ from django.shortcuts import redirect, render
 from django.views.generic.detail import SingleObjectMixin
 from participant.models import *
 from wkhtmltopdf.views import PDFTemplateView
+from django.core import mail
+from django.core.mail import EmailMessage
 
 
 def all_active_tasks_tags():
@@ -93,6 +95,9 @@ def task_details(request, task_id):
             messages.success(request, 'Thank you for your contribution! This task has been marked complete and is '
                                       'waiting for the approval of the requester.')
             current_task.participants.add(request.user)
+            message = "Thanks for completing %s for $%s. Will we contact you again when your submission has been approved." % (current_task.title, "{0:.2f}".format(current_task.reward_amount))
+            body = "Mines Crowdsourcing System Task Completion: %s" % (current_task.title,)
+            email_user(request.user.email, message, body)
             if current_task.participants.count() >= current_task.max_num_participants:
                 current_task.status = Task.COMPLETED
             current_task.save()
@@ -121,6 +126,9 @@ def redeem(request):
             transaction.save()
             user.reward_balance = 0  # Reset balance to 0 since all was redeemed
             user.save()
+            message = "Thanks for redeeming your balance of $%s." % ("{0:.2f}".format(amount))
+            body = "Mines Crowdsourcing System Balance Redemption"
+            email_user(request.user.email, message, body)
             messages.success(request, 'Your balance has been redeemed.')
         else:
             messages.error(
@@ -128,6 +136,14 @@ def redeem(request):
 
     return render(request, 'participant/redeem.html', {'user': user, 'min_reward': MIN_REWARD})
 
+def email_user(user_email, message, subject):
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email='minescrowdsourcing@gmail.com',
+        to=[user_email,],
+    )
+    email.send(False)
 
 # Admin Views
 class formPDF(SingleObjectMixin, PDFTemplateView):
