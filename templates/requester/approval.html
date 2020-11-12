@@ -38,6 +38,15 @@
             <h2 class="text-center" >You have no one left to approve on this task!</h2>
           {% endif %}
         {% endif %}
+        <h2 class="text-center py-3"> Task Statistics </h2>
+        <p> Reward Amount: ${{ task.reward_amount }} </p>
+        <p> Max Number of Participants: {{ task.max_num_participants }} </p>
+        <p> End Date: {{ task.end_date }} </p>
+        <p> Number of Participants That Have Completed Task: {{ num_completed }} </p>
+        <p> Number of Participants Approved: {{ num_approved }} </p>
+        <p> Percent of Task Completed: {{ percent_complete }}% </p>
+        <p> Total Amount Paid Out: ${{ total_paid }} </p>
+        <p> Success Rate (Number of Participants Approved / Number of Participants That Marked Task as Complete): {{ success_rate }}% </p>
       {% else %}
         <h2 class="text-center" >You must be an authorized requester in order to access this page.</h2>
       {% endif %}

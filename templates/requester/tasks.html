@@ -45,6 +45,38 @@
     </div>
     <div class="col-sm-2"></div>
   </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-2"></div>
+    <div class="col-sm">
+      <ul class="list-group list-group-flush">
+        <h3 class="pt-5">Task Statistics</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Number of Completed Tasks</th>
+                    <th scope="col">Percent Complete</th>
+                    <th scope="col">Reward Amount</th>
+                    <th scope="col">Total Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in task_data %}
+                    <tr>
+                        <th scope="row">{{ task.title }}</th>
+                        <td>{{ task.num_completed }}</td>
+                        <td>{{ task.percent_complete }}%</td>
+                        <td>${{ task.reward_amount }}</td>
+                        <td>${{ task.total_paid }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+      </ul>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
 </div>
 {% else %}
 <div class="container d-flex h-100">

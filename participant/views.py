@@ -6,7 +6,6 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.generic.detail import SingleObjectMixin
-
 from participant.models import *
 from wkhtmltopdf.views import PDFTemplateView
 
@@ -116,6 +115,7 @@ def redeem(request):
     if request.method == 'POST':
         # Redeem all of the available balance
         amount = user.reward_balance
+        #total_amount = Task.objects.filter(user_id=user.id)
         if amount >= MIN_REWARD:
             transaction = Transaction.create(user, amount)
             transaction.save()
