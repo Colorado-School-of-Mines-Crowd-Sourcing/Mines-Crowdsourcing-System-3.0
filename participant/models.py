@@ -13,7 +13,6 @@ class UserManager(BaseUserManager):
         if not multipass_username:
             raise ValueError("Enter your Mines username")
         user = self.model(
-            multipass_username=multipass_username,
             name=name,
             email=email,
             CWID=CWID,
@@ -25,9 +24,9 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, multipass_username, name, email, CWID, authorized_requester, reward_balance,
+    def create_superuser(self, name, email, CWID, authorized_requester, reward_balance,
                          password=None):
-        user = self.create_user(multipass_username, name, email, CWID, authorized_requester, reward_balance, password)
+        user = self.create_user(name, email, CWID, authorized_requester, reward_balance, password)
         user.is_superuser = True
         user.is_staff = True
         user.save()
@@ -36,8 +35,7 @@ class UserManager(BaseUserManager):
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
-    multipass_username = models.CharField(max_length=50, unique=True, )
-    name = models.CharField(max_length=100, )
+    name = models.CharField(max_length=100, unique=True)
     email = models.EmailField()
     CWID = models.IntegerField(primary_key=True, )
     authorized_requester = models.BooleanField(default=False, )
@@ -48,9 +46,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    REQUIRED_FIELDS = ['name', 'email', 'CWID', 'authorized_requester', 'reward_balance']
+    REQUIRED_FIELDS = ['email', 'CWID', 'authorized_requester', 'reward_balance']
 
-    USERNAME_FIELD = 'multipass_username'
+    USERNAME_FIELD = 'name'
+
     # def set_unusable_password(self):
     # Set a value that will never be a valid hash
     # self.password = make_password(None)
