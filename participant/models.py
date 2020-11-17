@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.core.validators import MinValueValidator
 import uuid
+import random
 
 
 # Define user manager
@@ -35,6 +36,12 @@ class UserManager(BaseUserManager):
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
+    def create_new_unique_id():
+        random_number = str(random.randint(100000,999999))
+        #while User.objects.filter(anon_id=random_number):
+        #    print("gen new random num")
+        #    random_number = str(random.randint(100000,999999))
+        return random_number
     name = models.CharField(max_length=100, unique=True)
     email = models.EmailField()
     CWID = models.IntegerField(primary_key=True, )
@@ -42,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
+    anon_id = models.CharField(blank=True, unique=True, max_length=6, default=create_new_unique_id())
     # completed_tasks = ManyToMany(Task) maybe?
 
     objects = UserManager()
@@ -53,9 +61,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # def set_unusable_password(self):
     # Set a value that will never be a valid hash
     # self.password = make_password(None)
-
     def __str__(self):
-        return self.name
+        #return self.name
+        return self.anon_id
 
 
 class Task(models.Model):

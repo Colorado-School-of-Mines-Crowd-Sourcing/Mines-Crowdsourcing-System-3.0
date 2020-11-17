@@ -147,10 +147,12 @@ def approve_contributors(request, task_id):
         raise Http404('Task does not exist')
 
 def email_user(user_email, message, subject):
-    email = EmailMessage(
-        subject=subject,
-        body=message,
-        from_email='minescrowdsourcing@gmail.com',
-        to=[user_email,],
-    )
-    email.send(False)
+    #email = EmailMessage(
+    #    subject=subject,
+    #    body=message,
+    #    from_email='minescrowdsourcing@gmail.com',
+    #    to=[user_email,],
+    #)
+    #email.send(False)
+    print(subject)
+    print(message)

@@ -8,16 +8,16 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.pay_users()
         self.redeem_user_balances()
-        email = EmailMessage(
-            subject='Mines Crowdsourcing System Payments',
-            body='Body',
-            from_email='minescrowdsourcing@gmail.com',
-            to=['maxgawason@gmail.com',],
-        )
+        #email = EmailMessage(
+        #    subject='Mines Crowdsourcing System Payments',
+        #    body='Body',
+        #    from_email='minescrowdsourcing@gmail.com',
+        #    to=['maxgawason@gmail.com',],
+        #)
         print("sending email")
-        email.attach_file('./temp/UserBalances.xlsx')
-        email.attach_file('./temp/TaskBalances.xlsx')
-        email.send(False) 
+        #email.attach_file('./temp/UserBalances.xlsx')
+        #email.attach_file('./temp/TaskBalances.xlsx')
+        #email.send(False) 
         print("finished sending email")
 
     def pay_users(self):

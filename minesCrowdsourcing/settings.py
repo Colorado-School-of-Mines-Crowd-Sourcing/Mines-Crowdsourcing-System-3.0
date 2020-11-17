@@ -151,7 +151,7 @@ LOGOUT_REDIRECT_URL = 'index'
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER='minescrowdsourcing@gmail.com'
-EMAIL_HOST_PASSWORD='INSERT PASSWORD'
+EMAIL_HOST_PASSWORD='Insert Password'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_USE_TLS=True
 EMAIL_PORT=587

@@ -137,13 +137,15 @@ def redeem(request):
     return render(request, 'participant/redeem.html', {'user': user, 'min_reward': MIN_REWARD})
 
 def email_user(user_email, message, subject):
-    email = EmailMessage(
-        subject=subject,
-        body=message,
-        from_email='minescrowdsourcing@gmail.com',
-        to=[user_email,],
-    )
-    email.send(False)
+    #email = EmailMessage(
+    #    subject=subject,
+    #    body=message,
+    #    from_email='minescrowdsourcing@gmail.com',
+    #    to=[user_email,],
+    #)
+    #email.send(False)
+    print(subject)
+    print(message)
 
 # Admin Views
 class formPDF(SingleObjectMixin, PDFTemplateView):

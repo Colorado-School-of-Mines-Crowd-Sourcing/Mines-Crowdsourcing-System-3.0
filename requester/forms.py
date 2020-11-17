@@ -29,7 +29,7 @@ class CreateApproval(ModelForm):
     class Meta:
         model = apps.get_model('participant', 'Task')
         fields = ['participants']
-
+    
     def __init__(self, *args,**kwargs):
         participants_set = kwargs.pop('participants_set', None)
         super(CreateApproval,self).__init__(*args,**kwargs)
