@@ -4,6 +4,9 @@ from django.http import Http404, QueryDict
 from django.shortcuts import redirect, render
 from django.core import mail
 from django.core.mail import EmailMessage
+from django.http.response import HttpResponse
+from xlsxwriter.workbook import Workbook
+import io
 
 from participant.models import Tag, Task, User
 
@@ -38,6 +41,7 @@ def create(request):
 
 
 def see_tasks(request):
+    print("in see tasks")
     user = request.user
     if user.is_anonymous:
         return render(request, 'requester/tasks.html')
@@ -110,6 +114,30 @@ def close(task, task_id, request):
     messages.success(request, 'The task has been closed!')
     return redirect('contributor_approval', task_id)
 
+def download_demographics(task, task_id, request):
+    output = io.BytesIO()
+    workbook = Workbook(output, {'in_memory': True})
+    worksheet = workbook.add_worksheet()
+    worksheet.write(0, 0, 'Participant ID')
+    worksheet.write(0, 1, 'Sex')
+    worksheet.write(0, 2, 'Ethnicity')
+    worksheet.write(0, 3, 'Age')
+    worksheet.write(0, 4, 'Major')
+    row = 1
+    approved_participants = task.approved_participants.all() | task.paid_participants.all()
+    for participant in approved_participants:
+        worksheet.write(row, 0, participant.anon_id)
+        worksheet.write(row, 1, participant.sex)
+        worksheet.write(row, 2, participant.ethnicity)
+        worksheet.write(row, 3, participant.age)
+        worksheet.write(row, 4, participant.major)
+        row = row + 1
+    workbook.close()
+    output.seek(0)
+    response = HttpResponse(output.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response['Content-Disposition'] = "attachment; filename=%s_Participant_Demographics.xlsx" % task.title
+    output.close()
+    return response
 
 def approve_contributors(request, task_id):
     try:
@@ -122,9 +150,12 @@ def approve_contributors(request, task_id):
                 return approve(task, task_id, request)
             elif 'close' in request.POST:
                 return close(task, task_id, request)
+            elif 'download_demographics' in request.POST:
+                return download_demographics(task, task_id, request)
         else:
             participants_set = task.participants.all().difference(
-                task.approved_participants.all())
+                task.approved_participants.all()).difference(
+                task.paid_participants.all())
             form_approval = CreateApproval(participants_set=participants_set)
             num_completed = task.participants.all().count()
             num_approved = task.approved_participants.count() + task.paid_participants.count()
@@ -156,3 +187,5 @@ def email_user(user_email, message, subject):
     #email.send(False)
     print(subject)
     print(message)
+
+

@@ -33,32 +33,4 @@ class TagsAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-
-    def get_urls(self):
-        return [
-            path(
-                '<int:pk>/pdf/',
-                self.admin_site.admin_view(formPDF.as_view()),
-                name='form_payment_pdf',
-            ),
-        ] + super().get_urls()
-
-    # Transactions processing actions
-    def make_processed(modeladmin, request, queryset):
-        queryset.update(processed=True)
-    make_processed.short_description = "Mark selected transactions as processed"
-
-    def make_not_processed(modeladmin, request, queryset):
-        queryset.update(processed=False)
-    make_not_processed.short_description = "Mark selected transactions as not processed"
-
-    def download_form_action(self, obj):
-        return format_html(
-            '<a class="button" href="{}">PDF</a>',
-            reverse('admin:form_payment_pdf', args=[obj.pk]),
-        )
-    download_form_action.short_description = 'Download as PDF'
-
-    list_display = ['__str__', 'processed', 'download_form_action']
-    list_filter = ['processed']
-    actions = [make_processed, make_not_processed]
+    pass

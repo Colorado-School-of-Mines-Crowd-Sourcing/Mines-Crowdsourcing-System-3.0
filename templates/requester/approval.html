@@ -38,6 +38,16 @@
             <h2 class="text-center" >You have no one left to approve on this task!</h2>
           {% endif %}
         {% endif %}
+        <h2 class="text-center py-3">Download Participant Demographics</h2>
+        <!--
+        <form action="#" method="get">
+            <input type="submit" class="btn" value="Download" name="demo_doc">
+        </form>
+        -->
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" class="d-block mx-auto my-3 btn btn-dark" name="download_demographics" value="Download"></input>
+        </form>
         <h2 class="text-center py-3"> Task Statistics </h2>
         <p> Reward Amount: ${{ task.reward_amount }} </p>
         <p> Max Number of Participants: {{ task.max_num_participants }} </p>

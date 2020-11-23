@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 import random
 
@@ -33,6 +33,39 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+SEX_CHOICES = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+    ('Other', 'Other'),
+)
+ETHNICITY_CHOICES = (
+    ('White', 'White'),
+    ('Hispanic or Latino', 'Hispanic or Latino'),
+    ('Black or African American', 'Black or African American'),
+    ('Native American or American Indian', 'Native American or American Indian'),
+    ('Asian/Pacific Islander', 'Asian/Pacific Islander'),
+    ('Other', 'Other'),
+)
+MAJOR_CHOICES = (
+    ('Applied Mathematics and Statistics', 'Applied Mathematics and Statistics'),
+    ('Biochemistry', 'Biochemistry'),
+    ('Chemical Engineering', 'Chemical Engineering'),
+    ('Chemistry', 'Chemistry'),
+    ('Civil Engineering', 'Civil Engineering'),
+    ('Computer Science', 'Computer Science'),
+    ('Economics', 'Economics'),
+    ('Electrical Engineering', 'Electrical Engineering'),
+    ('Engineering', 'Engineering'),
+    ('Engineering Physics', 'Engineering Physics'),
+    ('Environmental Engineering', 'Environmental Engineering'),
+    ('Geological Engineering', 'Geological Engineering'),
+    ('Geophysical Engineering', 'Geophysical Engineering'),
+    ('Mechanical Engineering', 'Mechanical Engineering'),
+    ('Metallurgical and Materials Engineering', 'Metallurgical and Materials Engineering'),
+    ('Mining Engineering', 'Mining Engineering'),
+    ('Petroleum Engineering', 'Petroleum Engineering'),
+    ('Not a Mines Student', 'Not a Mines Student'),
+)
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
@@ -50,6 +83,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
     anon_id = models.CharField(blank=True, unique=True, max_length=6, default=create_new_unique_id())
+    sex = models.CharField(max_length=6, choices=SEX_CHOICES, default='Female')
+    ethnicity = models.CharField(max_length=100, choices=ETHNICITY_CHOICES, default='Other')
+    age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)])
+    major = models.CharField(max_length=100, choices=MAJOR_CHOICES, default='Not a Mines Student')
     # completed_tasks = ManyToMany(Task) maybe?
 
     objects = UserManager()
