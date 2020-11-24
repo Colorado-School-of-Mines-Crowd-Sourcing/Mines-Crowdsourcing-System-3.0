@@ -4,7 +4,6 @@ from django.apps import apps
 
 
 class CreateTask(ModelForm):
-
     tags = forms.CharField(label='Tags', max_length=40, help_text='Separate your tags with a comma')
 
     class Meta:
@@ -16,6 +15,7 @@ class CreateTask(ModelForm):
             'participant_qualifications': 'Participant Qualifications',
             'reward_amount': 'Reward ',
             'link_to': 'Link to Google Form',
+            'major_qualifications': 'Participant Major',
         }
 
         help_texts = {

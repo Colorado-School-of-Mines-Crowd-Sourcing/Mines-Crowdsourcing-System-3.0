@@ -3,6 +3,7 @@ from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from multiselectfield import MultiSelectField
 import uuid
 import random
 
@@ -127,7 +128,7 @@ class Task(models.Model):
     participants = models.ManyToManyField(User, blank=True, related_name='part')
     approved_participants = models.ManyToManyField(User, blank=True, related_name='aproved')
     paid_participants = models.ManyToManyField(User, blank=True, related_name='paid')
-
+    major_qualifications = MultiSelectField(choices=MAJOR_CHOICES, blank=False, default='Applied Mathematics and Statistics,Biochemistry,Chemical Engineering,Chemistry,Civil Engineering,Computer Science,Economics,Electrical Engineering,Engineering,Engineering Physics,Environmental Engineering,Geological Engineering,Geophysical Engineering,Mechanical Engineering,Metallurgical and Materials Engineering,Mining Engineering,Petroleum Engineering,Not a Mines Student')
     def __str__(self):
         return self.title
 

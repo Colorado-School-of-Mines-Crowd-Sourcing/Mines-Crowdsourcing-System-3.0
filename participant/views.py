@@ -29,9 +29,18 @@ def index(request):
 
 
 def all_available_tasks(request):
+    user = request.user
     all_tags_mapped = all_active_tasks_tags()
+
+    filtered_tasks = Task.objects.filter(
+     Q(major_qualifications__exact=user.major) |
+     Q(major_qualifications__endswith=',%s' % user.major) |
+     Q(major_qualifications__contains=',%s,' % user.major) |
+     Q(major_qualifications__startswith='%s' % user.major),
+     status=Task.ACTIVE)
+        
     return render(request, 'participant/all_tasks.html', {
-        'all_tasks': Task.objects.filter(status=Task.ACTIVE), 'all_tags_mapped': all_tags_mapped})
+        'all_tasks': filtered_tasks, 'all_tags_mapped': all_tags_mapped})
 
 
 def completed_tasks(request):
