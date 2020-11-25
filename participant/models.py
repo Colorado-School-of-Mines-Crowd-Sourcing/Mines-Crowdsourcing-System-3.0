@@ -86,7 +86,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     anon_id = models.CharField(blank=True, unique=True, max_length=6, default=create_new_unique_id())
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, default='Female')
     ethnicity = models.CharField(max_length=100, choices=ETHNICITY_CHOICES, default='Other')
-    age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)])
+    age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)], default=18)
     major = models.CharField(max_length=100, choices=MAJOR_CHOICES, default='Not a Mines Student')
     # completed_tasks = ManyToMany(Task) maybe?
 
