@@ -82,6 +82,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     ethnicity = models.CharField(max_length=100, choices=ETHNICITY_CHOICES, default='Other')
     age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)], default=18)
     major = models.CharField(max_length=100, choices=MAJOR_CHOICES, default='Not a Mines Student')
+    demographics_consent = models.BooleanField(default=False, )
     # completed_tasks = ManyToMany(Task) maybe?
 
     objects = UserManager()
@@ -106,7 +107,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # self.password = make_password(None)
     def __str__(self):
         #return self.name
-        return self.anon_id
+        return str(self.anon_id)
 
 
 class Task(models.Model):

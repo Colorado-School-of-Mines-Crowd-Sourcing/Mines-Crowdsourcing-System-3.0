@@ -126,11 +126,14 @@ def download_demographics(task, task_id, request):
     row = 1
     approved_participants = task.approved_participants.all() | task.paid_participants.all()
     for participant in approved_participants:
-        worksheet.write(row, 0, participant.anon_id)
-        worksheet.write(row, 1, participant.sex)
-        worksheet.write(row, 2, participant.ethnicity)
-        worksheet.write(row, 3, participant.age)
-        worksheet.write(row, 4, participant.major)
+        if (participant.demographics_consent):
+                worksheet.write(row, 0, participant.anon_id)
+                worksheet.write(row, 1, participant.sex)
+                worksheet.write(row, 2, participant.ethnicity)
+                worksheet.write(row, 3, participant.age)
+                worksheet.write(row, 4, participant.major)
+        else:
+            worksheet.write(row, 0, participant.anon_id)
         row = row + 1
     workbook.close()
     output.seek(0)
