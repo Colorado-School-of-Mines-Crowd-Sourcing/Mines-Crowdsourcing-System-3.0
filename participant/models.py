@@ -70,12 +70,6 @@ MAJOR_CHOICES = (
 
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
-    def create_new_unique_id():
-        random_number = str(random.randint(100000,999999))
-        #while User.objects.filter(anon_id=random_number):
-        #    print("gen new random num")
-        #    random_number = str(random.randint(100000,999999))
-        return random_number
     name = models.CharField(max_length=100, unique=True)
     email = models.EmailField()
     CWID = models.IntegerField(primary_key=True, )
@@ -83,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
-    anon_id = models.CharField(blank=True, unique=True, max_length=6, default=create_new_unique_id())
+    anon_id = models.IntegerField(blank=True, unique=True)
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, default='Female')
     ethnicity = models.CharField(max_length=100, choices=ETHNICITY_CHOICES, default='Other')
     age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)], default=18)
@@ -95,6 +89,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'CWID', 'authorized_requester', 'reward_balance']
 
     USERNAME_FIELD = 'name'
+    def save(self, *args, **kwargs):
+        if not self.anon_id:
+            is_unique = False
+            while not is_unique:
+                random_number = random.randint(100000,999999)
+                print(random_number)
+                same_anon_id = User.objects.filter(anon_id=random_number)
+                if (same_anon_id.count() == 0):
+                    is_unique = True
+            self.anon_id = random_number
+        super(User, self).save(*args, **kwargs)
 
     # def set_unusable_password(self):
     # Set a value that will never be a valid hash
