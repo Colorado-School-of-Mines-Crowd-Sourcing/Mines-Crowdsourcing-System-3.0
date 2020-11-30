@@ -6,3 +6,4 @@ django-multiselectfield
 zipfile36
 django-wkhtmltopdf
 django-crispy-forms
+xlsxwriter
