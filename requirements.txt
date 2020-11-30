@@ -1,6 +1,6 @@
 pytz
 django-apscheduler
-Django==3.0.4
+Django
 gunicorn
 django-multiselectfield
 zipfile36
