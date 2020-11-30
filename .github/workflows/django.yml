@@ -20,6 +20,7 @@ jobs:
         pip install codecov
     - name: Run Tests
       run: |
+        python minesCrowdsourcing/manage.py makemigrations
         python minesCrowdsourcing/manage.py migrate
         python minesCrowdsourcing/manage.py collectstatic
         coverage run minesCrowdsourcing/manage.py test
