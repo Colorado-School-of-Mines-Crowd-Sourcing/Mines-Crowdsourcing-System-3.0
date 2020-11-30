@@ -2,6 +2,6 @@ pytz
 django-apscheduler
 Django==3.0.4
 gunicorn
-MultiSelectField
+django-multiselectfield
 zipfile36
 django-wkhtmltopdf
