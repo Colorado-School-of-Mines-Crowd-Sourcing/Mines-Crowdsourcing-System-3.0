@@ -161,7 +161,10 @@ def approve_contributors(request, task_id):
             num_approved = task.approved_participants.count() + task.paid_participants.count()
             total_paid = num_approved * task.reward_amount
             percent_complete = "{0:.2f}".format(num_approved / task.max_num_participants * 100)
-            success_rate = "{0:.2f}".format(num_approved / num_completed * 100)
+            try:
+                success_rate = "{0:.2f}".format(num_approved / num_completed * 100)
+            except ZeroDivisionError:
+                success_rate = 0
             approval_left = True
             if participants_set.count() == 0:
                 approval_left = False
