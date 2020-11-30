@@ -20,28 +20,6 @@ jobs:
         pip install codecov
     - name: Run Tests
       run: |
-        python manage.py migrate
-        python manage.py collectstatic
-        coverage run manage.py test
-  
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:    
-      - uses: actions/checkout@v2
-      - name: Extract Branch Name
-        run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
-      - name: Deploy prod
-        if: env.BRANCH == 'master'
-        uses: AkhileshNS/heroku-deploy@v2.0.2
-        with:
-            heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
-            heroku_app_name: "mines-crowdsourcing"
-            heroku_email: "leo.chely@live.fr"
-      - name: Deploy dev
-        if: env.BRANCH == 'dev'
-        uses: AkhileshNS/heroku-deploy@v2.0.2
-        with:
-            heroku_api_key: ${{secrets.HEROKU_DEV_KEY}}
-            heroku_app_name: "mines-crowdsourcing-dev"
-            heroku_email: "leo.chely@live.fr"
+        python minesCrowdsourcing/manage.py migrate
+        python minesCrowdsourcing/manage.py collectstatic
+        coverage run minesCrowdsourcing/manage.py test
