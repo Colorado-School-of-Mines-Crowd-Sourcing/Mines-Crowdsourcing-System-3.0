@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     reward_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, )
     is_superuser = models.BooleanField(default=False, )
     is_staff = models.BooleanField(default=False, )
-    anon_id = models.IntegerField(blank=True, unique=True, default=100000)
+    anon_id = models.IntegerField(blank=True, unique=True, null=True)
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, default='Female')
     ethnicity = models.CharField(max_length=100, choices=ETHNICITY_CHOICES, default='Other')
     age = models.PositiveIntegerField(validators=[MinValueValidator(18), MaxValueValidator(100)], default=18)

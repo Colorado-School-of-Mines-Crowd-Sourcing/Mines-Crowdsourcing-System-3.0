@@ -33,7 +33,7 @@ python3 manage.py runserver
 ```
 
 ## Running MCS in a Docker Container
-First a self-signed certificate must be created. 
+After completing the getting started section, MCS can be started in a Docker container. First a self-signed certificate must be created. 
 ```bash
 openssl req -newkey rsa:2048 -nodes -keyout self-signed-certs/mcs.key -x509 -days 365 -out self-signed-certs/mcs.crt
 ```
@@ -45,6 +45,8 @@ Then the container can be started on port 9601 to access the website at https://
 ```bash
 docker run -it -p 9601:9601 mines-crowdsourcing-app
 ```
+## Email
+Emails are set up to be sent out when a user completes a task or their balance changes. To activate this feature modify the email section of minesCrowdsourcing/settings.py and remove the comments on the email functions. 
 
 
 

@@ -31,15 +31,7 @@ def index(request):
 def all_available_tasks(request):
     user = request.user
     all_tags_mapped = all_active_tasks_tags()
-    if user.is_anonymous:
-        filtered_tasks = Task.objects.filter(status=Task.ACTIVE)
-    else:
-        filtered_tasks = Task.objects.filter(
-             Q(major_qualifications__exact=user.major) |
-             Q(major_qualifications__endswith=',%s' % user.major) |
-             Q(major_qualifications__contains=',%s,' % user.major) |
-             Q(major_qualifications__startswith='%s' % user.major),
-             status=Task.ACTIVE)
+    filtered_tasks = Task.objects.filter(status=Task.ACTIVE)
         
     return render(request, 'participant/all_tasks.html', {
         'all_tasks': filtered_tasks, 'all_tags_mapped': all_tags_mapped})
@@ -91,8 +83,20 @@ def search_results(request):
 
 
 def task_details(request, task_id):
+    user = request.user
     try:
         current_task = Task.objects.get(pk=task_id)
+        valid_participant_task = Task.objects.filter(
+             Q(major_qualifications__exact=user.major) |
+             Q(major_qualifications__endswith=',%s' % user.major) |
+             Q(major_qualifications__contains=',%s,' % user.major) |
+             Q(major_qualifications__startswith='%s' % user.major),
+             status=Task.ACTIVE, pk=task_id)
+        if valid_participant_task.exists():
+            valid_task = True
+        else:
+            valid_task = False
+            
 
         # If the task has not been posted or is closed and the user
         # has not completed, we still want to display a 404
@@ -116,7 +120,7 @@ def task_details(request, task_id):
     except Task.DoesNotExist:
         raise Http404('Task does not exist')
     return render(request, 'participant/task_details.html', {'task': current_task,
-                                                             'already_completed': already_completed})
+                                                             'already_completed': already_completed, 'valid_task': valid_task})
 
 
 def redeem(request):

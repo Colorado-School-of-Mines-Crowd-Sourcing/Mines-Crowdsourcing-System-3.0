@@ -23,7 +23,9 @@
         Please consult the "Redeem" page for further information regarding payments.
       </small></p>
       <a class="w-20 mx-1" href={{ task.link_to }} target="_blank"><button type="button" class="btn btn-dark">Go to Task</button></a><br>
-      {% if not already_completed %}
+      {% if not valid_task %}
+        <button type="button" class="btn btn-dark my-3" disabled>Invalid Qualifications</button>
+      {% elif not already_completed %}
         <form action="" method="post">
           {% csrf_token %}
           <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Mark Task Completed">
