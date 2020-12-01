@@ -6,4 +6,5 @@ local_settings.py
 *.DS_Store
 staticfiles/*
 temp/*
-self-signed-certs/*
+*.crt
+*.key
