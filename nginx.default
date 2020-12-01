@@ -2,9 +2,9 @@
 
 server {
     listen 9601 ssl;
-    server_name my-site.com;
-    ssl_certificate /etc/nginx/my-site.com.crt;
-    ssl_certificate_key /etc/nginx/my-site.com.key;
+    #server_name minescrowdsourcingsystem.com;
+    ssl_certificate /etc/nginx/mcs.crt;
+    ssl_certificate_key /etc/nginx/mcs.key;
 
     location / {
         proxy_pass http://127.0.0.1:9600;
