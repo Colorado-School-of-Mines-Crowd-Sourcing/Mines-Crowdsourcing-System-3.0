@@ -9,19 +9,16 @@
           <div class="py-5 alert {{ message.tags }} text-center">{{ message }}</div>
         {% endfor %}
         <div class="py-5 row justify-content-center align-items-center h-100">
-            <h2 class="text-center">You currently have ${{ user.reward_balance }}</h2>
+            <h2 class="text-center">You currently have ${{ user.reward_balance }} available to redeem</h2>
         </div>
-            <h4>How to Redeem</h4>
+            <h4>Note:</h4>
             <ul>
             <li>You must have a minimum balance of ${{ min_reward }}. </li>
-            <li>You must have a direct deposit form on file with CSM. If you do not, fill out
-                <a  href="https://inside.mines.edu/UserFiles/File/finance/controller/CSM_Docs/Direct%20Deposit%20Enrollment%20Form.doc" class="text-secondary">this form</a>
-            and return it to the Payroll department on campus.</li>
-            <li>You must have a W-9 on file with the school. If you do not, fill out the form found at this
-                <a href="https://www.irs.gov/pub/irs-pdf/fw9.pdf" class="text-secondary">link</a> on the IRS website and return it to the Payroll
-                department on campus. </li>
+            <li><b>IMPORTANT: </b>You must have a W-9 on file with the school. This should have been done before account registration.
+                If you have not done this, refer to instructions found at the bottom of the registration page for instructions
+                on how to submit your W-9 form to to Controller's Office.</li>
             <li>It may take up to 3 weeks to process your compensations successfully.</li>
-            <li>Click the "Redeem" button!</li>
+            <!-- <li>Click the "Redeem" button!</li> -->
             </ul>
 
 

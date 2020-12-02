@@ -12,6 +12,12 @@ Add custom coloring to navbar and footer.
   margin:7px;
 }
 
+.mcs{
+  margin-left: 10px;
+  height:45px;
+  width: 330px;
+}
+
 .logo-container{
   background: rgb(240, 241, 245);
   padding: 8px 0px 14px 0px ;
