@@ -3,8 +3,8 @@ Add custom coloring to navbar and footer.
  */
 
 .nav-custom{
-  height: 50px;
-  background: rgb(78, 106, 159);/*-webkit-linear-gradient(to right, #2240c4, #070000, #2240c4);*/
+  height: 52px;
+  background: rgb(15, 31, 61);/*-webkit-linear-gradient(to right, #2240c4, #070000, #2240c4);*/
   /*background: linear-gradient(to right, #2240c4, #070000, #2240c4);*/
 }
 
@@ -20,8 +20,9 @@ Add custom coloring to navbar and footer.
 
 .logo-container{
   background: rgb(240, 241, 245);
-  padding: 8px 0px 14px 0px ;
-  border-radius: 28px;
+  padding: 7px 0px 14px 0px ;
+  border-radius: 30px;
+  height: 49px;
 }
 
 .dropdown-menu {
