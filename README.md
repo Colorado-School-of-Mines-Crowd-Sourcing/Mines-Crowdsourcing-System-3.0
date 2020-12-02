@@ -6,6 +6,14 @@ A Crowdsourcing Web Application for Supporting Research at Mines and the Beyond
 ## Getting started
 Installing and running MCS locally is fairly straightforward. This tutorial assumes that python3, pip, virtualenv, and docker are installed and the docker daemon is running. First, clone the git repository and change it to the current directory. Now, the requirements have to be installed in a virtual environment.
 ### Virtual Environment
+
+
+### Installing Requirements
+Run 
+```bash
+pip install -r requirements.txt
+```
+
 ```bash
 cd minesCrowdsourcing
 virtualenv .venv
@@ -14,13 +22,6 @@ source .venv/bin/activate
 If on Windows run the following instead.
 ```bash
 source .venv/Scripts/activate
-```
-
-
-### Installing Requirements
-Run 
-```bash
-pip install -r requirements.txt
 ```
 
 ### Running a Local Instance
