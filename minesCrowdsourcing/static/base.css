@@ -3,8 +3,15 @@ Add custom coloring to navbar and footer.
  */
 
 .nav-custom{
-background: -webkit-linear-gradient(to right, #2240c4, #070000, #2240c4);
-background: linear-gradient(to right, #2240c4, #070000, #2240c4);
+  height: 50px;
+  background: rgb(78, 106, 159);/*-webkit-linear-gradient(to right, #2240c4, #070000, #2240c4);*/
+  /*background: linear-gradient(to right, #2240c4, #070000, #2240c4);*/
+}
+
+.logo{
+  background: rgb(240, 241, 245);
+  padding: 2px;
+  border-radius: 15px;
 }
 
 .dropdown-menu {

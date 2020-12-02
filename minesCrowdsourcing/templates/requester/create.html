@@ -16,7 +16,10 @@
             <p class="text-center"><b>Disclaimer: </b>The publishing of your task is subject to the approval of the site administrators.</p>
          </div>
         <div class="row justify-content-center align-items-center h-100">
-            <p class="text-center">Note that some participants my elect to keep their demographic information hidden by default. If this is crucial to your research make sure to ask for it in your task.</p>
+            <p class="text-center"><b>Human Subject Research Compliance: </b>
+              <br>- Please visit <a target="_blank" href="https://hsr.mines.edu/gettingstarted-onbase/">this link</a> to apply for an exemption or IRB review.
+              <br>- Note that some participants my elect to keep their demographic information hidden by default.
+              If this is crucial to your research make sure to ask for it in your Google form.</p>
          </div>
          <form action="/requester/create" method="post">
             {% csrf_token %}
@@ -32,7 +35,6 @@
             <tr><td>{{ form_task.link_to | as_crispy_field }}</td></tr>
             <p class="text-center">By pressing the submit button,
                 I agree that I have the required funding available and an approval from the CSM Human Subjects Team.</p>
-            <p>Please visit <a target="_blank" href="https://hsr.mines.edu/gettingstarted-onbase/">this link</a> to apply for an exemption or IRB review.</p>
             <input type="submit" class="d-block mx-auto my-3 btn btn-dark" value="Submit">
           </form>
         </div>
